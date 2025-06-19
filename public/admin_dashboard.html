@@ -1,0 +1,210 @@
+<?php
+session_start();
+if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
+    header('Location: home.php');
+    exit;
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - PawConnect</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background: #f7f7f7; }
+        .admin-dashboard {
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+        .admin-title {
+            text-align: center;
+            margin-bottom: 32px;
+            color: #a0522d;
+        }
+        .admin-cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: center;
+        }
+        .admin-card {
+            flex: 1 1 220px;
+            min-width: 220px;
+            max-width: 260px;
+            background: #ede8d0;
+            border-radius: 12px;
+            padding: 28px 20px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(160,82,45,0.08);
+            transition: transform 0.15s;
+        }
+        .admin-card:hover {
+            transform: translateY(-6px) scale(1.03);
+        }
+        .admin-card i {
+            font-size: 2.5rem;
+            color: #a0522d;
+            margin-bottom: 12px;
+        }
+        .admin-card h3 {
+            margin: 10px 0 8px 0;
+            font-size: 1.2rem;
+            color: #6b3e26;
+        }
+        .admin-card a {
+            display: inline-block;
+            margin-top: 10px;
+            color: #fff;
+            background: #a0522d;
+            padding: 8px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background 0.15s;
+        }
+        .admin-card a:hover {
+            background: #7a3a1d;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="home.php"><img src="images/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
+        <div class="header-content" style="display: flex; align-items: center; justify-content: space-between;">
+            <h1 class="header-title">PawConnect Admin</h1>
+            <div class="admin-notification" style="position: relative; margin-left: 20px;">
+                <i class="fas fa-bell" id="notifBell" style="font-size: 1.8rem; cursor: pointer;"></i>
+                <span id="notifBadge" style="position: absolute; top: -8px; right: -8px; background: #e74c3c; color: #fff; border-radius: 50%; padding: 2px 7px; font-size: 0.9rem; font-weight: bold;">3</span>
+                <div id="notifDropdown" style="display: none; position: absolute; right: 0; top: 32px; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.12); border-radius: 8px; min-width: 260px; z-index: 10;">
+                    <div style="padding: 14px 18px; border-bottom: 1px solid #eee; font-weight: bold; color: #a0522d;">Notifications</div>
+                    <div style="padding: 12px 18px; border-bottom: 1px solid #f3f3f3;">New adoption request received</div>
+                    <div style="padding: 12px 18px; border-bottom: 1px solid #f3f3f3;">3 new users registered</div>
+                    <div style="padding: 12px 18px;">Pending vet appointment approval</div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="admin-dashboard">
+        <h2 class="admin-title">Admin Dashboard</h2>
+        <div class="admin-cards">
+            <div class="admin-card">
+                <i class="fas fa-users-cog"></i>
+                <h3>Manage Users</h3>
+                <a href="manage_users.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-paw"></i>
+                <h3>Approve Adoptions</h3>
+                <a href="approve_adoptions.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-shopping-cart"></i>
+                <h3>Manage Products</h3>
+                <a href="manage_products.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-calendar-check"></i>
+                <h3>Manage Appointments</h3>
+                <a href="manage_appointments.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-chart-bar"></i>
+                <h3>View Statistics</h3>
+                <a href="view_statistics.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-history"></i>
+                <h3>User Activity Logs</h3>
+                <a href="user_activity_logs.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-envelope"></i>
+                <h3>Message Center</h3>
+                <a href="message_center.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-user-shield"></i>
+                <h3>Advanced Role Management</h3>
+                <a href="advanced_role_management.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-tasks"></i>
+                <h3>Bulk Actions</h3>
+                <a href="bulk_actions.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-folder-open"></i>
+                <h3>File/Media Manager</h3>
+                <a href="file_media_manager.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-clipboard-list"></i>
+                <h3>Audit Trail</h3>
+                <a href="audit_trail.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-th-large"></i>
+                <h3>Dashboard Widgets</h3>
+                <a href="dashboard_widgets.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-life-ring"></i>
+                <h3>Support Ticket System</h3>
+                <a href="support_ticket_system.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-paint-brush"></i>
+                <h3>Theme Settings</h3>
+                <a href="theme_settings.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-file-export"></i>
+                <h3>Data Export/Import</h3>
+                <a href="data_export_import.php">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-credit-card"></i>
+                <h3>Manage Subscriptions</h3>
+                <a href="subscription_management.html">Go</a>
+            </div>
+            <div class="admin-card">
+                <i class="fas fa-ellipsis-h"></i>
+                <h3>Manage Others</h3>
+                <a href="manage_others.html">Go</a>
+            </div>
+        </div>
+    </div>
+    <div class="navbar">
+        <div class="navlist">
+            <button onclick="window.location.href='admin_dashboard.html'" class="active">Dashboard</button>
+            <button onclick="window.location.href='manage_users.html'">Users</button>
+            <button onclick="window.location.href='manage_vets.html'">Vets</button>
+            <button onclick="window.location.href='manage_products.html'">Products</button>
+            <button onclick="window.location.href='manage_discounts.html'">Discounts</button>
+            <button onclick="window.location.href='subscription_management.html'">Subscriptions</button>
+            <button onclick="window.location.href='manage_others.html'">Others</button>
+            <button onclick="window.location.href='manage_appointments.html'">Appointments</button>
+            <button onclick="window.location.href='view_statistics.html'">Statistics</button>
+        </div>
+    </div>
+    <script>
+    // Notification dropdown toggle
+    const bell = document.getElementById('notifBell');
+    const dropdown = document.getElementById('notifDropdown');
+    bell.addEventListener('click', function(e) {
+        dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        e.stopPropagation();
+    });
+    document.addEventListener('click', function() {
+        dropdown.style.display = 'none';
+    });
+    </script>
+</body>
+</html> 

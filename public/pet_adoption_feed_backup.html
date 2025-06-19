@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/pet_adoption_feed.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Pet Adoption Feed</title>
+</head>
+<body>
+    <header class="site-header">
+        <a href="index.html" class="logo-link">
+            <img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo">
+        </a>
+        <div class="header-content">
+            <h1 class="header-title">PawConnect</h1>
+        </div>
+        <nav class="header-nav">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="transaction.html?type=donation" class="nav-link">Donate</a>
+            <a href="login.html" class="nav-link">Login & Register</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="header">
+            <h1>Pet Adoption Feed</h1>
+            <div class="search-bar">
+                <input type="text" placeholder="Search pets...">
+                <button><i class="fas fa-search"></i></button>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- Loading indicator -->
+            <div id="loading-indicator" style="text-align: center; padding: 20px;">
+                <i class="fas fa-spinner fa-spin"></i> Loading pets available for adoption...
+            </div>
+            
+            <!-- Dynamic content container for adoption listings -->
+            <div id="adoptions-container"></div>
+                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="pet-info">
+                    <h3>Bella</h3>
+                    <p class="breed">Labrador Retriever</p>
+                    <p class="age">4 years old</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Chicago, IL</p>
+                    <div class="pet-description">
+                        <p>Gentle and loyal companion, perfect for families and children.</p>
+                    </div>
+                    <div class="pet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="adopt-btn">Request Adoption</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pet-card">
+                <div class="pet-image">
+                    <img src="assets/bird_kool.png" alt="Pet Image">
+                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="pet-info">
+                    <h3>Kiwi</h3>
+                    <p class="breed">Budgerigar (Parakeet)</p>
+                    <p class="age">6 months old</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Miami, FL</p>
+                    <div class="pet-description">
+                        <p>Colorful and talkative bird who enjoys singing and socializing.</p>
+                    </div>
+                    <div class="pet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="adopt-btn">Request Adoption</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pet-card">
+                <div class="pet-image">
+                    <img src="assets/kitten_two.png" alt="Pet Image">
+                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="pet-info">
+                    <h3>Willow</h3>
+                    <p class="breed">Maine Coon</p>
+                    <p class="age">5 years old</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Seattle, WA</p>
+                    <div class="pet-description">
+                        <p>Large, fluffy, and affectionate cat who loves to be brushed and pampered.</p>
+                    </div>
+                    <div class="pet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="adopt-btn">Request Adoption</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pet-card">
+                <div class="pet-image">
+                    <img src="assets/doge_one.png" alt="Pet Image">
+                    <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="pet-info">
+                    <h3>Rocky</h3>
+                    <p class="breed">Shiba Inu</p>
+                    <p class="age">2 years old</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Denver, CO</p>
+                    <div class="pet-description">
+                        <p>Playful and independent dog with a big personality and lots of energy.</p>
+                    </div>
+                    <div class="pet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="adopt-btn">Request Adoption</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>PawConnect is your one-stop platform for pet adoption, veterinary services, and pet care products. We connect loving homes with pets in need.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="pet_adoption_feed.html">Adopt a Pet</a></li>
+                    <li><a href="vet_appointment.html">Vet Appointments</a></li>
+                    <li><a href="shop_feed.html">Pet Shop</a></li>
+                    <li><a href="customer_support.html">Customer Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="pet_adoption_feed.html">Pet Adoption</a></li>
+                    <li><a href="vet_appointment.html">Veterinary Care</a></li>
+                    <li><a href="shop_feed.html">Pet Supplies</a></li>
+                    <li><a href="customer_support.html">Pet Care Tips</a></li>
+                    <li><a href="customer_support.html">Emergency Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <p>Follow us on social media for updates and pet care tips.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 PawConnect. All rights reserved.</p>
+        </div>
+    </footer>
+    
+    <!-- API Manager Script -->
+    <script src="js/api-manager.js"></script>
+</body>
+</html>

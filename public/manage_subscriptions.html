@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Subscriptions - Admin</title>
+    <link rel="stylesheet" href="home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .admin-section {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 30px;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+        }
+        h2 {
+            color: #a0522d;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .subscription-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        .stat-card {
+            background: #ede8d0;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .stat-card h3 {
+            color: #a0522d;
+            margin-bottom: 10px;
+        }
+        .stat-card .number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #6b3e26;
+        }
+        .subscription-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .subscription-table th,
+        .subscription-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+        .subscription-table th {
+            background: #a0522d;
+            color: white;
+            font-weight: bold;
+        }
+        .subscription-table tr:hover {
+            background: #f9f9f9;
+        }
+        .status-active {
+            color: #4CAF50;
+            font-weight: bold;
+        }
+        .status-expired {
+            color: #f44336;
+            font-weight: bold;
+        }
+        .status-pending {
+            color: #ff9800;
+            font-weight: bold;
+        }
+        .plan-badge {
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .plan-gold {
+            background: #ffd700;
+            color: #333;
+        }
+        .plan-silver {
+            background: #c0c0c0;
+            color: #333;
+        }
+        .plan-bronze {
+            background: #cd7f32;
+            color: white;
+        }
+        .action-btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 2px;
+            font-size: 0.9rem;
+        }
+        .edit-btn {
+            background: #2196F3;
+            color: white;
+        }
+        .suspend-btn {
+            background: #ff9800;
+            color: white;
+        }
+        .cancel-btn {
+            background: #f44336;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-section">
+        <h2>Manage Subscriptions</h2>
+        
+        <div class="subscription-stats">
+            <div class="stat-card">
+                <h3>Total Subscribers</h3>
+                <div class="number">1,247</div>
+            </div>
+            <div class="stat-card">
+                <h3>Gold Members</h3>
+                <div class="number">156</div>
+            </div>
+            <div class="stat-card">
+                <h3>Silver Members</h3>
+                <div class="number">342</div>
+            </div>
+            <div class="stat-card">
+                <h3>Bronze Members</h3>
+                <div class="number">749</div>
+            </div>
+        </div>
+
+        <table class="subscription-table">
+            <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Email</th>
+                    <th>Plan</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>John Doe</td>
+                    <td>john@example.com</td>
+                    <td><span class="plan-badge plan-gold">GOLD</span></td>
+                    <td><span class="status-active">Active</span></td>
+                    <td>2024-01-15</td>
+                    <td>2024-02-15</td>
+                    <td>
+                        <button class="action-btn edit-btn">Edit</button>
+                        <button class="action-btn suspend-btn">Suspend</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Jane Smith</td>
+                    <td>jane@example.com</td>
+                    <td><span class="plan-badge plan-silver">SILVER</span></td>
+                    <td><span class="status-active">Active</span></td>
+                    <td>2024-01-10</td>
+                    <td>2024-02-10</td>
+                    <td>
+                        <button class="action-btn edit-btn">Edit</button>
+                        <button class="action-btn suspend-btn">Suspend</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Bob Johnson</td>
+                    <td>bob@example.com</td>
+                    <td><span class="plan-badge plan-bronze">BRONZE</span></td>
+                    <td><span class="status-expired">Expired</span></td>
+                    <td>2023-12-01</td>
+                    <td>2024-01-01</td>
+                    <td>
+                        <button class="action-btn edit-btn">Edit</button>
+                        <button class="action-btn cancel-btn">Cancel</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Alice Brown</td>
+                    <td>alice@example.com</td>
+                    <td><span class="plan-badge plan-gold">GOLD</span></td>
+                    <td><span class="status-pending">Pending</span></td>
+                    <td>2024-01-20</td>
+                    <td>2024-02-20</td>
+                    <td>
+                        <button class="action-btn edit-btn">Edit</button>
+                        <button class="action-btn cancel-btn">Cancel</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html> 

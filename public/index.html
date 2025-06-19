@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PawConnect</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<header>
+  <a href="index.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
+  
+  <div class="header-content">
+    <h1 class="header-title">PawConnect</h1>
+  </div>
+  
+  <section class="buttons">
+    <div class="header-buttons">
+      <button onclick="window.location.href='home.html'">Home</button>
+      <button onclick="window.location.href='transaction.html?type=donation'">Donate</button>
+      <button onclick="window.location.href='login.html'">Login & Register</button>
+      <!-- <button onclick="window.location.href='login.html'">Register</button> -->
+
+    </div>
+  </section>
+</header>
+
+<body>
+    <a href="#"><img src="assets/kitten.png" alt="kitten" class="landing_page_kitten"></a>
+    <section >
+      <div class="landing_page_text">
+        <h2>Welcome to PawConnect</h2>
+        <p> Find your perfect pet match today!</p>
+        <p>Join our community of pet lovers and make a difference.</p>
+        <p>Explore our platform to discover adoptable pets, share your pet stories, and connect with fellow animal enthusiasts.</p>
+    </section>
+
+    <section>
+      <div class="features-adoption" onclick="window.location.href='pet_adoption_feed.html'" style="cursor: pointer;">
+        <div class="icon">🐾</div>
+        <strong class="icon-title">Pet Adoption</strong><br>
+        <p>Find your perfect furry companion.</p>
+      </div>
+
+      <div class="features-shop" onclick="window.location.href='shop_feed.html'" style="cursor: pointer;">
+        <div class="icon">🛍️</div>
+        <strong class="icon-title">Shop</strong><br>
+        Treats, toys, grooming kits, and more.
+      </div>
+
+      <div class="features-appointment" onclick="window.location.href='vet_appointment.html'" style="cursor: pointer;">
+        <div class="icon">🩺</div>
+        <strong class="icon-title">Vet Appoinment</strong><br>
+        Book certifief vets for in-home or clicnic visits.
+      </div>
+
+      <div class="features-community">
+        <div class="icon">🤝</div>
+        <strong class="icon-title">Pet community</strong><br>
+        Connect with fellow pet parents.
+      </div>
+    </section>
+
+    <script src="js/script.js"></script>
+    
+    <!-- Floating Chatbot Button -->
+    <div class="chatbot-float" onclick="window.location.href='chatbot.html'">
+        <i class="fas fa-robot"></i>
+        <span class="chatbot-tooltip">Ask our AI Assistant</span>
+    </div>
+    
+    <style>
+        .chatbot-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #6f87f7 0%, #5a6fd8 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(111, 135, 247, 0.4);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .chatbot-float:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(111, 135, 247, 0.6);
+        }
+        
+        .chatbot-tooltip {
+            position: absolute;
+            right: 70px;
+            background: #4d3724c0;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .chatbot-tooltip::after {
+            content: '';
+            position: absolute;
+            right: -5px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: 5px solid transparent;
+            border-left-color: #4d3724c0;
+        }
+        
+        .chatbot-float:hover .chatbot-tooltip {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        @media (max-width: 768px) {
+            .chatbot-float {
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                font-size: 20px;
+            }
+            
+            .chatbot-tooltip {
+                display: none;
+            }
+        }
+    </style>
+</body>
+
+
+<footer class="site-footer">
+  <div class="footer-content">
+    <div class="footer-left">
+      <h3>PawConnect</h3>
+      <p>Your trusted platform for connecting pets with their forever families.</p>
+    </div>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="pet_adoption_feed.html">Pet Adoption</a></li>
+        <li><a href="vet_appointment.html">Vet Appointment</a></li>
+        <li><a href="#">Community</a></li>
+        <li><a href="shop_feed.html">Shop</a></li>
+        <li><a href="customer_support.html">Customer Support</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-social">
+      <h4>Follow Us</h4>
+      <ul>
+        <li><a href="https://www.facebook.com/Szer05" target="_blank"><img src="assets/facebook.png" alt="facebook" class="social-icon"></a></li>
+        <li><a href="https://www.instagram.com/sabbirx_" target="_blank"><img src="assets/instagram.png" alt="instagram" class="social-icon"></a></li>
+        <li><a href="https://wa.me/qr/4YS65IE5O74LK1" target="_blank"><img src="assets/whatsapp.png" alt="whatsapp" class="social-icon"></a></li>
+        <li><a href="tel:+8801870243704" target="_blank"><img src="assets/customer_care.png" alt="Customer Care" class="social-icon"></a></li>
+        
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 PawConnect. All rights reserved.</p>
+  </div>
+</footer>
+</html>

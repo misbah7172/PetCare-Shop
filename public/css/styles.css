@@ -1,0 +1,252 @@
+body {
+  padding: 0px;
+  margin: 0;
+  height: 100%; /* Full height of the viewport */
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(to right, #f3ede7, #f9d5c1); /* Peach-Beige Gradient */
+  color: #222; /* Dark text for contrast */
+}
+.logo {
+  position: absolute; /* Positioning it absolutely on the page */
+  top: 10px;  /* 10px from the top of the page */
+  left: 20px; /* 10px from the left of the page */
+  height: 50px;  /* Adjust the height of the logo */
+  width: auto;  /* Maintain aspect ratio based on the height */
+}
+
+.header-title {
+  margin-top: 70px; /* Space from the top of the page */
+  font-size: medium;
+  margin-left: 20px;
+}
+.header-buttons {
+  position: absolute;  /* Positioning the buttons relative to the page */
+  margin: center; /* Centering the buttons */
+}
+
+.header-buttons button {
+  margin-left: 10px;   /* Adds spacing between buttons */
+  padding: 10px 20px;   /* Adds some padding inside the buttons */
+  font-size: 14px;      /* Adjusts font size */
+  border-radius: 30%;
+  border: none;        /* Removes default border */  
+  
+  background-color: #e6ab86; /* Peach color for the button */
+  color: #4d3724c0; /* Dark text for contrast */
+  font-weight: bold;
+  cursor: pointer; /* Changes cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+
+  box-shadow: 0 4px 8px rgba(95, 24, 3, 0.566); /* Adds a shadow effect */
+  text-align: center; /* Centers the text inside the button */
+  text-decoration: none; /* Removes underline from text */
+  display: inline-block; /* Makes the button inline-block */
+  text-transform: uppercase; /* Makes the text uppercase */
+  letter-spacing: 1px; /* Adds spacing between letters */
+  
+  font-family: 'Inter', sans-serif; /* Font family for the button text */
+  font-size: 16px; /* Font size for the button text */
+  line-height: 1.5; /* Line height for the button text */
+}
+.header-buttons button:hover {
+  background-color: #d99a7c; /* Darker peach color on hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); /* Darker shadow on hover */
+}
+.header-buttons button:active {
+  background-color: #c88a6c; /* Even darker peach color on click */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Reset shadow on click */
+}
+.header-buttons button:focus {
+  outline: none; /* Removes the default focus outline */
+  box-shadow: 0 0 0 3px rgb(244, 248, 14); /* Adds a custom focus outline */
+}
+
+.landing_page_kitten {
+  float: right;
+  margin-right: 20px; /* Adjust the right margin to add space from the right edge */
+  margin-top: -110px;
+  height: 1000px; /* Adjust the height of the kitten image */
+  width: auto; /* Maintain aspect ratio based on the height */
+}
+
+.landing_page_text {
+  margin-top: 100px; /* Space from the top of the page */
+  margin-left: 20px; /* Space from the left of the page */
+  font-size: large; /* Adjust font size for the text */
+  color: #4d3724c0; /* Dark text for contrast */
+  font-weight: bold;
+  text-align: left; /* Aligns text to the left */
+  line-height: 1.2; /* Line height for better readability */
+}
+
+
+#feature-header {
+  margin-left: 200px;
+  font-size: large; /* Adjust font size for the text */
+  color: #244d2ec0; /* Dark text for contrast */
+  font-weight: bold;
+  text-align: left; /* Aligns text to the left */
+  line-height: 1.2; /* Line height for better readability */
+}
+
+#pet-adoption {
+  border: 2px solid black; /* Peach border for the pet adoption section */
+  border-radius: 10px; /* Rounded corners for the border */
+}
+
+
+/* body styling */
+.features-adoption {
+  position: absolute;  /* Allow absolute positioning */
+  bottom: 35%;  /* Position 10% from the bottom of the screen */
+  left: 1%;  /* Position 10% from the left of the screen */
+  border: 2px solid black;  /* Black border around the features section */
+  display: inline-block;  /* Ensure the section is inline with other content */
+  padding: 50px;  /* Add padding inside the section */
+  background-color: rgba(255, 255, 255, 0.8);  /* Optional: Make the background slightly transparent */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);  /* Optional: Add a shadow for better visibility */
+  border-radius: 10px;  /* Optional: Add rounded corners for a smoother look */
+  height: 8rem;
+  width: 12rem; /* Set a fixed width for the section */
+}
+
+.features-shop {
+  position: absolute;  /* Allow absolute positioning */
+  bottom: 35%;  /* Position 10% from the bottom of the screen */
+  left: 17%;  /* Position 10% from the left of the screen */
+  border: 2px solid black;  /* Black border around the features section */
+  display: inline-block;  /* Ensure the section is inline with other content */
+  padding: 50px;  /* Add padding inside the section */
+  background-color: rgba(255, 255, 255, 0.8);  /* Optional: Make the background slightly transparent */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);  /* Optional: Add a shadow for better visibility */
+  border-radius: 10px;  /* Optional: Add rounded corners for a smoother look */
+  height: 8rem;
+  width: 12rem; /* Set a fixed width for the section */
+
+}
+.features-appointment {
+  position: absolute;  /* Allow absolute positioning */
+  bottom: 35%;  /* Position 10% from the bottom of the screen */
+  left: 33%;  /* Position 10% from the left of the screen */
+  border: 2px solid black;  /* Black border around the features section */
+  display: inline-block;  /* Ensure the section is inline with other content */
+  padding: 50px;  /* Add padding inside the section */
+  background-color: rgba(255, 255, 255, 0.8);  /* Optional: Make the background slightly transparent */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);  /* Optional: Add a shadow for better visibility */
+  border-radius: 10px;  /* Optional: Add rounded corners for a smoother look */
+  height: 8rem;
+  width: 12rem; /* Set a fixed width for the section */
+
+}
+.features-community {
+  position: absolute;  /* Allow absolute positioning */
+  bottom: 35%;  /* Position 10% from the bottom of the screen */
+  left: 49%;  /* Position 10% from the left of the screen */
+  border: 2px solid black;  /* Black border around the features section */
+  display: inline-block;  /* Ensure the section is inline with other content */
+  padding: 50px;  /* Add padding inside the section */
+  background-color: rgba(255, 255, 255, 0.8);  /* Optional: Make the background slightly transparent */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);  /* Optional: Add a shadow for better visibility */
+  border-radius: 10px;  /* Optional: Add rounded corners for a smoother look */
+  height: 8rem;
+  width: 12rem; /* Set a fixed width for the section */
+
+}
+.icon {
+  font-size: 2rem;
+}
+
+.icon-title {
+  font-size: large;
+  font-weight: bold;
+  color: #4d3724c0; /* Dark text for contrast */
+  margin-left: 50px;
+  margin-bottom: 100px;
+}
+
+
+/* Footer Styling */
+/* Base Footer Styling */
+.site-footer {
+  margin-top: 400px;
+  background-color: #f1e6d6; /* Light peace beige color */
+  color: #5f4b41; /* Dark brown text for contrast */
+  font-family: 'Arial', sans-serif;
+  font-size: 16px;
+  text-align: center;
+  border-top: 2px solid #d0b89b; /* Light border for structure */
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.footer-left, .footer-links, .footer-social {
+  flex: 1;
+  padding: 20px;
+  min-width: 200px;
+}
+
+.footer-left h3 {
+  font-size: 28px;
+  color: #6c4f33; /* Darker shade for headings */
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.footer-left p {
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+.footer-links h4, .footer-social h4 {
+  font-size: 20px;
+  color: #6c4f33;
+  margin-bottom: 10px;
+}
+
+.footer-links ul, .footer-social ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links li, .footer-social li {
+  margin: 8px 0;
+}
+
+.footer-links a, .footer-social a {
+  color: #5f4b41; /* Dark brown color for links */
+  text-decoration: none;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.footer-links a:hover, .footer-social a:hover {
+  color: #a68e5b; /* Subtle gold color on hover */
+}
+
+.footer-social .social-icon {
+  height: 30px;
+  font-size: 18px;
+  display: inline-block;
+  margin: 0 10px;
+}
+
+.footer-social .social-icon:hover {
+  transform: scale(1.1); /* Slightly enlarge icons on hover */
+  transition: transform 0.3s ease;
+}
+
+.footer-bottom {
+  background-color: #6c4f33; /* Darker brown background for the footer bottom */
+  color: #f1e6d6; /* Light text color */
+  padding: 9px;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.footer-bottom p {
+  margin: 0;
+}

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawConnect AI Assistant</title>
+    <link rel="stylesheet" href="chatbot.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <a href="home.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
+        <div class="header-content">
+            <h1 class="header-title">PawConnect AI Assistant</h1>
+        </div>
+        
+        <div class="navbar">
+            <div class="navlist">
+                <button onclick="window.location.href='pet_adoption_feed.html'">pet adoption</button>
+                <button onclick="window.location.href='vet_appointment.html'">vet appointment</button>
+                <button onclick="window.location.href='pet_corner.html'">pet corner</button>
+                <button onclick="window.location.href='pet_community.html'">community</button>
+                <button onclick="window.location.href='shop_feed.html'">shop</button>
+                <button onclick="window.location.href='customer_support.html'">Customer Support</button>
+                <button class="subscription-nav-btn" onclick="window.location.href='subscription_plans.html'">Subscription</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="chatbot-container">
+        <div class="chatbot-header">
+            <h1><i class="fas fa-robot"></i> PawConnect AI Assistant</h1>
+            <p>Your intelligent pet care companion and customer support assistant</p>
+        </div>
+
+        <div class="chatbot-content">
+            <!-- Chat Interface -->
+            <div class="chat-interface">
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Welcome Message -->
+                    <div class="message bot-message">
+                        <div class="message-avatar">
+                            <i class="fas fa-robot"></i>
+                        </div>
+                        <div class="message-content">
+                            <div class="message-text">
+                                <p>🐾 Hello! I'm your PawConnect AI Assistant! I'm here to help you with:</p>
+                                <ul>
+                                    <li>🐕 Pet adoption information and guidance</li>
+                                    <li>🏥 Veterinary care and appointment booking</li>
+                                    <li>🛍️ Pet shop products and recommendations</li>
+                                    <li>👥 Community features and pet corner</li>
+                                    <li>💳 Subscription plans and payments</li>
+                                    <li>📞 General customer support</li>
+                                </ul>
+                                <p>How can I assist you today?</p>
+                            </div>
+                            <div class="message-time">Just now</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quick Action Buttons -->
+                <div class="quick-actions" id="quick-actions">
+                    <button class="quick-btn" onclick="sendQuickMessage('How do I adopt a pet?')">
+                        <i class="fas fa-paw"></i> Adopt a Pet
+                    </button>
+                    <button class="quick-btn" onclick="sendQuickMessage('How do I book a vet appointment?')">
+                        <i class="fas fa-user-md"></i> Book Vet
+                    </button>
+                    <button class="quick-btn" onclick="sendQuickMessage('What subscription plans do you offer?')">
+                        <i class="fas fa-crown"></i> Subscriptions
+                    </button>
+                    <button class="quick-btn" onclick="sendQuickMessage('How do I donate?')">
+                        <i class="fas fa-heart"></i> Donate
+                    </button>
+                </div>
+
+                <!-- Chat Input -->
+                <div class="chat-input-container">
+                    <div class="chat-input-wrapper">
+                        <input type="text" id="chat-input" placeholder="Ask me anything about pets or PawConnect services..." maxlength="500">
+                        <button id="send-btn" onclick="sendMessage()">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                    <div class="typing-indicator" id="typing-indicator" style="display: none;">
+                        <div class="typing-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <span>AI is typing...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chatbot Info Panel -->
+            <div class="chatbot-info">
+                <div class="info-section">
+                    <h3><i class="fas fa-info-circle"></i> About This AI Assistant</h3>
+                    <p>I'm powered by advanced AI technology and trained specifically on pet care, veterinary information, and PawConnect services. I can help you with:</p>
+                    <ul>
+                        <li>Pet adoption guidance</li>
+                        <li>Veterinary care advice</li>
+                        <li>Product recommendations</li>
+                        <li>Service information</li>
+                        <li>General pet care tips</li>
+                    </ul>
+                </div>
+
+                <div class="info-section">
+                    <h3><i class="fas fa-lightbulb"></i> Quick Tips</h3>
+                    <ul>
+                        <li>Ask specific questions for better answers</li>
+                        <li>I can help with pet health concerns</li>
+                        <li>I know all about PawConnect services</li>
+                        <li>I can guide you through our website</li>
+                    </ul>
+                </div>
+
+                <div class="info-section">
+                    <h3><i class="fas fa-exclamation-triangle"></i> Important Note</h3>
+                    <p>While I can provide general pet care advice, I'm not a substitute for professional veterinary care. Always consult with a veterinarian for serious health concerns.</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>PawConnect is your one-stop platform for pet adoption, veterinary services, and pet care products.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="pet_adoption_feed.html">Adopt a Pet</a></li>
+                    <li><a href="vet_appointment.html">Vet Appointments</a></li>
+                    <li><a href="shop_feed.html">Pet Shop</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="customer_support.html">Customer Support</a></li>
+                    <li><a href="#">Payment Help</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 PawConnect. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="javascripts/chatbot.js"></script>
+</body>
+</html> 

@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Others - PawConnect</title>
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .others-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .others-header {
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .others-header h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .others-header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: #667eea;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            color: #333;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .feature-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .feature-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .quick-links-section {
+            background: #f8f9fa;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 40px;
+        }
+
+        .quick-links-section h2 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .quick-links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .quick-link {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .quick-link:hover {
+            transform: translateY(-3px);
+        }
+
+        .quick-link i {
+            font-size: 2rem;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .quick-link h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .quick-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .quick-link a:hover {
+            text-decoration: underline;
+        }
+
+        .info-section {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+
+        .info-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 2rem;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            padding: 20px;
+            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .info-item h4 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .info-item p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        .back-btn {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: white;
+            border: none;
+            padding: 15px;
+            border-radius: 50%;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-btn:hover {
+            transform: scale(1.1);
+        }
+
+        @media (max-width: 768px) {
+            .others-header h1 {
+                font-size: 2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .quick-links-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="back-btn" onclick="window.location.href='home.html'">
+        <i class="fas fa-arrow-left"></i>
+    </button>
+
+    <header>
+        <a href="home.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
+        <div class="header-content">
+            <h1 class="header-title">PawConnect</h1>
+        </div>
+        
+        <!-- Clock and Calendar Section -->
+        <div class="header-clock-calendar">
+            <div class="clock-display">
+                <i class="fas fa-clock"></i>
+                <span id="current-time">--:--:--</span>
+            </div>
+            <div class="calendar-display">
+                <i class="fas fa-calendar"></i>
+                <span id="current-date">--/--/----</span>
+            </div>
+        </div>
+        
+        <div class="navbar">
+            <div class="navlist">
+                <button onclick="window.location.href='pet_adoption_feed.html'">pet adoption</button>
+                <button onclick="window.location.href='vet_appointment.html'">vet appointment</button>
+                <button onclick="window.location.href='pet_corner.html'">pet corner</button>
+                <button onclick="window.location.href='pet_community.html'">community</button>
+                <button onclick="window.location.href='shop_feed.html'">shop</button>
+                <button onclick="window.location.href='customer_support.html'">Customer Support</button>
+                <button class="active" onclick="window.location.href='others.html'">Others</button>
+                <button class="subscription-nav-btn" onclick="window.location.href='subscription_plans.html'">Subscription</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="others-container">
+        <div class="others-header">
+            <h1><i class="fas fa-ellipsis-h"></i> Others</h1>
+            <p>Discover additional features and resources for your pet care journey</p>
+        </div>
+
+        <!-- Additional Features -->
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-calendar-alt"></i>
+                </div>
+                <h3>Pet Events</h3>
+                <p>Stay updated with upcoming pet events, adoption drives, training sessions, and community meetups in your area.</p>
+                <button class="feature-btn" onclick="window.location.href='pet_events.html'">View Events</button>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h3>Pet Training</h3>
+                <p>Access professional training resources, tips, and guides to help train your pet effectively and build a strong bond.</p>
+                <button class="feature-btn" onclick="window.location.href='pet_training.html'">Learn Training</button>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3>Pet Health Tips</h3>
+                <p>Get expert advice on pet nutrition, exercise, grooming, and preventive healthcare to keep your pet healthy and happy.</p>
+                <button class="feature-btn" onclick="window.location.href='pet_health.html'">Health Tips</button>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3>Pet Services Map</h3>
+                <p>Find nearby pet services including groomers, trainers, pet sitters, and emergency veterinary clinics on an interactive map.</p>
+                <button class="feature-btn" onclick="window.location.href='pet_services_map.html'">View Map</button>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-book"></i>
+                </div>
+                <h3>Pet Care Blog</h3>
+                <p>Read informative articles, expert advice, and heartwarming stories about pet care, adoption, and the human-animal bond.</p>
+                <button class="feature-btn" onclick="window.location.href='pet_blog.html'">Read Blog</button>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h3>Pet Contests</h3>
+                <p>Participate in monthly pet photo contests, talent shows, and competitions to showcase your pet's unique personality.</p>
+                <button class="feature-btn" onclick="window.location.href='pet_contests.html'">Join Contests</button>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="quick-links-section">
+            <h2><i class="fas fa-link"></i> Quick Links</h2>
+            <div class="quick-links-grid">
+                <div class="quick-link">
+                    <i class="fas fa-file-alt"></i>
+                    <h4>Terms of Service</h4>
+                    <a href="terms_of_service.html">Read Terms</a>
+                </div>
+                <div class="quick-link">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>Privacy Policy</h4>
+                    <a href="privacy_policy.html">View Policy</a>
+                </div>
+                <div class="quick-link">
+                    <i class="fas fa-question-circle"></i>
+                    <h4>FAQ</h4>
+                    <a href="faq.html">View FAQ</a>
+                </div>
+                <div class="quick-link">
+                    <i class="fas fa-envelope"></i>
+                    <h4>Contact Us</h4>
+                    <a href="contact_us.html">Get in Touch</a>
+                </div>
+                <div class="quick-link">
+                    <i class="fas fa-info-circle"></i>
+                    <h4>About Us</h4>
+                    <a href="about_us.html">Learn More</a>
+                </div>
+                <div class="quick-link">
+                    <i class="fas fa-bug"></i>
+                    <h4>Report Issue</h4>
+                    <a href="report_issue.html">Report Bug</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Information -->
+        <div class="info-section">
+            <h2><i class="fas fa-info-circle"></i> Additional Information</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <h4><i class="fas fa-mobile-alt"></i> Mobile App</h4>
+                    <p>Download our mobile app for on-the-go access to all PawConnect features. Available on iOS and Android.</p>
+                </div>
+                <div class="info-item">
+                    <h4><i class="fas fa-bell"></i> Notifications</h4>
+                    <p>Enable push notifications to stay updated with new pets, events, and important announcements.</p>
+                </div>
+                <div class="info-item">
+                    <h4><i class="fas fa-language"></i> Language Support</h4>
+                    <p>PawConnect is available in multiple languages. Change your language preference in settings.</p>
+                </div>
+                <div class="info-item">
+                    <h4><i class="fas fa-download"></i> Downloads</h4>
+                    <p>Access downloadable resources including pet care guides, training manuals, and health checklists.</p>
+                </div>
+                <div class="info-item">
+                    <h4><i class="fas fa-users"></i> Partnerships</h4>
+                    <p>Learn about our partnerships with local shelters, veterinary clinics, and pet service providers.</p>
+                </div>
+                <div class="info-item">
+                    <h4><i class="fas fa-star"></i> Reviews</h4>
+                    <p>Read reviews from other pet owners and share your own experiences with PawConnect services.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>PawConnect is your one-stop platform for pet adoption, veterinary services, and pet care products.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="pet_adoption_feed.html">Adopt a Pet</a></li>
+                    <li><a href="vet_appointment.html">Vet Appointments</a></li>
+                    <li><a href="shop_feed.html">Pet Shop</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="customer_support.html">Customer Support</a></li>
+                    <li><a href="faq.html">FAQ</a></li>
+                    <li><a href="contact_us.html">Contact Us</a></li>
+                    <li><a href="terms_of_service.html">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 PawConnect. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Clock and Calendar functionality
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        function updateDate() {
+            const now = new Date();
+            const dateString = now.toLocaleDateString('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric'
+            });
+            document.getElementById('current-date').textContent = dateString;
+        }
+        
+        updateClock();
+        updateDate();
+        setInterval(updateClock, 1000);
+        setInterval(updateDate, 60000);
+    </script>
+</body>
+</html> 

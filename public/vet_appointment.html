@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/pet_adoption_feed.css">
+    <link rel="stylesheet" href="css/vet_appointment.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <title>Veterinary Appointment</title>
+</head>
+<body>
+    <header class="site-header">
+        <a href="index.html" class="logo-link">
+            <img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo">
+        </a>
+        <div class="header-content">
+            <h1 class="header-title">PawConnect</h1>
+        </div>
+        <nav class="header-nav">
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="transaction.html?type=donation" class="nav-link">Donate</a>
+            <a href="login.html" class="nav-link">Login & Register</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1 class="page-title">Find a Veterinarian</h1>
+
+        <div class="search-filter">
+            <div class="search-bar">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" placeholder="Search veterinarians...">
+                <button class="search-btn">
+                    <i class="fas fa-search"></i>
+                    Search
+                </button>
+            </div>
+            <div class="filters">
+                <select id="specialtySelect" class="filter-select">
+                    <option value="">All Specialties</option>
+                    <option value="general">General Medicine</option>
+                    <option value="surgery">Surgery</option>
+                    <option value="dermatology">Dermatology</option>
+                    <option value="dental">Dental Care</option>
+                    <option value="emergency">Emergency Care</option>
+                </select>
+                <select id="citySelect" class="filter-select" onchange="handleCitySelection(this)">
+                    <option value="">Select City</option>
+                    <option value="dhaka">Dhaka</option>
+                    <option value="chittagong">Chittagong</option>
+                    <option value="rajshahi">Rajshahi</option>
+                    <option value="khulna">Khulna</option>
+                    <option value="sylhet">Sylhet</option>
+                    <option value="barishal">Barishal</option>
+                    <option value="rangpur">Rangpur</option>
+                    <option value="mymensingh">Mymensingh</option>
+                </select>
+            </div>
+
+            <!-- Thana Lists -->
+            <div class="thana-list dhaka-thanas">
+                <h4>Popular Areas in Dhaka</h4>
+                <div class="thana-options">
+                    <label><input type="checkbox" value="gulshan"> Gulshan</label>
+                    <label><input type="checkbox" value="banani"> Banani</label>
+                    <label><input type="checkbox" value="dhanmondi"> Dhanmondi</label>
+                    <label><input type="checkbox" value="uttara"> Uttara</label>
+                    <label><input type="checkbox" value="mirpur"> Mirpur</label>
+                    <label><input type="checkbox" value="mohammadpur"> Mohammadpur</label>
+                    <label><input type="checkbox" value="puran-dhaka"> Puran Dhaka</label>
+                </div>
+            </div>
+
+            <div class="thana-list chittagong-thanas">
+                <h4>Popular Areas in Chittagong</h4>
+                <div class="thana-options">
+                    <label><input type="checkbox" value="agrabad"> Agrabad</label>
+                    <label><input type="checkbox" value="nasirabad"> Nasirabad</label>
+                    <label><input type="checkbox" value="halishahar"> Halishahar</label>
+                    <label><input type="checkbox" value="patenga"> Patenga</label>
+                </div>
+            </div>
+
+            <div class="thana-list rajshahi-thanas">
+                <h4>Popular Areas in Rajshahi</h4>
+                <div class="thana-options">
+                    <label><input type="checkbox" value="kajla"> Kajla</label>
+                    <label><input type="checkbox" value="shahmukhdum"> Shah Mukhdum</label>
+                    <label><input type="checkbox" value="katakhali"> Katakhali</label>
+                    <label><input type="checkbox" value="sadarghat"> Sadarghat</label>
+                </div>
+            </div>
+
+            <div class="thana-list khulna-thanas">
+                <h4>Popular Areas in Khulna</h4>
+                <div class="thana-options">
+                    <label><input type="checkbox" value="khalishpur"> Khalishpur</label>
+                    <label><input type="checkbox" value="boyra"> Boyra</label>
+                    <label><input type="checkbox" value="sonadanga"> Sonadanga</label>
+                    <label><input type="checkbox" value="fultala"> Fultala</label>
+                </div>
+            </div>
+
+            <div class="thana-list sylhet-thanas">
+                <h4>Popular Areas in Sylhet</h4>
+                <div class="thana-options">
+                    <label><input type="checkbox" value="zindabazar"> Zindabazar</label>
+                    <label><input type="checkbox" value="amberkhana"> Amberkhana</label>
+                    <label><input type="checkbox" value="shahjalal"> Shahjalal Upashahar</label>
+                    <label><input type="checkbox" value="nobigong"> Nobigong</label>
+                </div>
+            </div>
+
+            <div class="thana-list barishal-thanas">
+                <h4>Popular Areas in Barishal</h4>
+                <div class="thana-options">
+                    <label><input type="checkbox" value="nathullabad"> Nathullabad</label>
+                    <label><input type="checkbox" value="kashipur"> Kashipur</label>
+                    <label><input type="checkbox" value="alipur"> Alipur</label>
+                    <label><input type="checkbox" value="chandmari"> Chandmari</label>
+                </div>
+            </div>
+
+            <div class="thana-list rangpur-thanas">
+                <h4>Popular Areas in Rangpur</h4>
+                <div class="thana-options">
+                    <label><input type="checkbox" value="betpotti"> Betpotti</label>
+                    <label><input type="checkbox" value="kajirhat"> Kajirhat</label>
+                    <label><input type="checkbox" value="hemayetpur"> Hemayetpur</label>
+                    <label><input type="checkbox" value="majhipara"> Majhipara</label>
+                </div>
+            </div>
+
+            <div class="thana-list mymensingh-thanas">
+                <h4>Popular Areas in Mymensingh</h4>
+                <div class="thana-options">
+                    <label><input type="checkbox" value="kewatkhali"> Kewatkhali</label>
+                    <label><input type="checkbox" value="shambhuganj"> Shambhuganj</label>
+                    <label><input type="checkbox" value="valuka"> Valuka</label>
+                    <label><input type="checkbox" value="trishal"> Trishal</label>
+                </div>
+            </div>        </div>
+
+        <!-- Loading indicator -->
+        <div id="loading-indicator" style="text-align: center; padding: 20px;">
+            <i class="fas fa-spinner fa-spin"></i> Loading veterinarians...
+        </div>
+        
+        <!-- Dynamic content container for vets -->
+        <div id="vets-container" class="vet-profiles"></div>
+                <div class="vet-info">
+                    <h3>Dr. Rahman</h3>
+                    <p class="specialty">General Veterinary Medicine</p>
+                    <p class="experience">15 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Gulshan, Dhaka</p>
+                    <p class="working-hours">Mon-Sat: 9:00 AM - 5:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Ahmed</h3>
+                    <p class="specialty">Surgery Specialist</p>
+                    <p class="experience">12 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Banani, Dhaka</p>
+                    <p class="working-hours">Mon-Fri: 10:00 AM - 6:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Khan</h3>
+                    <p class="specialty">Pet Nutrition Expert</p>
+                    <p class="experience">8 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Dhanmondi, Dhaka</p>
+                    <p class="working-hours">Sun-Thu: 9:00 AM - 4:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Fatima</h3>
+                    <p class="specialty">Avian & Exotic Pets</p>
+                    <p class="experience">10 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Agrabad, Chittagong</p>
+                    <p class="working-hours">Mon-Sat: 8:00 AM - 3:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Hossain</h3>
+                    <p class="specialty">Dermatology Specialist</p>
+                    <p class="experience">7 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Nasirabad, Chittagong</p>
+                    <p class="working-hours">Sun-Thu: 10:00 AM - 7:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Begum</h3>
+                    <p class="specialty">Emergency Care</p>
+                    <p class="experience">14 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Shibganj, Rajshahi</p>
+                    <p class="working-hours">24/7 Emergency Service</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- New vet profiles -->
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Karim</h3>
+                    <p class="specialty">Orthopedic Surgery</p>
+                    <p class="experience">11 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Boyra, Khulna</p>
+                    <p class="working-hours">Mon-Fri: 9:00 AM - 5:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Nasreen</h3>
+                    <p class="specialty">Behavioral Medicine</p>
+                    <p class="experience">9 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Zindabazar, Sylhet</p>
+                    <p class="working-hours">Sun-Thu: 10:00 AM - 6:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Islam</h3>
+                    <p class="specialty">Dental Care</p>
+                    <p class="experience">6 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Sadar Road, Barishal</p>
+                    <p class="working-hours">Mon-Sat: 9:00 AM - 4:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Rahman</h3>
+                    <p class="specialty">Cardiology</p>
+                    <p class="experience">13 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Medical College, Rangpur</p>
+                    <p class="working-hours">Mon-Fri: 8:00 AM - 3:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Akter</h3>
+                    <p class="specialty">Reproductive Health</p>
+                    <p class="experience">8 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> BAU Campus, Mymensingh</p>
+                    <p class="working-hours">Sun-Thu: 9:00 AM - 5:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Additional vet profiles -->
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Zaman</h3>
+                    <p class="specialty">Wildlife Medicine</p>
+                    <p class="experience">16 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Mirpur Zoo, Dhaka</p>
+                    <p class="working-hours">Mon-Sat: 8:00 AM - 4:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Sultana</h3>
+                    <p class="specialty">Feline Specialist</p>
+                    <p class="experience">9 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Uttara, Dhaka</p>
+                    <p class="working-hours">Sun-Thu: 10:00 AM - 6:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Kabir</h3>
+                    <p class="specialty">Aquatic Animal Medicine</p>
+                    <p class="experience">12 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Cox's Bazar</p>
+                    <p class="working-hours">Mon-Fri: 9:00 AM - 5:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Nahar</h3>
+                    <p class="specialty">Pet Rehabilitation</p>
+                    <p class="experience">7 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Bashundhara, Dhaka</p>
+                    <p class="working-hours">Mon-Sat: 9:00 AM - 4:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Rashid</h3>
+                    <p class="specialty">Avian Medicine</p>
+                    <p class="experience">11 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Farmgate, Dhaka</p>
+                    <p class="working-hours">Sun-Thu: 8:00 AM - 3:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Yasmin</h3>
+                    <p class="specialty">Pet Nutrition & Diet</p>
+                    <p class="experience">8 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Motijheel, Dhaka</p>
+                    <p class="working-hours">Mon-Fri: 10:00 AM - 7:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Mahmud</h3>
+                    <p class="specialty">Small Animal Surgery</p>
+                    <p class="experience">14 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Mohammadpur, Dhaka</p>
+                    <p class="working-hours">Mon-Sat: 9:00 AM - 5:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Farah</h3>
+                    <p class="specialty">Pet Behaviorist</p>
+                    <p class="experience">6 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Wari, Dhaka</p>
+                    <p class="working-hours">Sun-Thu: 10:00 AM - 6:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Aziz</h3>
+                    <p class="specialty">Emergency & Critical Care</p>
+                    <p class="experience">13 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Mirpur-10, Dhaka</p>
+                    <p class="working-hours">24/7 Emergency Service</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="vet-card">
+                <div class="vet-info">
+                    <h3>Dr. Nusrat</h3>
+                    <p class="specialty">Pet Dentistry</p>
+                    <p class="experience">9 years experience</p>
+                    <p class="location"><i class="fas fa-map-marker-alt"></i> Lalmatia, Dhaka</p>
+                    <p class="working-hours">Mon-Fri: 9:00 AM - 4:00 PM</p>
+                    <div class="vet-actions">
+                        <button class="details-btn">See Details</button>
+                        <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Appointment Form (Hidden by default) -->
+        <form class="appointment-form" id="appointmentForm">
+            <div class="form-group">
+                <label for="petName">Pet's Name</label>
+                <input type="text" id="petName" name="petName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="petType">Pet Type</label>
+                <select id="petType" name="petType" required>
+                    <option value="">Select pet type</option>
+                    <option value="dog">Dog</option>
+                    <option value="cat">Cat</option>
+                    <option value="bird">Bird</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="appointmentDate">Preferred Date</label>
+                <input type="date" id="appointmentDate" name="appointmentDate" required>
+            </div>
+
+            <div class="form-group">
+                <label for="appointmentTime">Preferred Time</label>
+                <select id="appointmentTime" name="appointmentTime" required>
+                    <option value="">Select time</option>
+                    <option value="09:00">9:00 AM</option>
+                    <option value="10:00">10:00 AM</option>
+                    <option value="11:00">11:00 AM</option>
+                    <option value="14:00">2:00 PM</option>
+                    <option value="15:00">3:00 PM</option>
+                    <option value="16:00">4:00 PM</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="reason">Reason for Visit</label>
+                <textarea id="reason" name="reason" required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="ownerName">Owner's Name</label>
+                <input type="text" id="ownerName" name="ownerName" required>
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" name="phone" required>
+            </div>
+
+            <button type="submit" class="submit-btn">Schedule Appointment</button>
+        </form>
+    </div>
+
+    <!-- Vet Details Modal -->
+    <div id="vetDetailsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="vet-details-content">
+                <h2 id="modalVetName"></h2>
+                <div class="vet-details-grid">
+                    <div class="detail-section">
+                        <h3>Professional Information</h3>
+                        <p><strong>Specialty:</strong> <span id="modalSpecialty"></span></p>
+                        <p><strong>Experience:</strong> <span id="modalExperience"></span></p>
+                        <p><strong>Qualifications:</strong> <span id="modalQualifications"></span></p>
+                        <p><strong>Languages:</strong> <span id="modalLanguages"></span></p>
+                    </div>
+                    <div class="detail-section">
+                        <h3>Clinic Information</h3>
+                        <p><strong>Location:</strong> <span id="modalLocation"></span></p>
+                        <p><strong>Working Hours:</strong> <span id="modalWorkingHours"></span></p>
+                        <p><strong>Consultation Fee:</strong> <span id="modalFee"></span></p>
+                        <p><strong>Emergency Service:</strong> <span id="modalEmergency"></span></p>
+                    </div>
+                    <div class="detail-section">
+                        <h3>Specializations</h3>
+                        <ul id="modalSpecializations"></ul>
+                    </div>
+                    <div class="detail-section">
+                        <h3>About</h3>
+                        <p id="modalAbout"></p>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button class="book-btn" onclick="showAppointmentForm()">Book Appointment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/vet_appointment.js"></script>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>PawConnect is your one-stop platform for pet adoption, veterinary services, and pet care products. We connect loving homes with pets in need.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="pet_adoption_feed.html">Adopt a Pet</a></li>
+                    <li><a href="vet_appointment.html">Vet Appointments</a></li>
+                    <li><a href="shop_feed.html">Pet Shop</a></li>
+                    <li><a href="customer_support.html">Customer Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Services</h3>
+                <ul>
+                    <li><a href="pet_adoption_feed.html">Pet Adoption</a></li>
+                    <li><a href="vet_appointment.html">Veterinary Care</a></li>
+                    <li><a href="shop_feed.html">Pet Supplies</a></li>
+                    <li><a href="customer_support.html">Pet Care Tips</a></li>
+                    <li><a href="customer_support.html">Emergency Support</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <p>Follow us on social media for updates and pet care tips.</p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 PawConnect. All rights reserved.</p>        </div>
+    </footer>
+    
+    <!-- API Manager Script -->
+    <script src="js/api-manager.js"></script>
+</body>
+</html>

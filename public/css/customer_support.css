@@ -1,0 +1,370 @@
+body {
+    padding: 0px;
+    margin: 0;
+    height: 100%;
+    font-family: 'Inter', sans-serif;
+    background: linear-gradient(to right, #bfd1f5, #f9d5c1);
+    color: #4d3724c0;
+}
+
+/* Header Styles */
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    height: 50px;
+    width: auto;
+}
+
+.header-content {
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+.header-title {
+    font-size: 2em;
+    color: #4d3724c0;
+    margin: 0;
+}
+
+/* Remove navbar styles */
+.navbar, .navlist, .navlist button {
+    display: none;
+}
+
+/* Support Container Styles */
+.support-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+}
+
+.support-header {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.support-header h1 {
+    font-size: 2.5em;
+    color: #4d3724c0;
+    margin-bottom: 15px;
+}
+
+.support-header p {
+    font-size: 1.2em;
+    color: #5f4b41;
+}
+
+/* Contact Methods Styles */
+.contact-methods {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+    margin-bottom: 60px;
+}
+
+.contact-card {
+    background-color: #f9d5c1;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    flex: 1;
+    min-width: 250px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-5px);
+}
+
+.contact-card i {
+    font-size: 2.5em;
+    color: #4d3724c0;
+    margin-bottom: 15px;
+}
+
+.contact-card h3 {
+    color: #4d3724c0;
+    margin-bottom: 10px;
+}
+
+.contact-card p {
+    color: #5f4b41;
+    margin-bottom: 15px;
+}
+
+.contact-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #e6ab86;
+    color: #4d3724c0;
+    text-decoration: none;
+    border-radius: 25px;
+    transition: background-color 0.3s ease;
+}
+
+.contact-button:hover {
+    background-color: #d99a7c;
+}
+
+/* FAQ Section Styles */
+.faq-section {
+    margin-bottom: 60px;
+}
+
+.faq-section h2 {
+    text-align: center;
+    color: #4d3724c0;
+    margin-bottom: 30px;
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    background-color: #f9d5c1;
+    border-radius: 10px;
+    margin-bottom: 15px;
+    overflow: hidden;
+}
+
+.faq-question {
+    padding: 20px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.faq-question h3 {
+    margin: 0;
+    color: #4d3724c0;
+    font-size: 1.1em;
+}
+
+.faq-question i {
+    color: #4d3724c0;
+    transition: transform 0.3s ease;
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    background-color: #f3ede7;
+    padding: 0 20px;
+}
+
+.faq-answer p {
+    padding: 20px 0;
+    margin: 0;
+    color: #5f4b41;
+}
+
+/* Contact Form Styles */
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+    background-color: #f9d5c1;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form h2 {
+    text-align: center;
+    color: #4d3724c0;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #4d3724c0;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #d99a7c;
+    border-radius: 5px;
+    background-color: #f3ede7;
+    color: #4d3724c0;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: #e6ab86;
+}
+
+.submit-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #e6ab86;
+    color: #4d3724c0;
+    border: none;
+    border-radius: 25px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #d99a7c;
+}
+
+/* Welcome Banner Styles */
+.welcome-banner {
+    background: linear-gradient(135deg, #f9d5c1 0%, #e6ab86 100%);
+    padding: 60px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-banner::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle cx="2" cy="2" r="1" fill="%23ffffff20"/></svg>') repeat;
+    opacity: 0.1;
+}
+
+.welcome-content {
+    position: relative;
+    z-index: 1;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.welcome-content h1 {
+    font-size: 2.8em;
+    color: #4d3724c0;
+    margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.welcome-content p {
+    font-size: 1.4em;
+    color: #5f4b41;
+    margin-bottom: 25px;
+}
+
+.decoration {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.decoration span {
+    font-size: 2em;
+    animation: float 3s ease-in-out infinite;
+}
+
+.decoration .heart {
+    animation-delay: 0.5s;
+}
+
+.decoration .paw:last-child {
+    animation-delay: 1s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* Update support container margin */
+.support-container {
+    margin-top: 40px;
+}
+
+/* Footer Styles - restore original dark theme for shop page */
+.footer {
+    background-color: #333;
+    color: white;
+    padding: 3rem 0;
+    margin-top: 4rem;
+    font-family: 'Arial', sans-serif;
+}
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding: 0 1rem;
+}
+.footer-section h3 {
+    color: #fff;
+    margin-bottom: 1.5rem;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.footer-section ul li {
+    margin-bottom: 0.8rem;
+}
+.footer-section ul li a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    font-size: 0.9rem;
+}
+.footer-section ul li a:hover {
+    color: #2ecc71;
+}
+.footer-section p {
+    color: #ccc;
+    line-height: 1.6;
+    margin: 0;
+    font-size: 0.9rem;
+}
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+.social-links a {
+    color: #fff;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+.social-links a:hover {
+    color: #2ecc71;
+}
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    margin-top: 2rem;
+    border-top: 1px solid #444;
+    color: #ccc;
+    background: none;
+    font-size: 0.9rem;
+} 

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawConnect - System Status</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            background: #f7fafc;
+        }
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+        }
+        .status-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid #48bb78;
+        }
+        .status-error {
+            border-left-color: #f56565;
+        }
+        .btn {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 0.5rem;
+            transition: background 0.3s;
+        }
+        .btn:hover {
+            background: #5a67d8;
+        }
+        .btn-success {
+            background: #48bb78;
+        }
+        .btn-success:hover {
+            background: #38a169;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🐾 PawConnect System Status</h1>
+        <p>Full-Stack Pet Management Platform</p>
+    </div>
+
+    <div id="status-container">
+        <div class="status-card">
+            <h3>🔧 Checking System Status...</h3>
+            <p>Please wait while we verify all components...</p>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 2rem;">
+        <h3>Quick Access:</h3>
+        <a href="../src/test.php" class="btn">System Test</a>
+        <a href="../src/setup_database.php" class="btn">Setup Database</a>
+        <a href="index.html" class="btn btn-success">Go to Website</a>
+        <a href="login.html" class="btn">Login</a>
+        <a href="register.html" class="btn">Register</a>
+    </div>
+
+    <script>
+        async function checkSystemStatus() {
+            const container = document.getElementById('status-container');
+            
+            try {
+                // Test PHP and database connection
+                const response = await fetch('../src/test.php');
+                const text = await response.text();
+                
+                let status = '<div class="status-card">';
+                
+                if (text.includes('✅ PHP is working correctly')) {
+                    status += '<h3>✅ PHP Status: Working</h3>';
+                } else {
+                    status += '<h3>❌ PHP Status: Error</h3>';
+                }
+                
+                if (text.includes('✅ Database connection successful')) {
+                    status += '<p>✅ Database: Connected</p>';
+                } else {
+                    status += '<p>❌ Database: Connection Failed</p>';
+                }
+                
+                if (text.includes('✅ Users table exists')) {
+                    status += '<p>✅ Database Tables: Ready</p>';
+                } else {
+                    status += '<p>⚠️ Database Tables: Not Found (Run Setup)</p>';
+                }
+                
+                status += '</div>';
+                
+                if (text.includes('Total users:')) {
+                    const userMatch = text.match(/Total users: (\d+)/);
+                    if (userMatch) {
+                        status += '<div class="status-card">';
+                        status += `<h3>👥 Total Registered Users: ${userMatch[1]}</h3>`;
+                        status += '</div>';
+                    }
+                }
+                
+                if (text.includes('✅ Database connection successful') && text.includes('✅ Users table exists')) {
+                    status += '<div class="status-card">';
+                    status += '<h3>🎉 System Status: READY</h3>';
+                    status += '<p>Your PawConnect application is fully functional!</p>';
+                    status += '<a href="index.html" class="btn btn-success">Launch Application</a>';
+                    status += '</div>';
+                }
+                
+                container.innerHTML = status;
+                
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="status-card status-error">
+                        <h3>❌ System Check Failed</h3>
+                        <p>Error: ${error.message}</p>
+                        <p>Make sure XAMPP is running and try again.</p>
+                    </div>
+                `;
+            }
+        }
+        
+        // Run status check when page loads
+        document.addEventListener('DOMContentLoaded', checkSystemStatus);
+        
+        // Auto-refresh every 30 seconds
+        setInterval(checkSystemStatus, 30000);
+    </script>
+</body>
+</html>

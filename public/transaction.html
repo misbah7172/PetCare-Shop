@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transaction - PawConnect</title>
+    <link rel="stylesheet" href="css/transaction.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <a href="home.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
+        <div class="header-content">
+            <h1 class="header-title">PawConnect</h1>
+        </div>
+        
+        <!-- Clock and Calendar Section -->
+        <div class="header-clock-calendar">
+            <div class="clock-display">
+                <i class="fas fa-clock"></i>
+                <span id="current-time">--:--:--</span>
+            </div>
+            <div class="calendar-display">
+                <i class="fas fa-calendar"></i>
+                <span id="current-date">--/--/----</span>
+            </div>
+        </div>
+        
+        <div class="navbar">
+            <div class="navlist">
+                <button onclick="window.location.href='pet_adoption_feed.html'">pet adoption</button>
+                <button onclick="window.location.href='vet_appointment.html'">vet appointment</button>
+                <button onclick="window.location.href='pet_corner.html'">pet corner</button>
+                <button onclick="window.location.href='pet_community.html'">community</button>
+                <button onclick="window.location.href='shop_feed.html'">shop</button>
+                <button onclick="window.location.href='customer_support.html'">Customer Support</button>
+                <button class="subscription-nav-btn" onclick="window.location.href='subscription_plans.html'">Subscription</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="transaction-container">
+        <div class="transaction-header">
+            <h1><i class="fas fa-credit-card"></i> Secure Transaction</h1>
+            <p>Complete your purchase or subscription securely</p>
+        </div>
+
+        <div class="transaction-content">
+            <!-- Transaction Type Selection -->
+            <div class="transaction-type">
+                <h2>Select Transaction Type</h2>
+                <div class="type-buttons">
+                    <button class="type-btn active" data-type="purchase">
+                        <i class="fas fa-shopping-cart"></i>
+                        Product Purchase
+                    </button>
+                    <button class="type-btn" data-type="subscription">
+                        <i class="fas fa-crown"></i>
+                        Subscription
+                    </button>
+                    <button class="type-btn" data-type="donation">
+                        <i class="fas fa-heart"></i>
+                        Donation
+                    </button>
+                </div>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="order-summary">
+                <h2><i class="fas fa-receipt"></i> Order Summary</h2>
+                <div class="summary-items">
+                    <div class="summary-item">
+                        <span>Product/Service</span>
+                        <span id="item-name">Premium Pet Food</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Quantity</span>
+                        <span id="item-quantity">1</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Price</span>
+                        <span id="item-price">৳2,999</span>
+                    </div>
+                    <div class="summary-item">
+                        <span>Shipping</span>
+                        <span id="shipping-cost">৳100</span>
+                    </div>
+                    <div class="summary-item total">
+                        <span>Total</span>
+                        <span id="total-amount">৳3,099</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Payment Method Selection -->
+            <div class="payment-method-section">
+                <h2><i class="fas fa-wallet"></i> Select Payment Method</h2>
+                <div class="payment-methods">
+                    <!-- Mobile Banking -->
+                    <div class="payment-category">
+                        <h3>Mobile Banking</h3>
+                        <div class="method-grid">
+                            <div class="payment-method" data-method="bkash">
+                                <div class="method-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <span>bKash</span>
+                            </div>
+                            <div class="payment-method" data-method="nagad">
+                                <div class="method-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <span>Nagad</span>
+                            </div>
+                            <div class="payment-method" data-method="rocket">
+                                <div class="method-icon">
+                                    <i class="fas fa-mobile-alt"></i>
+                                </div>
+                                <span>Rocket</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Card Payment -->
+                    <div class="payment-category">
+                        <h3>Card Payment</h3>
+                        <div class="method-grid">
+                            <div class="payment-method" data-method="card">
+                                <div class="method-icon">
+                                    <i class="fas fa-credit-card"></i>
+                                </div>
+                                <span>Credit/Debit Card</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Mobile Banking Payment Form -->
+            <div class="mobile-payment-form" id="mobile-payment-form" style="display: none;">
+                <h2><i class="fas fa-mobile-alt"></i> Mobile Banking Payment</h2>
+                <form class="payment-form" id="mobile-payment-form-content" method="POST" action="process_transaction.php">
+                    <input type="hidden" name="payment_method" id="mobile-payment-method" value="">
+                    <input type="hidden" name="transaction_type" id="mobile-transaction-type" value="purchase">
+                    <input type="hidden" name="amount" id="mobile-amount" value="3099">
+                    
+                    <div class="form-group">
+                        <label for="mobile-number">Mobile Number</label>
+                        <input type="tel" id="mobile-number" name="mobile_number" required placeholder="01XXXXXXXXX">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="transaction-id">Transaction ID</label>
+                        <input type="text" id="transaction-id" name="transaction_id" required placeholder="Enter transaction ID">
+                        <small>Send money to our number and enter the transaction ID here</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email for Receipt</label>
+                        <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    </div>
+                </form>
+            </div>
+
+            <!-- Card Payment Form -->
+            <div class="card-payment-form" id="card-payment-form" style="display: none;">
+                <h2><i class="fas fa-credit-card"></i> Card Payment</h2>
+                <form class="payment-form" id="card-payment-form-content" method="POST" action="process_transaction.php">
+                    <input type="hidden" name="payment_method" id="card-payment-method" value="card">
+                    <input type="hidden" name="transaction_type" id="card-transaction-type" value="purchase">
+                    <input type="hidden" name="amount" id="card-amount" value="3099">
+                    
+                    <div class="form-group">
+                        <label for="card-name">Cardholder Name</label>
+                        <input type="text" id="card-name" name="card_name" required placeholder="John Doe">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="card-number">Card Number</label>
+                        <div class="card-input">
+                            <input type="text" id="card-number" name="card_number" required placeholder="1234 5678 9012 3456" maxlength="19">
+                            <i class="fas fa-credit-card"></i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="expiry">Expiry Date</label>
+                            <input type="text" id="expiry" name="expiry" required placeholder="MM/YY" maxlength="5">
+                        </div>
+                        <div class="form-group">
+                            <label for="cvv">CVV</label>
+                            <input type="text" id="cvv" name="cvv" required placeholder="123" maxlength="4">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email for Receipt</label>
+                        <input type="email" id="email" name="email" required placeholder="your@email.com">
+                    </div>
+                </form>
+            </div>
+
+            <!-- Billing Address -->
+            <div class="billing-section">
+                <h2><i class="fas fa-map-marker-alt"></i> Billing Address</h2>
+                <form class="billing-form" id="billing-form">
+                    <div class="form-group">
+                        <label for="address">Street Address</label>
+                        <input type="text" id="address" name="address" required placeholder="123 Main St">
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <input type="text" id="city" name="city" required placeholder="Dhaka">
+                        </div>
+                        <div class="form-group">
+                            <label for="state">State/Division</label>
+                            <input type="text" id="state" name="state" required placeholder="Dhaka">
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="zipcode">ZIP Code</label>
+                            <input type="text" id="zipcode" name="zipcode" required placeholder="1000">
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <select id="country" name="country" required>
+                                <option value="">Select Country</option>
+                                <option value="BD" selected>Bangladesh</option>
+                                <option value="US">United States</option>
+                                <option value="CA">Canada</option>
+                                <option value="UK">United Kingdom</option>
+                                <option value="AU">Australia</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Payment Instructions -->
+            <div class="payment-instructions" id="payment-instructions" style="display: none;">
+                <h3><i class="fas fa-info-circle"></i> Payment Instructions</h3>
+                <div class="instructions-content">
+                    <div class="instruction-step">
+                        <span class="step-number">1</span>
+                        <p>Send ৳<span id="payment-amount">3,099</span> to our <span id="payment-method-name">bKash</span> number: <strong>01XXXXXXXXX</strong></p>
+                    </div>
+                    <div class="instruction-step">
+                        <span class="step-number">2</span>
+                        <p>Copy the transaction ID from your <span id="payment-method-name-2">bKash</span> app</p>
+                    </div>
+                    <div class="instruction-step">
+                        <span class="step-number">3</span>
+                        <p>Paste the transaction ID in the form above and click "Complete Payment"</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Notice -->
+            <div class="security-notice">
+                <i class="fas fa-shield-alt"></i>
+                <div>
+                    <h3>Secure Payment</h3>
+                    <p>Your payment information is encrypted and secure. We use industry-standard SSL encryption to protect your data.</p>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <button class="btn-secondary" onclick="window.history.back()">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+                <button class="btn-primary" onclick="processTransaction()">
+                    <i class="fas fa-lock"></i> Complete Payment
+                </button>
+            </div>
+        </div>
+
+        <!-- Transaction History -->
+        <div class="transaction-history">
+            <h2><i class="fas fa-history"></i> Recent Transactions</h2>
+            <div class="history-list">
+                <div class="history-item">
+                    <div class="history-icon success">
+                        <i class="fas fa-check"></i>
+                    </div>
+                    <div class="history-details">
+                        <h4>Premium Pet Food</h4>
+                        <p>Order #PC-2024-001</p>
+                        <span class="amount">৳2,999</span>
+                    </div>
+                    <div class="history-date">
+                        <span>Dec 19, 2024</span>
+                        <span class="status success">Completed</span>
+                    </div>
+                </div>
+                
+                <div class="history-item">
+                    <div class="history-icon subscription">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <div class="history-details">
+                        <h4>Gold Subscription</h4>
+                        <p>Monthly Plan</p>
+                        <span class="amount">৳1,999</span>
+                    </div>
+                    <div class="history-date">
+                        <span>Dec 15, 2024</span>
+                        <span class="status active">Active</span>
+                    </div>
+                </div>
+                
+                <div class="history-item">
+                    <div class="history-icon donation">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <div class="history-details">
+                        <h4>Pet Shelter Donation</h4>
+                        <p>Charity Donation</p>
+                        <span class="amount">৳5,000</span>
+                    </div>
+                    <div class="history-date">
+                        <span>Dec 10, 2024</span>
+                        <span class="status completed">Completed</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>PawConnect is your one-stop platform for pet adoption, veterinary services, and pet care products.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="pet_adoption_feed.html">Adopt a Pet</a></li>
+                    <li><a href="vet_appointment.html">Vet Appointments</a></li>
+                    <li><a href="shop_feed.html">Pet Shop</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul>
+                    <li><a href="customer_support.html">Customer Support</a></li>
+                    <li><a href="#">Payment Help</a></li>
+                    <li><a href="#">Refund Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Connect With Us</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 PawConnect. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="js/transaction.js"></script>
+    
+    <!-- Clock and Calendar JavaScript -->
+    <script>
+        function updateClock() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('en-US', { 
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            document.getElementById('current-time').textContent = timeString;
+        }
+        
+        function updateDate() {
+            const now = new Date();
+            const dateString = now.toLocaleDateString('en-US', {
+                month: '2-digit',
+                day: '2-digit',
+                year: 'numeric'
+            });
+            document.getElementById('current-date').textContent = dateString;
+        }
+        
+        updateClock();
+        updateDate();
+        setInterval(updateClock, 1000);
+        setInterval(updateDate, 60000);
+        
+        // Handle URL parameters for pre-selecting transaction type
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const transactionType = urlParams.get('type');
+            const plan = urlParams.get('plan');
+            
+            if (transactionType) {
+                // Find and click the appropriate transaction type button
+                const typeButton = document.querySelector(`[data-type="${transactionType}"]`);
+                if (typeButton) {
+                    // Remove active class from all buttons
+                    document.querySelectorAll('.type-btn').forEach(btn => btn.classList.remove('active'));
+                    // Add active class to the selected button
+                    typeButton.classList.add('active');
+                    // Update order summary
+                    updateOrderSummary(transactionType, plan);
+                }
+            }
+        });
+    </script>
+</body>
+</html> 
