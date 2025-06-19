@@ -4,300 +4,523 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pet Corner - PawConnect</title>
-    <link rel="stylesheet" href="css/pet_corner.css">
+    <link rel="stylesheet" href="css/global.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Pet Corner Specific Styles */
+        .pet-corner-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 2rem;
+        }
+        
+        .pet-corner-hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .pet-corner-hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .features-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .feature-preview {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .feature-preview:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+        }
+        
+        .feature-preview i {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pet-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+        
+        .pet-tab {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--text-secondary);
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .pet-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+        
+        .pet-tab:hover {
+            color: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .upload-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+            border: 2px dashed var(--border-color);
+            transition: all 0.3s ease;
+        }
+        
+        .upload-section:hover {
+            border-color: var(--primary-color);
+            background: var(--hover-bg);
+        }
+        
+        .upload-area {
+            padding: 2rem;
+            cursor: pointer;
+        }
+        
+        .upload-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+        
+        .pet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .pet-card {
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+        
+        .pet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+        
+        .pet-image {
+            height: 200px;
+            background: var(--gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .pet-info {
+            padding: 1.5rem;
+        }
+        
+        .pet-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pet-details {
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .pet-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .activity-feed {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-light);
+            color: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-time {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .gallery-filters {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .gallery-filters .btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid var(--border-color);
+            background: transparent;
+            color: var(--text-primary);
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-filters .btn.active,
+        .gallery-filters .btn:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header class="header">
-        <div class="header-content">
-            <div class="logo-section">
-                <a href="index.html">
-                    <img src="assets/logo_pwc.png" alt="PawConnect" class="logo">
-                </a>
-                <h1>Pet Corner</h1>
-            </div>
-            
-            <div class="header-info">
-                <div class="clock-section">
-                    <div class="time" id="current-time">00:00:00</div>
-                    <div class="date" id="current-date">Mon, Jan 1</div>
-                </div>
-                <div class="weather-section">
-                    <i class="fas fa-sun"></i>
-                    <span>72°F</span>
-                </div>
-            </div>
-        </div>
-    </header>
+    <!-- Navigation will be dynamically updated by session manager -->
+    <nav id="main-navigation">
+        <!-- Navigation will be dynamically updated by session manager -->
+    </nav>
 
-    <!-- Welcome Section (shown when not logged in) -->
-    <div id="welcome-section" class="welcome-section">
-        <div class="welcome-content">
-            <div class="welcome-icon">
-                <i class="fas fa-paw"></i>
-            </div>
-            <h2>Welcome to Pet Corner</h2>
-            <p>Share your pet photos, stories, and connect with other pet lovers!</p>
-            <div class="welcome-features">
-                <div class="feature">
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="pet-corner-hero">
+            <h1>Welcome to Pet Corner</h1>
+            <p>Your personal space to manage, share, and celebrate your beloved pets. Upload photos, track their health, and connect with fellow pet lovers.</p>
+            
+            <div class="features-preview">
+                <div class="feature-preview">
                     <i class="fas fa-camera"></i>
-                    <span>Share Pet Photos</span>
+                    <div>Share Photos</div>
                 </div>
-                <div class="feature">
-                    <i class="fas fa-book-open"></i>
-                    <span>Write Pet Stories</span>
-                </div>
-                <div class="feature">
+                <div class="feature-preview">
                     <i class="fas fa-heart"></i>
-                    <span>Like & Comment</span>
+                    <div>Track Health</div>
                 </div>
-                <div class="feature">
+                <div class="feature-preview">
                     <i class="fas fa-users"></i>
-                    <span>Connect with Pet Lovers</span>
+                    <div>Connect</div>
+                </div>
+                <div class="feature-preview">
+                    <i class="fas fa-calendar"></i>
+                    <div>Schedule Care</div>
                 </div>
             </div>
-            <div class="welcome-actions">
-                <button class="btn btn-primary" onclick="showAuthModal('login')">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Login to Pet Corner
-                </button>
-                <button class="btn btn-secondary" onclick="showAuthModal('register')">
-                    <i class="fas fa-user-plus"></i>
-                    Create Community Profile
-                </button>
-            </div>
-            <div class="welcome-note">
-                <p><i class="fas fa-info-circle"></i> Pet Corner is a special community feature. You need a separate community profile to access it.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- User Dashboard (shown when logged in) -->
-    <div id="user-dashboard" class="user-dashboard" style="display: none;">
-        <!-- Navigation Tabs -->
-        <nav class="tab-navigation">
-            <button class="tab-btn active" onclick="switchTab('gallery')">
-                <i class="fas fa-images"></i>
-                Gallery
-            </button>
-            <button class="tab-btn" onclick="switchTab('stories')">
-                <i class="fas fa-book-open"></i>
-                Stories
-            </button>
-            <button class="tab-btn" onclick="switchTab('profiles')">
-                <i class="fas fa-user"></i>
-                My Profile
-            </button>
-        </nav>
-
-        <!-- Tab Content -->
-        <div class="tab-content active" id="gallery-tab">
-            <div class="tab-header">
-                <h2>Pet Photo Gallery</h2>
-                <button class="btn btn-primary" onclick="showSharePhotoModal()">
-                    <i class="fas fa-plus"></i>
-                    Share Photo
-                </button>
-            </div>
-              <div class="gallery-content" id="gallery-content">
-                <!-- Photo posts will be loaded here -->
-            </div>
-            
-            <!-- Alias container for API manager compatibility -->
-            <div id="pets-container" style="display: none;"></div>
-            
-            <div class="load-more-section">
-                <button id="load-more-btn" class="btn btn-secondary" onclick="loadMorePosts()" style="display: none;">
-                    Load More Photos
-                </button>
-            </div>
         </div>
 
-        <div class="tab-content" id="stories-tab">
-            <div class="tab-header">
-                <h2>Pet Stories</h2>
-                <button class="btn btn-primary" onclick="showShareStoryModal()">
-                    <i class="fas fa-plus"></i>
-                    Share Story
-                </button>
-            </div>
-            
-            <div class="stories-content" id="stories-content">
-                <!-- Pet stories will be loaded here -->
-            </div>
-            
-            <div class="load-more-section">
-                <button id="load-more-stories-btn" class="btn btn-secondary" onclick="loadMorePosts()" style="display: none;">
-                    Load More Stories
-                </button>
-            </div>
+        <!-- Tab Navigation -->
+        <div class="pet-tabs">
+            <button class="pet-tab active" onclick="showTab('my-pets')">
+                <i class="fas fa-paw"></i> My Pets
+            </button>
+            <button class="pet-tab" onclick="showTab('upload')">
+                <i class="fas fa-upload"></i> Add Pet
+            </button>
+            <button class="pet-tab" onclick="showTab('gallery')">
+                <i class="fas fa-images"></i> Photo Gallery
+            </button>
+            <button class="pet-tab" onclick="showTab('activities')">
+                <i class="fas fa-list"></i> Activities
+            </button>
         </div>
 
-        <div class="tab-content" id="profiles-tab">
-            <div class="profile-section">
-                <div class="user-profile">
-                    <div class="profile-header">
-                        <img id="user-avatar" src="assets/default-avatar.png" alt="User Avatar" class="profile-avatar">
-                        <div class="profile-info">
-                            <h3 id="user-display-name">User Name</h3>
-                            <p id="user-bio">User bio will appear here</p>
-                            <div class="profile-stats">
-                                <span><i class="fas fa-paw"></i> <span id="user-pets">0</span> Pets</span>
-                                <span><i class="fas fa-image"></i> <span id="user-photos">0</span> Photos</span>
-                                <span><i class="fas fa-book"></i> <span id="user-stories">0</span> Stories</span>
-                            </div>
+        <!-- My Pets Tab -->
+        <div id="my-pets" class="tab-content active">
+            <div class="section-header">
+                <h2>My Pets</h2>
+                <p>Manage and view your registered pets</p>
+            </div>
+
+            <div id="pets-container" class="pet-grid">
+                <!-- Dynamic pet cards will be loaded here -->
+                <div class="pet-card">
+                    <div class="pet-image">
+                        <i class="fas fa-dog"></i>
+                    </div>
+                    <div class="pet-info">
+                        <div class="pet-name">Add Your First Pet</div>
+                        <div class="pet-details">Click "Add Pet" to get started</div>
+                        <div class="pet-actions">
+                            <button class="btn btn-primary btn-sm" onclick="showTab('upload')">
+                                <i class="fas fa-plus"></i> Add Pet
+                            </button>
                         </div>
                     </div>
-                    
-                    <div class="profile-actions">
-                        <button class="btn btn-primary" onclick="showAddPetModal()">
-                            <i class="fas fa-plus"></i>
-                            Add Pet
+                </div>
+            </div>
+        </div>
+
+        <!-- Upload Tab -->
+        <div id="upload" class="tab-content">
+            <div class="section-header">
+                <h2>Add New Pet</h2>
+                <p>Register a new pet to your profile</p>
+            </div>
+
+            <div class="card">
+                <form id="pet-upload-form" enctype="multipart/form-data">
+                    <div class="upload-section">
+                        <div class="upload-area" onclick="document.getElementById('pet-photo').click()">
+                            <div class="upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <h3>Upload Pet Photo</h3>
+                            <p>Click here or drag and drop your pet's photo</p>
+                            <input type="file" id="pet-photo" name="pet_photo" accept="image/*" style="display: none;" onchange="previewImage(this)">
+                        </div>
+                        <div id="image-preview" style="display: none; margin-top: 1rem;">
+                            <img id="preview-img" src="" alt="Preview" style="max-width: 200px; border-radius: 10px;">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pet-name">Pet Name *</label>
+                            <input type="text" id="pet-name" name="pet_name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pet-type">Pet Type *</label>
+                            <select id="pet-type" name="pet_type" required>
+                                <option value="">Select Type</option>
+                                <option value="dog">Dog</option>
+                                <option value="cat">Cat</option>
+                                <option value="bird">Bird</option>
+                                <option value="fish">Fish</option>
+                                <option value="rabbit">Rabbit</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pet-breed">Breed</label>
+                            <input type="text" id="pet-breed" name="pet_breed" placeholder="e.g., Golden Retriever">
+                        </div>
+                        <div class="form-group">
+                            <label for="pet-age">Age</label>
+                            <input type="text" id="pet-age" name="pet_age" placeholder="e.g., 2 years">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="pet-gender">Gender</label>
+                            <select id="pet-gender" name="pet_gender">
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pet-weight">Weight</label>
+                            <input type="text" id="pet-weight" name="pet_weight" placeholder="e.g., 25 kg">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pet-description">Description</label>
+                        <textarea id="pet-description" name="pet_description" rows="4" placeholder="Tell us about your pet..."></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Add Pet
+                        </button>
+                        <button type="button" class="btn btn-secondary" onclick="resetForm()">
+                            <i class="fas fa-redo"></i> Reset
                         </button>
                     </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Gallery Tab -->
+        <div id="gallery" class="tab-content">
+            <div class="section-header">
+                <h2>Photo Gallery</h2>
+                <p>View and manage all your pet photos</p>
+            </div>
+
+            <div class="gallery-filters">
+                <button class="btn btn-sm active" onclick="filterGallery('all')">All Photos</button>
+                <button class="btn btn-sm" onclick="filterGallery('recent')">Recent</button>
+                <button class="btn btn-sm" onclick="filterGallery('favorites')">Favorites</button>
+            </div>
+
+            <div id="gallery-container" class="pet-grid">
+                <!-- Dynamic gallery items will be loaded here -->
+                <div class="card text-center" style="padding: 3rem;">
+                    <i class="fas fa-images" style="font-size: 3rem; color: var(--text-secondary); margin-bottom: 1rem;"></i>
+                    <h3>No Photos Yet</h3>
+                    <p>Start by adding your first pet to see photos here</p>
                 </div>
-                
-                <div class="pet-profiles">
-                    <h3>My Pets</h3>
-                    <div class="pet-profiles-list" id="pet-profiles-list">
-                        <!-- Pet profiles will be loaded here -->
+            </div>
+        </div>
+
+        <!-- Activities Tab -->
+        <div id="activities" class="tab-content">
+            <div class="section-header">
+                <h2>Recent Activities</h2>
+                <p>Track your pets' activities and milestones</p>
+            </div>
+
+            <div class="activity-feed">
+                <div class="activity-item">
+                    <div class="activity-icon">
+                        <i class="fas fa-paw"></i>
+                    </div>
+                    <div class="activity-content">
+                        <div><strong>Welcome to Pet Corner!</strong></div>
+                        <div class="activity-time">Start by adding your first pet</div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Share Photo Modal -->
-    <div id="share-photo-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Share Pet Photo</h3>
-                <span class="close" onclick="closeModal('share-photo-modal')">&times;</span>
-            </div>
-            <form id="share-photo-form">
-                <div class="form-group">
-                    <label for="photo-url">Photo URL</label>
-                    <input type="url" id="photo-url" name="photo_url" placeholder="Enter photo URL" required>
-                </div>
-                <div class="form-group">
-                    <label for="photo-caption">Caption (max 50 words)</label>
-                    <textarea id="photo-caption" name="caption" placeholder="Tell us about this photo..." maxlength="250"></textarea>
-                    <div class="char-count">
-                        <span id="caption-char-count">0</span>/250
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="photo-anonymous" name="is_anonymous">
-                        Share anonymously
-                    </label>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('share-photo-modal')">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Share Photo</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <!-- Footer -->
+    <footer id="main-footer">
+        <!-- Footer will be dynamically updated by session manager -->
+    </footer>
 
-    <!-- Share Story Modal -->
-    <div id="share-story-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Share Pet Story</h3>
-                <span class="close" onclick="closeModal('share-story-modal')">&times;</span>
-            </div>
-            <form id="share-story-form">
-                <div class="form-group">
-                    <label for="story-title">Story Title</label>
-                    <input type="text" id="story-title" name="title" placeholder="Enter story title" required>
-                </div>
-                <div class="form-group">
-                    <label for="story-content">Story Content (max 250 words)</label>
-                    <textarea id="story-content" name="content" placeholder="Share your pet story..." maxlength="1000"></textarea>
-                    <div class="char-count">
-                        <span id="story-char-count">0</span>/1000
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="story-anonymous" name="is_anonymous">
-                        Share anonymously
-                    </label>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('share-story-modal')">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Share Story</button>
-                </div>
-            </form>
-        </div>
-    </div>
+    <script src="js/session-manager.js"></script>
+    <script>
+        // Initialize session manager
+        const sessionManager = new SessionManager();
+        
+        // Check session and update UI
+        sessionManager.checkSession().then(() => {
+            sessionManager.updateUI();
+        });
 
-    <!-- Add Pet Modal -->
-    <div id="add-pet-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3>Add Pet Profile</h3>
-                <span class="close" onclick="closeModal('add-pet-modal')">&times;</span>
-            </div>
-            <form id="add-pet-form">
-                <div class="form-group">
-                    <label for="pet-name">Pet Name</label>
-                    <input type="text" id="pet-name" name="pet_name" placeholder="Enter pet name" required>
-                </div>
-                <div class="form-group">
-                    <label for="pet-type">Pet Type</label>
-                    <select id="pet-type" name="pet_type" required>
-                        <option value="">Select pet type</option>
-                        <option value="dog">Dog</option>
-                        <option value="cat">Cat</option>
-                        <option value="bird">Bird</option>
-                        <option value="fish">Fish</option>
-                        <option value="rabbit">Rabbit</option>
-                        <option value="hamster">Hamster</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="pet-breed">Breed</label>
-                    <input type="text" id="pet-breed" name="breed" placeholder="Enter breed (optional)">
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="pet-age">Age</label>
-                        <input type="number" id="pet-age" name="age" placeholder="Age" min="0">
-                    </div>
-                    <div class="form-group">
-                        <label for="pet-age-unit">Age Unit</label>
-                        <select id="pet-age-unit" name="age_unit">
-                            <option value="years">Years</option>
-                            <option value="months">Months</option>
-                            <option value="weeks">Weeks</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="pet-gender">Gender</label>
-                    <select id="pet-gender" name="gender" required>
-                        <option value="">Select gender</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                        <option value="unknown">Unknown</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="pet-description">Description</label>
-                    <textarea id="pet-description" name="description" placeholder="Tell us about your pet..."></textarea>
-                </div>
-                <div class="form-actions">
-                    <button type="button" class="btn btn-secondary" onclick="closeModal('add-pet-modal')">Cancel</button>
-                    <button type="submit" class="btn btn-primary">Add Pet</button>
-                </div>
-            </form>
-        </div>
-    </div>    <!-- API Manager Script -->
-    <script src="js/api-manager.js"></script>
-    <script src="js/pet_corner.js"></script>
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.pet-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Image preview functionality
+        function previewImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview-img').src = e.target.result;
+                    document.getElementById('image-preview').style.display = 'block';
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        // Form handling
+        document.getElementById('pet-upload-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            if (!sessionManager.isLoggedIn) {
+                alert('Please log in to add a pet');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Here you would normally send the form data to the server
+            alert('Pet added successfully! (This is a demo)');
+            resetForm();
+            showTab('my-pets');
+        });
+
+        function resetForm() {
+            document.getElementById('pet-upload-form').reset();
+            document.getElementById('image-preview').style.display = 'none';
+        }
+
+        function filterGallery(filter) {
+            // Update active filter button
+            document.querySelectorAll('.gallery-filters .btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Here you would filter the gallery based on the selected filter
+            console.log('Filtering gallery by:', filter);
+        }
+
+        // Load user's pets when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            if (sessionManager.isLoggedIn) {
+                loadUserPets();
+            }
+        });
+
+        function loadUserPets() {
+            // This would normally fetch pets from the server
+            console.log('Loading user pets...');
+        }
+    </script>
 </body>
 </html>

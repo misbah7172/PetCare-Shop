@@ -3,175 +3,472 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PawConnect</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <title>PawConnect - Your Pet Care Companion</title>
+  <link rel="stylesheet" href="css/global.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+  <style>
+    /* Hero Section Styles */
+    .hero-section {
+      min-height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    
+    .hero-content {
+      max-width: 800px;
+    }
+      .hero-content h2 {
+      font-size: 3.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 1s ease-out;
+    }
+    
+    .hero-content .subtitle {
+      font-size: 1.1rem;
+      color: #667eea;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      animation: fadeInUp 1s ease-out 0.2s both;
+    }
+      .hero-content p {
+      font-size: 1.2rem;
+      color: #4a5568;
+      margin-bottom: 0.5rem;
+      animation: fadeInUp 1s ease-out 0.4s both;
+    }
+    
+    .hero-stats {
+      display: flex;
+      justify-content: center;
+      gap: 3rem;
+      margin: 2rem 0;
+      flex-wrap: wrap;
+      animation: fadeInUp 1s ease-out 0.6s both;
+    }
+    
+    .hero-stat {
+      text-align: center;
+    }
+    
+    .hero-stat .number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #667eea;
+      display: block;
+    }
+    
+    .hero-stat .label {
+      font-size: 0.9rem;
+      color: #718096;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+      flex-wrap: wrap;
+      animation: fadeInUp 1s ease-out 0.8s both;
+    }
+    
+    .hero-btn {
+      padding: 1rem 2rem;
+      font-size: 1.1rem;
+      border-radius: 50px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+    }
+    
+    .hero-btn.secondary {
+      background: rgba(255, 255, 255, 0.9);
+      color: #4a5568;
+      border: 2px solid #e2e8f0;
+    }
+    
+    .hero-btn.secondary:hover {
+      background: white;
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Features Section */
+    .features-section {
+      padding: 4rem 2rem;
+      text-align: center;
+    }
+    
+    .features-section h2 {
+      font-size: 2.5rem;
+      margin-bottom: 3rem;
+      color: #2d3748;
+    }
+    
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    
+    .feature-card {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      animation: slideInLeft 0.6s ease-out both;
+    }
+    
+    .feature-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+    }
+    
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+    }
+    
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: white;
+    }
+    
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #2d3748;
+    }
+    
+    .feature-card p {
+      color: #718096;
+      line-height: 1.6;
+    }
+    
+    /* Chatbot Float */
+    .chatbot-float {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 60px;
+      height: 60px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 20px rgba(102, 126, 234, 0.4);
+      transition: all 0.3s ease;
+      z-index: 1000;
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .chatbot-float:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 25px rgba(102, 126, 234, 0.6);
+    }
+    
+    .chatbot-tooltip {
+      position: absolute;
+      right: 70px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #2d3748;
+      color: white;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+    
+    .chatbot-tooltip::after {
+      content: '';
+      position: absolute;
+      right: -5px;
+      top: 50%;
+      transform: translateY(-50%);
+      border: 5px solid transparent;
+      border-left-color: #4d3724c0;
+    }
+    
+    .chatbot-float:hover .chatbot-tooltip {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    /* Animations */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    @keyframes slideInLeft {
+      from {
+        opacity: 0;
+        transform: translateX(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+    
+    .hero-actions {
+      animation: fadeInUp 1s ease-out 0.8s both;
+    }
+    
+    .feature-card {
+      animation: slideInLeft 0.6s ease-out both;
+    }
+    
+    .feature-card:nth-child(1) { animation-delay: 0.1s; }
+    .feature-card:nth-child(2) { animation-delay: 0.2s; }
+    .feature-card:nth-child(3) { animation-delay: 0.3s; }
+    .feature-card:nth-child(4) { animation-delay: 0.4s; }
+    
+    .chatbot-float {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-content h2 {
+        font-size: 2.5rem;
+      }
+      
+      .hero-actions {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      .hero-btn {
+        width: 100%;
+        max-width: 300px;
+      }
+      
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-<header>
-  <a href="index.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
-  
-  <div class="header-content">
+<body>
+<header class="site-header">
+  <div class="logo-section">
+    <a href="index.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
     <h1 class="header-title">PawConnect</h1>
   </div>
   
-  <section class="buttons">
-    <div class="header-buttons">
-      <button onclick="window.location.href='home.html'">Home</button>
-      <button onclick="window.location.href='transaction.html?type=donation'">Donate</button>
-      <button onclick="window.location.href='login.html'">Login & Register</button>
-      <!-- <button onclick="window.location.href='login.html'">Register</button> -->
+  <nav class="header-nav">
+    <!-- Navigation will be dynamically updated by session manager -->
+  </nav>
+</header>    <div class="container">      <section class="hero-section">
+        <div class="hero-content">
+          <div class="subtitle">Your Pet Care Companion</div>
+          <h2>Welcome to PawConnect</h2>
+          <p>Find your perfect pet match today!</p>
+          <p>Join our community of pet lovers and make a difference.</p>
+          
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="number">1,200+</span>
+              <span class="label">Pets Adopted</span>
+            </div>
+            <div class="hero-stat">
+              <span class="number">5,000+</span>
+              <span class="label">Happy Families</span>
+            </div>
+            <div class="hero-stat">
+              <span class="number">300+</span>
+              <span class="label">Verified Vets</span>
+            </div>
+          </div>
+          
+          <div class="hero-actions">
+            <button class="btn btn-primary hero-btn" onclick="window.location.href='pet_adoption_feed.html'">
+              <i class="fas fa-heart"></i> Start Adopting
+            </button>
+            <button class="btn hero-btn secondary" onclick="window.location.href='pet_community.html'">
+              <i class="fas fa-users"></i> Join Community
+            </button>
+            <button class="btn hero-btn outline" onclick="window.location.href='shop_feed.html'">
+              <i class="fas fa-shopping-bag"></i> Pet Shop
+            </button>
+          </div>
+        </div>
+      </section>
 
+      <section class="features-section">
+        <h2>What We Offer</h2>
+        <div class="features-grid">
+          <div class="feature-card" onclick="window.location.href='pet_adoption_feed.html'">
+            <div class="feature-icon">
+              <i class="fas fa-paw"></i>
+            </div>
+            <h3>Pet Adoption</h3>
+            <p>Find your perfect furry companion from our loving community of rescued pets waiting for their forever homes.</p>
+          </div>
+
+          <div class="feature-card" onclick="window.location.href='shop_feed.html'">
+            <div class="feature-icon">
+              <i class="fas fa-shopping-bag"></i>
+            </div>
+            <h3>Pet Shop</h3>
+            <p>Quality treats, toys, grooming kits, and everything your pet needs for a happy and healthy life.</p>
+          </div>
+
+          <div class="feature-card" onclick="window.location.href='vet_appointment.html'">
+            <div class="feature-icon">
+              <i class="fas fa-stethoscope"></i>
+            </div>
+            <h3>Vet Services</h3>
+            <p>Connect with qualified veterinarians for the best care, from routine checkups to emergency services.</p>
+          </div>
+
+          <div class="feature-card" onclick="window.location.href='pet_community.html'">
+            <div class="feature-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3>Community</h3>
+            <p>Share experiences, get advice, and connect with fellow pet lovers in our vibrant community.</p>
+          </div>
+        </div>
+      </section>
     </div>
-  </section>
-</header>
 
-<body>
-    <a href="#"><img src="assets/kitten.png" alt="kitten" class="landing_page_kitten"></a>
-    <section >
-      <div class="landing_page_text">
-        <h2>Welcome to PawConnect</h2>
-        <p> Find your perfect pet match today!</p>
-        <p>Join our community of pet lovers and make a difference.</p>
-        <p>Explore our platform to discover adoptable pets, share your pet stories, and connect with fellow animal enthusiasts.</p>
-    </section>
-
-    <section>
-      <div class="features-adoption" onclick="window.location.href='pet_adoption_feed.html'" style="cursor: pointer;">
-        <div class="icon">🐾</div>
-        <strong class="icon-title">Pet Adoption</strong><br>
-        <p>Find your perfect furry companion.</p>
+    <!-- Modern Footer -->
+    <footer class="footer">
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>PawConnect</h3>
+          <p>Your trusted companion in pet care, connecting pets with loving families and providing comprehensive pet services.</p>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+        <div class="footer-section">
+          <h3>Services</h3>
+          <ul>
+            <li><a href="pet_adoption_feed.html">Pet Adoption</a></li>
+            <li><a href="shop_feed.html">Pet Shop</a></li>
+            <li><a href="vet_appointment.html">Veterinary Care</a></li>
+            <li><a href="pet_community.html">Community</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Support</h3>
+          <ul>
+            <li><a href="customer_support.html">Help Center</a></li>
+            <li><a href="chatbot.html">AI Assistant</a></li>
+            <li><a href="#contact">Contact Us</a></li>
+            <li><a href="#faq">FAQ</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Company</h3>
+          <ul>
+            <li><a href="#about">About Us</a></li>
+            <li><a href="#careers">Careers</a></li>
+            <li><a href="#privacy">Privacy Policy</a></li>
+            <li><a href="#terms">Terms of Service</a></li>
+          </ul>
+        </div>
       </div>
-
-      <div class="features-shop" onclick="window.location.href='shop_feed.html'" style="cursor: pointer;">
-        <div class="icon">🛍️</div>
-        <strong class="icon-title">Shop</strong><br>
-        Treats, toys, grooming kits, and more.
+      <div class="footer-bottom">
+        <p>&copy; 2024 PawConnect. All rights reserved. Made with ❤️ for pets and their families.</p>
       </div>
-
-      <div class="features-appointment" onclick="window.location.href='vet_appointment.html'" style="cursor: pointer;">
-        <div class="icon">🩺</div>
-        <strong class="icon-title">Vet Appoinment</strong><br>
-        Book certifief vets for in-home or clicnic visits.
-      </div>
-
-      <div class="features-community">
-        <div class="icon">🤝</div>
-        <strong class="icon-title">Pet community</strong><br>
-        Connect with fellow pet parents.
-      </div>
-    </section>
-
-    <script src="js/script.js"></script>
+    </footer>
     
     <!-- Floating Chatbot Button -->
     <div class="chatbot-float" onclick="window.location.href='chatbot.html'">
         <i class="fas fa-robot"></i>
         <span class="chatbot-tooltip">Ask our AI Assistant</span>
     </div>
-    
-    <style>
-        .chatbot-float {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #6f87f7 0%, #5a6fd8 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 5px 20px rgba(111, 135, 247, 0.4);
-            transition: all 0.3s ease;
-            z-index: 1000;
-        }
+
+    <!-- Session Manager -->
+    <script src="js/session-manager.js"></script>
+    <script>
+        // Initialize session manager
+        const sessionManager = new SessionManager();
         
-        .chatbot-float:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 25px rgba(111, 135, 247, 0.6);
-        }
-        
-        .chatbot-tooltip {
-            position: absolute;
-            right: 70px;
-            background: #4d3724c0;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 6px;
-            font-size: 14px;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        
-        .chatbot-tooltip::after {
-            content: '';
-            position: absolute;
-            right: -5px;
-            top: 50%;
-            transform: translateY(-50%);
-            border: 5px solid transparent;
-            border-left-color: #4d3724c0;
-        }
-        
-        .chatbot-float:hover .chatbot-tooltip {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        @media (max-width: 768px) {
-            .chatbot-float {
-                bottom: 20px;
-                right: 20px;
-                width: 50px;
-                height: 50px;
-                font-size: 20px;
-            }
+        // Add smooth scrolling and animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add animation classes to elements as they come into view
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
             
-            .chatbot-tooltip {
-                display: none;
-            }
-        }
-    </style>
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('animate-fadeInUp');
+                    }
+                });
+            }, observerOptions);
+            
+            // Observe all feature cards
+            document.querySelectorAll('.feature-card').forEach(card => {
+                observer.observe(card);
+            });
+        });
+    </script>
 </body>
-
-
-<footer class="site-footer">
-  <div class="footer-content">
-    <div class="footer-left">
-      <h3>PawConnect</h3>
-      <p>Your trusted platform for connecting pets with their forever families.</p>
-    </div>
-
-    <div class="footer-links">
-      <h4>Quick Links</h4>
-      <ul>
-        <li><a href="home.html">Home</a></li>
-        <li><a href="pet_adoption_feed.html">Pet Adoption</a></li>
-        <li><a href="vet_appointment.html">Vet Appointment</a></li>
-        <li><a href="#">Community</a></li>
-        <li><a href="shop_feed.html">Shop</a></li>
-        <li><a href="customer_support.html">Customer Support</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-social">
-      <h4>Follow Us</h4>
-      <ul>
-        <li><a href="https://www.facebook.com/Szer05" target="_blank"><img src="assets/facebook.png" alt="facebook" class="social-icon"></a></li>
-        <li><a href="https://www.instagram.com/sabbirx_" target="_blank"><img src="assets/instagram.png" alt="instagram" class="social-icon"></a></li>
-        <li><a href="https://wa.me/qr/4YS65IE5O74LK1" target="_blank"><img src="assets/whatsapp.png" alt="whatsapp" class="social-icon"></a></li>
-        <li><a href="tel:+8801870243704" target="_blank"><img src="assets/customer_care.png" alt="Customer Care" class="social-icon"></a></li>
-        
-      </ul>
-    </div>
-  </div>
-
-  <div class="footer-bottom">
-    <p>&copy; 2025 PawConnect. All rights reserved.</p>
-  </div>
-</footer>
 </html>

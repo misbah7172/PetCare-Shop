@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Reminders - PawConnect</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Smart Reminders Specific Styles */
+        .reminders-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+        }
+
+        .reminder-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .category-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .category-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .reminder-list {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .reminder-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: background 0.3s ease;
+        }
+
+        .reminder-item:last-child {
+            border-bottom: none;
+        }
+
+        .reminder-item:hover {
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .reminder-info {
+            flex: 1;
+        }
+
+        .reminder-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .reminder-details {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .reminder-time {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .reminder-form {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .form-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .tab-btn {
+            padding: 1rem 2rem;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .smart-suggestions {
+            background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .suggestion-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .suggestion-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .notification-settings {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            border-radius: 34px;
+            transition: .4s;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            border-radius: 50%;
+            transition: .4s;
+        }
+
+        input:checked + .slider {
+            background-color: var(--primary-color);
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .frequency-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .frequency-option {
+            padding: 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 10px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .frequency-option:hover,
+        .frequency-option.active {
+            border-color: var(--primary-color);
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .upcoming-reminders {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            background: var(--primary-color);
+            border-radius: 50%;
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .form-tabs {
+                flex-direction: column;
+            }
+
+            .frequency-selector {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="logo-section">
+            <a href="index.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
+            <h1 class="header-title">PawConnect</h1>
+        </div>
+        <nav class="header-nav">
+            <!-- Navigation will be dynamically updated by session manager -->
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="reminders-hero">
+            <h1>Smart Pet Reminders</h1>
+            <p>Never miss important pet care tasks with our intelligent reminder system</p>
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <span class="number">98%</span>
+                    <span class="label">Task Completion</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">24/7</span>
+                    <span class="label">Smart Monitoring</span>
+                </div>
+                <div class="stat-item">
+                    <span class="number">15+</span>
+                    <span class="label">Reminder Types</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reminder Categories -->
+        <div class="reminder-categories">
+            <div class="category-card" onclick="showCategory('health')">
+                <div class="category-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3>Health & Medical</h3>
+                <p>Vaccinations, checkups, medication schedules, and health monitoring</p>
+            </div>
+
+            <div class="category-card" onclick="showCategory('grooming')">
+                <div class="category-icon">
+                    <i class="fas fa-cut"></i>
+                </div>
+                <h3>Grooming & Care</h3>
+                <p>Bathing, nail trimming, brushing, and professional grooming appointments</p>
+            </div>
+
+            <div class="category-card" onclick="showCategory('feeding')">
+                <div class="category-icon">
+                    <i class="fas fa-bone"></i>
+                </div>
+                <h3>Feeding & Nutrition</h3>
+                <p>Meal times, special diets, supplements, and treat schedules</p>
+            </div>
+
+            <div class="category-card" onclick="showCategory('exercise')">
+                <div class="category-icon">
+                    <i class="fas fa-running"></i>
+                </div>
+                <h3>Exercise & Training</h3>
+                <p>Daily walks, training sessions, playtime, and activity goals</p>
+            </div>
+        </div>
+
+        <!-- Smart Suggestions -->
+        <div class="smart-suggestions">
+            <h2><i class="fas fa-lightbulb"></i> Smart Suggestions Based on Your Pet</h2>
+            <div class="suggestion-item">
+                <i class="fas fa-syringe"></i>
+                <span>Max (Golden Retriever, 2 years) - Annual vaccination due in 2 weeks</span>
+            </div>
+            <div class="suggestion-item">
+                <i class="fas fa-cut"></i>
+                <span>Luna (Persian Cat, 1 year) - Professional grooming recommended monthly</span>
+            </div>
+            <div class="suggestion-item">
+                <i class="fas fa-pills"></i>
+                <span>Charlie (Senior Dog, 8 years) - Joint supplement schedule optimization available</span>
+            </div>
+        </div>
+
+        <!-- Current Reminders -->
+        <div class="reminder-list">
+            <div class="section-title">
+                <i class="fas fa-bell"></i>
+                Current Reminders
+            </div>
+            
+            <div class="reminder-item">
+                <div class="reminder-info">
+                    <div class="reminder-title">Vaccination - Max</div>
+                    <div class="reminder-details">Annual shots due soon - Contact Dr. Sarah</div>
+                </div>
+                <div class="reminder-time">In 3 days</div>
+            </div>
+
+            <div class="reminder-item">
+                <div class="reminder-info">
+                    <div class="reminder-title">Grooming Appointment - Luna</div>
+                    <div class="reminder-details">Professional grooming at PetSpa</div>
+                </div>
+                <div class="reminder-time">Tomorrow</div>
+            </div>
+
+            <div class="reminder-item">
+                <div class="reminder-info">
+                    <div class="reminder-title">Heartworm Prevention - Charlie</div>
+                    <div class="reminder-details">Monthly prevention medication</div>
+                </div>
+                <div class="reminder-time">Today</div>
+            </div>
+
+            <div class="reminder-item">
+                <div class="reminder-info">
+                    <div class="reminder-title">Training Session - Bella</div>
+                    <div class="reminder-details">Obedience training with PawConnect Trainer</div>
+                </div>
+                <div class="reminder-time">In 5 days</div>
+            </div>
+        </div>
+
+        <!-- Create New Reminder -->
+        <div class="reminder-form">
+            <h2><i class="fas fa-plus"></i> Create New Reminder</h2>
+            
+            <div class="form-tabs">
+                <button class="tab-btn active" onclick="showTab('quick')">Quick Reminder</button>
+                <button class="tab-btn" onclick="showTab('recurring')">Recurring Reminder</button>
+                <button class="tab-btn" onclick="showTab('smart')">Smart Schedule</button>
+            </div>
+
+            <div id="quick" class="tab-content active">
+                <form id="quick-reminder-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Pet</label>
+                            <select name="pet_id" required>
+                                <option value="">Select Pet</option>
+                                <option value="1">Max (Golden Retriever)</option>
+                                <option value="2">Luna (Persian Cat)</option>
+                                <option value="3">Charlie (Senior Dog)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select name="category" required>
+                                <option value="">Select Category</option>
+                                <option value="health">Health & Medical</option>
+                                <option value="grooming">Grooming & Care</option>
+                                <option value="feeding">Feeding & Nutrition</option>
+                                <option value="exercise">Exercise & Training</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Reminder Title *</label>
+                        <input type="text" name="title" required placeholder="e.g., Vet Checkup, Grooming Appointment">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea name="description" rows="3" placeholder="Additional details about this reminder"></textarea>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Date *</label>
+                            <input type="date" name="reminder_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Time *</label>
+                            <input type="time" name="reminder_time" required>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-bell"></i> Set Reminder
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="recurring" class="tab-content">
+                <form id="recurring-reminder-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Pet</label>
+                            <select name="pet_id" required>
+                                <option value="">Select Pet</option>
+                                <option value="1">Max (Golden Retriever)</option>
+                                <option value="2">Luna (Persian Cat)</option>
+                                <option value="3">Charlie (Senior Dog)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select name="category" required>
+                                <option value="">Select Category</option>
+                                <option value="health">Health & Medical</option>
+                                <option value="grooming">Grooming & Care</option>
+                                <option value="feeding">Feeding & Nutrition</option>
+                                <option value="exercise">Exercise & Training</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Reminder Title *</label>
+                        <input type="text" name="title" required placeholder="e.g., Daily Walk, Weekly Grooming">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Frequency</label>
+                        <div class="frequency-selector">
+                            <div class="frequency-option" onclick="selectFrequency('daily', this)">
+                                <i class="fas fa-sun"></i>
+                                <div>Daily</div>
+                            </div>
+                            <div class="frequency-option" onclick="selectFrequency('weekly', this)">
+                                <i class="fas fa-calendar-week"></i>
+                                <div>Weekly</div>
+                            </div>
+                            <div class="frequency-option" onclick="selectFrequency('monthly', this)">
+                                <i class="fas fa-calendar-alt"></i>
+                                <div>Monthly</div>
+                            </div>
+                            <div class="frequency-option" onclick="selectFrequency('custom', this)">
+                                <i class="fas fa-cog"></i>
+                                <div>Custom</div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="frequency" id="selected-frequency">
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Start Date *</label>
+                            <input type="date" name="start_date" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Time *</label>
+                            <input type="time" name="reminder_time" required>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-repeat"></i> Create Recurring Reminder
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="smart" class="tab-content">
+                <div style="text-align: center; padding: 2rem;">
+                    <i class="fas fa-brain" style="font-size: 3rem; color: var(--primary-color); margin-bottom: 1rem;"></i>
+                    <h3>AI-Powered Smart Scheduling</h3>
+                    <p>Let our AI analyze your pet's needs and create optimal reminder schedules based on breed, age, health history, and behavior patterns.</p>
+                    
+                    <div class="form-group" style="margin: 2rem 0;">
+                        <label>Select Pet for Smart Analysis</label>
+                        <select name="pet_id">
+                            <option value="">Choose a pet</option>
+                            <option value="1">Max (Golden Retriever, 2 years)</option>
+                            <option value="2">Luna (Persian Cat, 1 year)</option>
+                            <option value="3">Charlie (Senior Dog, 8 years)</option>
+                        </select>
+                    </div>
+                    
+                    <button class="btn btn-primary" onclick="generateSmartSchedule()">
+                        <i class="fas fa-magic"></i> Generate Smart Schedule
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Upcoming Reminders Timeline -->
+        <div class="upcoming-reminders">
+            <h2><i class="fas fa-calendar-check"></i> Upcoming This Week</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="reminder-title">Today - Heartworm Prevention</div>
+                    <div class="reminder-details">Charlie needs his monthly heartworm medication</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="reminder-title">Tomorrow - Grooming</div>
+                    <div class="reminder-details">Luna's appointment at PetSpa at 2:00 PM</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="reminder-title">Friday - Vaccination</div>
+                    <div class="reminder-details">Max's annual shots with Dr. Sarah</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="reminder-title">Saturday - Training</div>
+                    <div class="reminder-details">Bella's obedience training session</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notification Settings -->
+        <div class="notification-settings">
+            <h2><i class="fas fa-cog"></i> Notification Settings</h2>
+            
+            <div class="setting-item">
+                <div>
+                    <div class="setting-title">Push Notifications</div>
+                    <div class="setting-description">Receive instant notifications on your device</div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <div>
+                    <div class="setting-title">Email Reminders</div>
+                    <div class="setting-description">Get reminder emails before important tasks</div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <div>
+                    <div class="setting-title">SMS Alerts</div>
+                    <div class="setting-description">Receive urgent reminders via text message</div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <div>
+                    <div class="setting-title">Smart Suggestions</div>
+                    <div class="setting-description">Allow AI to suggest new reminders based on your pet's needs</div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <div class="setting-item">
+                <div>
+                    <div class="setting-title">Weather-Based Adjustments</div>
+                    <div class="setting-description">Automatically adjust outdoor activity reminders based on weather</div>
+                </div>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="main-footer">
+        <!-- Footer will be dynamically updated by session manager -->
+    </footer>
+
+    <script src="js/session-manager.js"></script>
+    <script>
+        // Initialize session manager
+        const sessionManager = new SessionManager();
+
+        // Tab functionality
+        function showTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+
+            // Show selected tab
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        // Frequency selection
+        function selectFrequency(frequency, element) {
+            document.querySelectorAll('.frequency-option').forEach(option => {
+                option.classList.remove('active');
+            });
+            element.classList.add('active');
+            document.getElementById('selected-frequency').value = frequency;
+        }
+
+        // Category navigation
+        function showCategory(category) {
+            alert(`Showing ${category} reminders. This feature will filter reminders by category.`);
+        }
+
+        // Smart schedule generation
+        function generateSmartSchedule() {
+            if (!sessionManager.isLoggedIn) {
+                alert('Please log in to use smart scheduling');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            alert('AI is analyzing your pet\'s needs to create an optimal reminder schedule. This feature will be available soon!');
+        }
+
+        // Form submissions
+        document.getElementById('quick-reminder-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!sessionManager.isLoggedIn) {
+                alert('Please log in to create reminders');
+                window.location.href = 'login.html';
+                return;
+            }
+            alert('Quick reminder created successfully!');
+            this.reset();
+        });
+
+        document.getElementById('recurring-reminder-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            if (!sessionManager.isLoggedIn) {
+                alert('Please log in to create reminders');
+                window.location.href = 'login.html';
+                return;
+            }
+            alert('Recurring reminder created successfully!');
+            this.reset();
+        });
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function() {
+            sessionManager.checkSession().then(() => {
+                sessionManager.updateUI();
+            });
+        });
+    </script>
+</body>
+</html>

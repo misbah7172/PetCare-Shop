@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - PawConnect</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/loginstyles.css">
+    <style>
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #ffcdd2;
+        }
+        .success-message {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #c8e6c9;
+        }
+        .info-box {
+            background: #e3f2fd;
+            color: #1565c0;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            border: 1px solid #bbdefb;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .register-form {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+        }
+        .register-form h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #333;
+            font-size: 28px;
+        }
+        .input-box {
+            position: relative;
+            margin: 20px 0;
+        }
+        .input-box input {
+            width: 100%;
+            padding: 15px 50px 15px 20px;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 16px;
+            background: transparent;
+            outline: none;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+        .input-box input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        .input-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #667eea;
+            font-size: 18px;
+        }
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 20px 0;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+        .social-icon {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .social-icon a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            background: #f8f9fa;
+            border-radius: 50%;
+            color: #667eea;
+            text-decoration: none;
+            font-size: 20px;
+            transition: all 0.3s;
+        }
+        .social-icon a:hover {
+            background: #667eea;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .login-link {
+            text-align: center;
+            margin-top: 20px;
+            color: #666;
+        }
+        .login-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        header .logo {
+            height: 50px;
+        }
+        body {
+            margin: 0;
+            padding-top: 70px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
+    </header>
+
+    <div class="container">
+        <div class="register-form">
+            <h1>Create Account</h1>
+            
+            <div class="info-box">
+                <strong>Join PawConnect Today!</strong><br>
+                Get access to: Pet Adoption, Vet Appointments, Pet Community, Shop, and more
+            </div>
+            
+            <!-- Error/Success messages will be displayed here -->
+            <div id="error-container"></div>
+            <div id="success-container"></div>
+            
+            <form action="../src/register.php" method="POST" id="registerForm">
+                <div class="input-box">
+                    <input type="text" name="first_name" placeholder="First Name" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                
+                <div class="input-box">
+                    <input type="text" name="last_name" placeholder="Last Name" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                
+                <div class="input-box">
+                    <input type="text" name="username" placeholder="Username" required minlength="3">
+                    <i class='bx bxs-user'></i>
+                </div>
+                
+                <div class="input-box">
+                    <input type="email" name="email" placeholder="Email Address" required>
+                    <i class='bx bxs-envelope'></i>
+                </div>
+                
+                <div class="input-box">
+                    <input type="tel" name="phone" placeholder="Phone Number (Optional)">
+                    <i class='bx bxs-phone'></i>
+                </div>
+                
+                <div class="input-box">
+                    <input type="password" name="password" placeholder="Password" required minlength="6" id="password">
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                
+                <div class="input-box">
+                    <input type="password" name="confirm_password" placeholder="Confirm Password" required minlength="6" id="confirm_password">
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                
+                <button type="submit" class="btn">Create Account</button>
+                
+                <p style="text-align: center; color: #666;">or sign up with</p>
+                <div class="social-icon">
+                    <a href="#" title="Facebook"><i class='bx bxl-facebook'></i></a>
+                    <a href="#" title="Google"><i class='bx bxl-google'></i></a>
+                    <a href="#" title="Twitter"><i class='bx bxl-twitter'></i></a>
+                </div>
+                
+                <div class="login-link">
+                    Already have an account? <a href="login.html">Login here</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Form validation
+        document.getElementById('registerForm').addEventListener('submit', function(e) {
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm_password').value;
+            
+            if (password !== confirmPassword) {
+                e.preventDefault();
+                showError(['Passwords do not match']);
+                return false;
+            }
+            
+            if (password.length < 6) {
+                e.preventDefault();
+                showError(['Password must be at least 6 characters long']);
+                return false;
+            }
+        });
+        
+        // Display error messages
+        function showError(messages) {
+            const errorContainer = document.getElementById('error-container');
+            errorContainer.innerHTML = '<div class="error-message">' + 
+                messages.map(msg => '<div>' + msg + '</div>').join('') + 
+                '</div>';
+        }
+        
+        // Display success messages
+        function showSuccess(message) {
+            const successContainer = document.getElementById('success-container');
+            successContainer.innerHTML = '<div class="success-message">' + message + '</div>';
+        }
+        
+        // Check URL parameters for messages
+        const urlParams = new URLSearchParams(window.location.search);
+        
+        if (urlParams.get('error') === '1') {
+            // Fetch and display error messages from session
+            fetch('../src/get_messages.php?type=registration_errors')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.messages && data.messages.length > 0) {
+                        showError(data.messages);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching messages:', error);
+                });
+        }
+
+        if (urlParams.get('success') === '1') {
+            // Fetch and display success message from session
+            fetch('../src/get_messages.php?type=registration_success')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        showSuccess(data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching messages:', error);
+                });
+        }
+        
+        // Add input validation feedback
+        const inputs = document.querySelectorAll('input[required]');
+        inputs.forEach(input => {
+            input.addEventListener('blur', function() {
+                if (this.value.trim() === '') {
+                    this.style.borderColor = '#ff4444';
+                } else {
+                    this.style.borderColor = '#48bb78';
+                }
+            });
+            
+            input.addEventListener('focus', function() {
+                this.style.borderColor = '#667eea';
+            });
+        });
+        
+        // Real-time password confirmation validation
+        document.getElementById('confirm_password').addEventListener('input', function() {
+            const password = document.getElementById('password').value;
+            const confirmPassword = this.value;
+            
+            if (confirmPassword && password !== confirmPassword) {
+                this.style.borderColor = '#ff4444';
+            } else if (confirmPassword && password === confirmPassword) {
+                this.style.borderColor = '#48bb78';
+            }
+        });
+    </script>
+</body>
+</html>

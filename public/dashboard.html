@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - PawConnect</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Dashboard Specific Styles */
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .dashboard-welcome {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-subtitle {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient);
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 1rem;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .recent-activities {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--hover-bg);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .activity-item:hover {
+            background: var(--primary-light);
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 0.25rem;
+        }
+
+        .activity-time {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .quick-actions {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 1rem;
+        }
+
+        .action-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1.5rem 1rem;
+            background: var(--hover-bg);
+            border-radius: 10px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .action-item:hover {
+            background: var(--primary-light);
+            transform: translateY(-2px);
+        }
+
+        .action-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .action-label {
+            font-size: 0.9rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .weather-widget {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+            text-align: center;
+        }
+
+        .weather-icon {
+            font-size: 3rem;
+            color: #ffa500;
+            margin-bottom: 0.5rem;
+        }
+
+        .weather-temp {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .weather-desc {
+            color: var(--text-secondary);
+            margin-top: 0.5rem;
+        }
+
+        .pet-summary {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .pet-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .pet-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--hover-bg);
+            border-radius: 10px;
+        }
+
+        .pet-avatar {
+            width: 40px;
+            height: 40px;
+            background: var(--gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .pet-info {
+            flex: 1;
+        }
+
+        .pet-name {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .pet-type {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .upcoming-appointments {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: var(--shadow);
+        }
+
+        .appointment-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--hover-bg);
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+
+        .appointment-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .appointment-date {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .appointment-info {
+            flex: 1;
+        }
+
+        .appointment-title {
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .appointment-details {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        @media (max-width: 968px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .dashboard-stats {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-stats {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+
+            .action-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation will be dynamically updated by session manager -->
+    <nav id="main-navigation">
+        <!-- Navigation will be dynamically updated by session manager -->
+    </nav>
+
+    <div class="container">
+        <!-- Dashboard Header -->
+        <div class="dashboard-header">
+            <div class="dashboard-welcome" id="welcome-message">Welcome back!</div>
+            <div class="dashboard-subtitle">Here's what's happening with your pets today</div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-paw"></i>
+                </div>
+                <div class="stat-number" id="total-pets">0</div>
+                <div class="stat-label">My Pets</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-calendar-check"></i>
+                </div>
+                <div class="stat-number" id="appointments-count">0</div>
+                <div class="stat-label">Upcoming Appointments</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-images"></i>
+                </div>
+                <div class="stat-number" id="photos-count">0</div>
+                <div class="stat-label">Photos Shared</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="stat-number" id="community-likes">0</div>
+                <div class="stat-label">Community Likes</div>
+            </div>
+        </div>
+
+        <!-- Main Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Main Content -->
+            <div class="main-content">
+                <!-- Recent Activities -->
+                <div class="recent-activities">
+                    <div class="section-title">
+                        <i class="fas fa-clock"></i>
+                        Recent Activities
+                    </div>
+                    <div class="activity-list" id="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">
+                                <i class="fas fa-paw"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Welcome to PawConnect!</div>
+                                <div class="activity-time">Get started by adding your first pet</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upcoming Appointments -->
+                <div class="upcoming-appointments">
+                    <div class="section-title">
+                        <i class="fas fa-calendar-alt"></i>
+                        Upcoming Appointments
+                    </div>
+                    <div id="appointments-list">
+                        <div class="text-center" style="padding: 2rem; color: var(--text-secondary);">
+                            <i class="fas fa-calendar" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+                            <p>No upcoming appointments</p>
+                            <button class="btn btn-primary" onclick="window.location.href='vet_appointment.html'">
+                                <i class="fas fa-plus"></i> Schedule Appointment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Quick Actions -->                <div class="quick-actions">
+                    <div class="section-title">
+                        <i class="fas fa-bolt"></i>
+                        All PawConnect Features
+                    </div>                    <div class="action-grid">                        <!-- Admin Panel - Only visible to admins -->
+                        <div class="action-item admin-only" id="admin-panel-link" onclick="window.location.href='admin_panel.html'" style="display: none;">
+                            <div class="action-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="action-label">Admin Panel</div>
+                        </div>
+                        <div class="action-item" onclick="window.location.href='pet_adoption_feed.html'">
+                            <div class="action-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="action-label">Pet Adoption</div>
+                        </div>
+                        <div class="action-item" onclick="window.location.href='vet_appointment.html'">
+                            <div class="action-icon">
+                                <i class="fas fa-user-md"></i>
+                            </div>
+                            <div class="action-label">Vet Appointments</div>
+                        </div>
+                        <div class="action-item" onclick="window.location.href='shop_feed.html'">
+                            <div class="action-icon">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                            <div class="action-label">Pet Shop</div>
+                        </div>
+                        <div class="action-item" onclick="window.location.href='pet_community.html'">
+                            <div class="action-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="action-label">Community</div>
+                        </div>
+                        <div class="action-item" onclick="window.location.href='customer_support.html'">
+                            <div class="action-icon">
+                                <i class="fas fa-support"></i>
+                            </div>
+                            <div class="action-label">Customer Support</div>
+                        </div>
+                        <div class="action-item" onclick="window.location.href='subscription_plans.html'">
+                            <div class="action-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="action-label">Premium Plans</div>
+                        </div>
+                        <div class="action-item" onclick="window.location.href='lost_and_found.html'">
+                            <div class="action-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="action-label">Lost & Found</div>
+                        </div>
+                        <div class="action-item" onclick="window.location.href='subscription_box.html'">
+                            <div class="action-icon">
+                                <i class="fas fa-box"></i>
+                            </div>
+                            <div class="action-label">Subscription Box</div>
+                        </div>
+                        <div class="action-item" onclick="window.location.href='smart_reminders.html'">
+                            <div class="action-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="action-label">Smart Reminders</div>
+                        </div>
+                        <div class="action-item" onclick="window.location.href='pet_corner.html'">
+                            <div class="action-icon">
+                                <i class="fas fa-camera"></i>
+                            </div>
+                            <div class="action-label">Pet Profiles</div>
+                        </div>
+                        <div class="action-item" onclick="callEmergency()">
+                            <div class="action-icon">
+                                <i class="fas fa-ambulance"></i>
+                            </div>
+                            <div class="action-label">Emergency</div>
+                        </div>
+                        <div class="action-item" onclick="window.location.href='transaction.html?type=donation'">
+                            <div class="action-icon">
+                                <i class="fas fa-donate"></i>
+                            </div>
+                            <div class="action-label">Donate</div>
+                        </div>                        <div class="action-item" onclick="window.location.href='chatbot.html'">
+                            <div class="action-icon">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="action-label">AI Assistant</div>
+                        </div>
+                        <div class="action-item" onclick="checkAdminAccess()" id="admin-panel-link" style="display: none;">
+                            <div class="action-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="action-label">Admin Panel</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Weather Widget -->
+                <div class="weather-widget">
+                    <div class="section-title" style="justify-content: center; margin-bottom: 1rem;">
+                        <i class="fas fa-cloud-sun"></i>
+                        Weather
+                    </div>
+                    <div class="weather-icon">
+                        <i class="fas fa-sun"></i>
+                    </div>
+                    <div class="weather-temp">24°C</div>
+                    <div class="weather-desc">Perfect for dog walks!</div>
+                </div>
+
+                <!-- My Pets Summary -->
+                <div class="pet-summary">
+                    <div class="section-title">
+                        <i class="fas fa-paw"></i>
+                        My Pets
+                    </div>
+                    <div class="pet-list" id="pets-summary">
+                        <div class="text-center" style="padding: 1rem; color: var(--text-secondary);">
+                            <i class="fas fa-paw" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                            <p>No pets added yet</p>
+                            <button class="btn btn-sm btn-primary" onclick="window.location.href='pet_corner.html'">
+                                Add Your First Pet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="main-footer">
+        <!-- Footer will be dynamically updated by session manager -->
+    </footer>
+
+    <script src="js/session-manager.js"></script>
+    <script>
+        // Initialize session manager
+        const sessionManager = new SessionManager();
+        
+        // Check session and redirect if not logged in
+        sessionManager.checkSession().then(() => {
+            if (!sessionManager.isLoggedIn) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            sessionManager.updateUI();
+            initializeDashboard();
+        }).catch(error => {
+            console.error('Error checking session:', error);
+            window.location.href = 'login.html';
+        });        function initializeDashboard() {
+            updateWelcomeMessage();
+            loadDashboardData();
+            updateDateTime();
+            checkAdminStatus();
+            setInterval(updateDateTime, 60000); // Update every minute
+        }
+
+        async function checkAdminStatus() {
+            try {
+                const response = await fetch('../src/session_manager.php?action=check_admin');
+                const data = await response.json();
+                
+                if (data.success && data.is_admin) {
+                    const adminLink = document.getElementById('admin-panel-link');
+                    if (adminLink) {
+                        adminLink.style.display = 'flex';
+                    }
+                }
+            } catch (error) {
+                console.error('Error checking admin status:', error);
+            }
+        }
+
+        function checkAdminAccess() {
+            if (sessionManager.user && sessionManager.user.role === 'admin') {
+                window.location.href = 'admin_panel.html';
+            } else {
+                alert('Admin access required');
+            }
+        }
+
+        function updateWelcomeMessage() {
+            const welcomeElement = document.getElementById('welcome-message');
+            if (sessionManager.user) {
+                const name = sessionManager.user.first_name || sessionManager.user.username;
+                const hour = new Date().getHours();
+                let greeting = 'Good evening';
+                
+                if (hour < 12) greeting = 'Good morning';
+                else if (hour < 18) greeting = 'Good afternoon';
+                
+                welcomeElement.textContent = `${greeting}, ${name}!`;
+            }
+        }
+
+        function loadDashboardData() {
+            // In a real application, this would fetch data from the server
+            // For now, we'll simulate some data
+            
+            // Simulate loading stats
+            animateCounter('total-pets', 3);
+            animateCounter('appointments-count', 2);
+            animateCounter('photos-count', 15);
+            animateCounter('community-likes', 47);
+            
+            // Load recent activities
+            setTimeout(() => {
+                addActivity('Added new pet "Buddy"', '2 hours ago', 'paw');
+                addActivity('Scheduled vet appointment', '1 day ago', 'calendar-check');
+                addActivity('Uploaded 3 new photos', '2 days ago', 'camera');
+                addActivity('Joined PawConnect community', '3 days ago', 'users');
+            }, 500);
+            
+            // Load pets summary
+            setTimeout(() => {
+                loadPetsSummary();
+            }, 800);
+        }
+
+        function animateCounter(elementId, targetValue) {
+            const element = document.getElementById(elementId);
+            const duration = 1000;
+            const start = 0;
+            const increment = targetValue / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if (current >= targetValue) {
+                    current = targetValue;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current);
+            }, 16);
+        }
+
+        function addActivity(title, time, iconClass) {
+            const activityList = document.getElementById('activity-list');
+            
+            const activityItem = document.createElement('div');
+            activityItem.className = 'activity-item';
+            activityItem.innerHTML = `
+                <div class="activity-icon">
+                    <i class="fas fa-${iconClass}"></i>
+                </div>
+                <div class="activity-content">
+                    <div class="activity-title">${title}</div>
+                    <div class="activity-time">${time}</div>
+                </div>
+            `;
+            
+            // Remove the welcome message if it exists
+            const welcomeItem = activityList.querySelector('.activity-item');
+            if (welcomeItem && welcomeItem.textContent.includes('Welcome to PawConnect')) {
+                welcomeItem.remove();
+            }
+            
+            activityList.appendChild(activityItem);
+        }
+
+        function loadPetsSummary() {
+            const petsContainer = document.getElementById('pets-summary');
+            
+            // Simulate pet data
+            const pets = [
+                { name: 'Buddy', type: 'Golden Retriever', icon: 'dog' },
+                { name: 'Whiskers', type: 'Persian Cat', icon: 'cat' },
+                { name: 'Charlie', type: 'Parakeet', icon: 'dove' }
+            ];
+            
+            if (pets.length > 0) {
+                petsContainer.innerHTML = pets.map(pet => `
+                    <div class="pet-item">
+                        <div class="pet-avatar">
+                            <i class="fas fa-${pet.icon}"></i>
+                        </div>
+                        <div class="pet-info">
+                            <div class="pet-name">${pet.name}</div>
+                            <div class="pet-type">${pet.type}</div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function updateDateTime() {
+            // Update any time-sensitive elements
+            const now = new Date();
+            
+            // Update weather based on time of day
+            const hour = now.getHours();
+            const weatherIcon = document.querySelector('.weather-icon i');
+            
+            if (hour >= 6 && hour < 18) {
+                weatherIcon.className = 'fas fa-sun';
+            } else {
+                weatherIcon.className = 'fas fa-moon';
+            }
+        }
+
+        // Real-time notifications (simulate)
+        function showNotification(message, type = 'info') {
+            // This would typically show a toast notification
+            console.log(`Notification: ${message}`);
+        }
+
+        // Simulate real-time updates
+        setTimeout(() => {
+            showNotification('New message from Dr. Smith about Buddy\'s appointment', 'info');
+        }, 5000);
+
+        setTimeout(() => {
+            showNotification('Reminder: Whiskers\' vaccination due in 3 days', 'warning');
+        }, 10000);
+
+        // Emergency function for dashboard
+        function callEmergency() {
+            if (confirm('🚨 Do you need emergency veterinary assistance?\n\nThis will:\n• Call our emergency hotline: +880-1234-567890\n• Create an emergency request\n• Alert nearby veterinarians\n\nClick OK to proceed with emergency call.')) {
+                // Create emergency request
+                fetch('emergency_service.html', {
+                    method: 'GET'
+                }).then(() => {
+                    // Open emergency page in new tab
+                    window.open('emergency_service.html', '_blank');
+                    // Try to initiate call
+                    window.open('tel:+8801234567890');
+                }).catch(() => {
+                    // Fallback - direct call
+                    window.open('tel:+8801234567890');
+                });
+                
+                // Log emergency action
+                addActivity('Emergency call initiated', 'Just now', 'ambulance');
+                showNotification('Emergency services contacted! Help is on the way.', 'warning');
+            }
+        }
+    </script>
+</body>
+</html>

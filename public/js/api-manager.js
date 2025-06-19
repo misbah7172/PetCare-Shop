@@ -110,28 +110,36 @@ function displayAdoptions(adoptions, containerId) {
     if (!container) return;
 
     if (!adoptions || adoptions.length === 0) {
-        container.innerHTML = '<p>No pets available for adoption at the moment.</p>';
+        container.innerHTML = '<div class="error">No pets available for adoption at the moment.</div>';
         return;
     }
 
     container.innerHTML = adoptions.map(adoption => `
-        <div class="adoption-card pet-card">
-            <div class="pet-image">
+        <div class="adoption-card">
+            <div class="pet-image-container">
                 <img src="${adoption.photo_url || 'assets/allpet.png'}" alt="${adoption.pet_name}" class="pet-image">
+                <div class="adoption-status-badge">${adoption.status || 'Available'}</div>
             </div>
-            <div class="adoption-info pet-info">
+            <div class="adoption-info">
                 <h3>${adoption.pet_name}</h3>
-                <p class="breed"><strong>Type:</strong> ${adoption.type}</p>
-                <p class="breed"><strong>Breed:</strong> ${adoption.breed || 'Mixed'}</p>
-                <p class="age"><strong>Age:</strong> ${adoption.age} ${adoption.age_unit}</p>
-                <p class="age"><strong>Gender:</strong> ${adoption.gender}</p>
-                <p class="location"><strong>Listed by:</strong> ${adoption.listed_by_name}</p>
+                <div class="pet-details">
+                    <span class="detail-item"><i class="fas fa-paw"></i> ${adoption.type}</span>
+                    <span class="detail-item"><i class="fas fa-dna"></i> ${adoption.breed || 'Mixed'}</span>
+                    <span class="detail-item"><i class="fas fa-birthday-cake"></i> ${adoption.age} ${adoption.age_unit}</span>
+                    <span class="detail-item"><i class="fas fa-venus-mars"></i> ${adoption.gender}</span>
+                </div>
+                <p class="listed-by"><i class="fas fa-user"></i> Listed by: ${adoption.listed_by_name}</p>
                 <div class="pet-description">
-                    <p class="pet-description">${adoption.pet_description || 'No description available'}</p>
-                    <p class="adoption-description">${adoption.description}</p>
+                    <p>${adoption.pet_description || 'No description available'}</p>
+                    ${adoption.description ? `<p class="adoption-notes">${adoption.description}</p>` : ''}
                 </div>
                 <div class="pet-actions">
-                    <button class="btn-adopt details-btn" onclick="showAdoptionForm(${adoption.id})">Apply for Adoption</button>
+                    <button class="btn-adopt" onclick="showAdoptionForm(${adoption.id})">
+                        <i class="fas fa-heart"></i> Apply for Adoption
+                    </button>
+                    <button class="btn-details" onclick="showAdoptionDetails(${adoption.id})">
+                        <i class="fas fa-info-circle"></i> More Details
+                    </button>
                 </div>
             </div>
         </div>
@@ -151,23 +159,36 @@ function displayProducts(products, containerId) {
     if (!container) return;
 
     if (!products || products.length === 0) {
-        container.innerHTML = '<p>No products available at the moment.</p>';
+        container.innerHTML = '<div class="error">No products available at the moment.</div>';
         return;
     }
 
     container.innerHTML = products.map(product => `
         <div class="product-card" data-category="${product.category}">
-            <div class="product-image">
-                <img src="${product.image_url || 'assets/cat_food.jpg'}" alt="${product.name}">
-                <button class="wishlist-btn"><i class="far fa-heart"></i></button>
+            <div class="product-image-container">
+                <img src="${product.image_url || 'assets/cat_food.jpg'}" alt="${product.name}" class="product-image">
+                <button class="wishlist-btn" onclick="toggleWishlist(${product.id})">
+                    <i class="far fa-heart"></i>
+                </button>
+                ${product.stock <= 5 ? '<div class="stock-badge low-stock">Low Stock</div>' : ''}
             </div>
             <div class="product-info">
                 <h3>${product.name}</h3>
-                <p class="brand">${product.category.charAt(0).toUpperCase() + product.category.slice(1)}</p>
-                <p class="price">৳${product.price}</p>
+                <div class="product-meta">
+                    <span class="category-tag">${product.category.charAt(0).toUpperCase() + product.category.slice(1)}</span>
+                    <span class="stock-info">${product.stock} in stock</span>
+                </div>
+                <p class="product-description">${product.description || 'Premium quality product for your beloved pet.'}</p>
+                <div class="price-section">
+                    <span class="price">৳${parseFloat(product.price).toFixed(2)}</span>
+                </div>
                 <div class="product-actions">
-                    <button class="details-btn">View Details</button>
-                    <button class="add-to-cart-btn" onclick="addToCart(${product.id})">Add to Cart</button>
+                    <button class="btn-cart" onclick="addToCart(${product.id})">
+                        <i class="fas fa-shopping-cart"></i> Add to Cart
+                    </button>
+                    <button class="btn-details" onclick="showProductDetails(${product.id})">
+                        <i class="fas fa-eye"></i> View Details
+                    </button>
                 </div>
             </div>
         </div>
@@ -187,19 +208,49 @@ function displayVets(vets, containerId) {
     if (!container) return;
 
     if (!vets || vets.length === 0) {
-        container.innerHTML = '<p>No veterinarians available at the moment.</p>';
+        container.innerHTML = '<div class="error">No veterinarians available at the moment.</div>';
         return;
     }
 
     container.innerHTML = vets.map(vet => `
         <div class="vet-card">
+            <div class="vet-header">
+                <div class="vet-avatar">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <div class="vet-title">
+                    <h3>Dr. ${vet.name}</h3>
+                    <p class="specialization">${vet.specialization}</p>
+                </div>
+            </div>
             <div class="vet-info">
-                <h3>${vet.name}</h3>
-                <p class="specialty"><strong>Specialization:</strong> ${vet.specialization}</p>
-                <p><strong>Contact:</strong> ${vet.contact_info}</p>
-                <p><strong>Email:</strong> ${vet.email}</p>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <span>${vet.email}</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <span>${vet.contact_info}</span>
+                    </div>
+                </div>
+                <div class="vet-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-star"></i>
+                        <span>4.8/5 Rating</span>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-calendar-check"></i>
+                        <span>Available</span>
+                    </div>
+                </div>
                 <div class="vet-actions">
-                    <button class="btn-appointment" onclick="bookAppointment(${vet.id})">Book Appointment</button>
+                    <button class="btn-appointment" onclick="bookAppointment(${vet.id})">
+                        <i class="fas fa-calendar-plus"></i> Book Appointment
+                    </button>
+                    <button class="btn-contact" onclick="contactVet(${vet.id})">
+                        <i class="fas fa-phone"></i> Contact
+                    </button>
                 </div>
             </div>
         </div>

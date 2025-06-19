@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - PawConnect</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="css/loginstyles.css">
+    <style>
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #ffcdd2;
+        }
+        .success-message {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+            border: 1px solid #c8e6c9;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <a href="index.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
+</header>
+
+<div class="container">
+    <!-- Login Form -->
+    <div class="form-box login">
+        <form action="../src/login.php" method="POST">
+            <h1>Login</h1>
+            
+            <!-- Error/Success messages will be displayed here -->
+            <div id="error-container"></div>
+            <div id="success-container"></div>
+            
+            <div class="input-box">
+                <input type="text" name="username" placeholder="Username or Email" required>
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Password" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+            <div class="forgot-link">
+                <a href="#">Forgot Password?</a>
+            </div>
+            <button type="submit" class="btn">Login</button>
+            <p>or login with social platforms</p>
+            <div class="social-icon">
+                <a href="#"><i class='bx bxl-facebook'></i></a>
+                <a href="#"><i class='bx bxl-twitter'></i></a>
+                <a href="#"><i class='bx bxl-google'></i></a>
+            </div>
+            <div style="text-align: center; margin-top: 20px;">
+                <p>Don't have an account? <a href="register.html" style="color: #007bff;">Register here</a></p>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // Display error/success messages from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const errorContainer = document.getElementById('error-container');
+    const successContainer = document.getElementById('success-container');
+
+    if (urlParams.get('error') === '1') {
+        // Fetch and display error messages from session
+        fetch('../src/get_messages.php?type=login_errors')
+            .then(response => response.json())
+            .then(data => {
+                if (data.messages && data.messages.length > 0) {
+                    errorContainer.innerHTML = '<div class="error-message">' + 
+                        data.messages.map(msg => '<div>' + msg + '</div>').join('') + 
+                        '</div>';
+                }
+            });
+    }
+
+    if (urlParams.get('success') === '1') {
+        // Fetch and display success message from session
+        fetch('../src/get_messages.php?type=registration_success')
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    successContainer.innerHTML = '<div class="success-message">' + data.message + '</div>';
+                }
+            });
+    }
+</script>
+</body>
+</html>

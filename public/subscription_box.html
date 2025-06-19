@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subscription Box - PawConnect</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Subscription Box Specific Styles */
+        .subscription-hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            text-align: center;
+            border-radius: 15px;
+            margin-bottom: 3rem;
+        }
+
+        .subscription-hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .subscription-hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .subscription-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .plan-card {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            text-align: center;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .plan-card.featured {
+            border: 3px solid var(--primary-color);
+            transform: scale(1.05);
+        }
+
+        .plan-badge {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .plan-icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .plan-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .plan-features {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .plan-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+
+        .plan-features i {
+            color: #48bb78;
+            margin-right: 0.5rem;
+        }
+
+        .subscribe-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .subscribe-btn:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .box-contents {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .contents-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .content-item {
+            background: var(--hover-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .content-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .testimonials {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .testimonial-card {
+            background: var(--hover-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            position: relative;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: var(--text-secondary);
+        }
+
+        .testimonial-author {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .stars {
+            color: #fbbf24;
+            margin-bottom: 1rem;
+        }
+
+        .shipping-info {
+            background: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .shipping-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .shipping-item {
+            text-align: center;
+            padding: 1rem;
+        }
+
+        .shipping-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation will be dynamically updated by session manager -->
+    <nav id="main-navigation">
+        <!-- Navigation will be dynamically updated by session manager -->
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <div class="subscription-hero">
+            <h1>🎁 PawConnect Subscription Box</h1>
+            <p>Monthly curated boxes filled with premium pet products, toys, treats, and essentials delivered right to your door. Spoil your furry friends with surprise goodies every month!</p>
+        </div>
+
+        <!-- Subscription Plans -->
+        <div class="subscription-plans">
+            <div class="plan-card">
+                <div class="plan-icon">
+                    <i class="fas fa-box"></i>
+                </div>
+                <div class="plan-name">Basic Box</div>
+                <div class="plan-price">৳899<small>/month</small></div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 3-4 premium items</li>
+                    <li><i class="fas fa-check"></i> Monthly treats & toys</li>
+                    <li><i class="fas fa-check"></i> Pet care essentials</li>
+                    <li><i class="fas fa-check"></i> Free shipping</li>
+                    <li><i class="fas fa-check"></i> Cancel anytime</li>
+                </ul>
+                <button class="subscribe-btn" onclick="subscribe('basic')">Subscribe Now</button>
+            </div>
+
+            <div class="plan-card featured">
+                <div class="plan-badge">MOST POPULAR</div>
+                <div class="plan-icon">
+                    <i class="fas fa-gift"></i>
+                </div>
+                <div class="plan-name">Premium Box</div>
+                <div class="plan-price">৳1499<small>/month</small></div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 5-7 premium items</li>
+                    <li><i class="fas fa-check"></i> Exclusive brand products</li>
+                    <li><i class="fas fa-check"></i> Monthly treats & toys</li>
+                    <li><i class="fas fa-check"></i> Health & wellness items</li>
+                    <li><i class="fas fa-check"></i> Personalized for your pet</li>
+                    <li><i class="fas fa-check"></i> Free shipping</li>
+                    <li><i class="fas fa-check"></i> Priority customer support</li>
+                </ul>
+                <button class="subscribe-btn" onclick="subscribe('premium')">Subscribe Now</button>
+            </div>
+
+            <div class="plan-card">
+                <div class="plan-icon">
+                    <i class="fas fa-crown"></i>
+                </div>
+                <div class="plan-name">Deluxe Box</div>
+                <div class="plan-price">৳2299<small>/month</small></div>
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 8-10 premium items</li>
+                    <li><i class="fas fa-check"></i> Luxury brand products</li>
+                    <li><i class="fas fa-check"></i> Custom pet accessories</li>
+                    <li><i class="fas fa-check"></i> Monthly vet-approved supplements</li>
+                    <li><i class="fas fa-check"></i> Personalized nutrition guide</li>
+                    <li><i class="fas fa-check"></i> Free shipping & returns</li>
+                    <li><i class="fas fa-check"></i> 24/7 VIP support</li>
+                </ul>
+                <button class="subscribe-btn" onclick="subscribe('deluxe')">Subscribe Now</button>
+            </div>
+        </div>
+
+        <!-- What's Inside -->
+        <div class="box-contents">
+            <h2><i class="fas fa-eye"></i> What's Inside Your Box</h2>
+            <p>Each month, our expert team curates a unique selection of products tailored to your pet's needs and preferences.</p>
+            
+            <div class="contents-grid">
+                <div class="content-item">
+                    <div class="content-icon">
+                        <i class="fas fa-bone"></i>
+                    </div>
+                    <h3>Premium Treats</h3>
+                    <p>Healthy, natural treats from top brands that your pet will love</p>
+                </div>
+                <div class="content-item">
+                    <div class="content-icon">
+                        <i class="fas fa-football-ball"></i>
+                    </div>
+                    <h3>Interactive Toys</h3>
+                    <p>Fun, engaging toys to keep your pet active and entertained</p>
+                </div>
+                <div class="content-item">
+                    <div class="content-icon">
+                        <i class="fas fa-spray-can"></i>
+                    </div>
+                    <h3>Care Products</h3>
+                    <p>Grooming supplies, supplements, and health essentials</p>
+                </div>
+                <div class="content-item">
+                    <div class="content-icon">
+                        <i class="fas fa-tshirt"></i>
+                    </div>
+                    <h3>Accessories</h3>
+                    <p>Stylish collars, bandanas, and seasonal accessories</p>
+                </div>
+                <div class="content-item">
+                    <div class="content-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Care Guide</h3>
+                    <p>Monthly tips, training advice, and wellness information</p>
+                </div>
+                <div class="content-item">
+                    <div class="content-icon">
+                        <i class="fas fa-surprise"></i>
+                    </div>
+                    <h3>Surprise Items</h3>
+                    <p>Special seasonal items and exclusive product previews</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="testimonials">
+            <h2><i class="fas fa-heart"></i> What Pet Parents Say</h2>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="testimonial-text">
+                        "My dog absolutely loves the monthly box! The toys are high quality and the treats are always a hit. It's like Christmas every month!"
+                    </div>
+                    <div class="testimonial-author">- Sarah & Max</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="testimonial-text">
+                        "Great value for money! The products are always useful and my cats love trying new treats. The personalization based on pet preferences is amazing."
+                    </div>
+                    <div class="testimonial-author">- Ahmed & Whiskers</div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="testimonial-text">
+                        "The customer service is excellent and the shipping is always on time. My bird loves the variety of toys and treats. Highly recommended!"
+                    </div>
+                    <div class="testimonial-author">- Fatima & Charlie</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Shipping Info -->
+        <div class="shipping-info">
+            <h2><i class="fas fa-truck"></i> Delivery Information</h2>
+            
+            <div class="shipping-grid">
+                <div class="shipping-item">
+                    <div class="shipping-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Monthly Delivery</h3>
+                    <p>Boxes ship between the 1st-5th of each month</p>
+                </div>
+                <div class="shipping-item">
+                    <div class="shipping-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h3>Free Shipping</h3>
+                    <p>All boxes include free shipping across Bangladesh</p>
+                </div>
+                <div class="shipping-item">
+                    <div class="shipping-icon">
+                        <i class="fas fa-undo"></i>
+                    </div>
+                    <h3>Flexible Plans</h3>
+                    <p>Skip, pause, or cancel your subscription anytime</p>
+                </div>
+                <div class="shipping-item">
+                    <div class="shipping-icon">
+                        <i class="fas fa-user-cog"></i>
+                    </div>
+                    <h3>Personalized</h3>
+                    <p>Customized based on your pet's size, age, and preferences</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer will be dynamically updated by session manager -->
+    <footer id="main-footer">
+        <!-- Footer will be dynamically updated by session manager -->
+    </footer>
+
+    <script src="js/session-manager.js"></script>
+    <script>
+        // Initialize session manager
+        const sessionManager = new SessionManager();
+        
+        // Check session and update UI
+        sessionManager.checkSession().then(() => {
+            sessionManager.updateUI();
+        });
+
+        function subscribe(plan) {
+            if (!sessionManager.isLoggedIn) {
+                alert('Please log in to subscribe to our monthly box');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Redirect to transaction page with subscription box type and plan
+            window.location.href = `transaction.html?type=subscription_box&plan=${plan}`;
+        }
+
+        // Add some interactive animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Animate plan cards on scroll
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all plan cards
+            document.querySelectorAll('.plan-card').forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+        });
+    </script>
+</body>
+</html>

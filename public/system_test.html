@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Test - PawConnect</title>
+    <link rel="stylesheet" href="css/global.css">
+    <style>
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .test-card {
+            background: var(--card-bg);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+
+        .test-result {
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            font-weight: 500;
+        }
+
+        .test-pass {
+            background: #e8f5e8;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+        }
+
+        .test-fail {
+            background: #ffebee;
+            color: #c62828;
+            border: 1px solid #ffcdd2;
+        }
+
+        .test-pending {
+            background: #fff3e0;
+            color: #ef6c00;
+            border: 1px solid #ffcc02;
+        }
+
+        .run-tests-btn {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 20px 0;
+        }
+
+        .run-tests-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        pre {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>PawConnect System Test</h1>
+        <p>This page tests the integration of all major components:</p>
+
+        <button class="run-tests-btn" onclick="runAllTests()">Run All Tests</button>
+
+        <div class="test-card">
+            <h2>Session Management Tests</h2>
+            <div id="session-tests">
+                <div class="test-result test-pending">Waiting to run session tests...</div>
+            </div>
+        </div>
+
+        <div class="test-card">
+            <h2>Global CSS Tests</h2>
+            <div id="css-tests">
+                <div class="test-result test-pending">Waiting to run CSS tests...</div>
+            </div>
+        </div>
+
+        <div class="test-card">
+            <h2>Navigation Tests</h2>
+            <div id="nav-tests">
+                <div class="test-result test-pending">Waiting to run navigation tests...</div>
+            </div>
+        </div>
+
+        <div class="test-card">
+            <h2>API Connectivity Tests</h2>
+            <div id="api-tests">
+                <div class="test-result test-pending">Waiting to run API tests...</div>
+            </div>
+        </div>
+
+        <div class="test-card">
+            <h2>Page Load Tests</h2>
+            <div id="page-tests">
+                <div class="test-result test-pending">Waiting to run page tests...</div>
+            </div>
+        </div>
+
+        <div class="test-card">
+            <h2>Test Results Summary</h2>
+            <div id="test-summary">
+                <div class="test-result test-pending">Tests not run yet</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/session-manager.js"></script>
+    <script>
+        let testResults = [];
+
+        async function runAllTests() {
+            testResults = [];
+            document.querySelector('.run-tests-btn').disabled = true;
+            document.querySelector('.run-tests-btn').textContent = 'Running Tests...';
+
+            await runSessionTests();
+            await runCSSTests();
+            await runNavigationTests();
+            await runAPITests();
+            await runPageTests();
+            
+            updateSummary();
+            document.querySelector('.run-tests-btn').disabled = false;
+            document.querySelector('.run-tests-btn').textContent = 'Run All Tests';
+        }
+
+        async function runSessionTests() {
+            const container = document.getElementById('session-tests');
+            container.innerHTML = '';
+
+            // Test 1: Session Manager Initialization
+            try {
+                const sessionManager = new SessionManager();
+                addTestResult(container, 'Session Manager Initialization', true, 'Session manager created successfully');
+                testResults.push({name: 'Session Manager Init', passed: true});
+            } catch (error) {
+                addTestResult(container, 'Session Manager Initialization', false, error.message);
+                testResults.push({name: 'Session Manager Init', passed: false});
+            }
+
+            // Test 2: Session Status Check
+            try {
+                const sessionManager = new SessionManager();
+                await sessionManager.checkSession();
+                const status = sessionManager.isLoggedIn ? 'User is logged in' : 'User is not logged in';
+                addTestResult(container, 'Session Status Check', true, status);
+                testResults.push({name: 'Session Status Check', passed: true});
+            } catch (error) {
+                addTestResult(container, 'Session Status Check', false, error.message);
+                testResults.push({name: 'Session Status Check', passed: false});
+            }
+        }
+
+        async function runCSSTests() {
+            const container = document.getElementById('css-tests');
+            container.innerHTML = '';
+
+            // Test 1: Global CSS Loading
+            const cssLoaded = document.querySelector('link[href*="global.css"]') !== null;
+            addTestResult(container, 'Global CSS Loading', cssLoaded, cssLoaded ? 'Global CSS file is linked' : 'Global CSS file not found');
+            testResults.push({name: 'Global CSS Loading', passed: cssLoaded});
+
+            // Test 2: CSS Variables
+            const testElement = document.createElement('div');
+            testElement.style.display = 'none';
+            document.body.appendChild(testElement);
+            const primaryColor = getComputedStyle(testElement).getPropertyValue('--primary-color');
+            document.body.removeChild(testElement);
+            
+            const variablesWork = primaryColor !== '';
+            addTestResult(container, 'CSS Variables', variablesWork, variablesWork ? 'CSS variables are working' : 'CSS variables not found');
+            testResults.push({name: 'CSS Variables', passed: variablesWork});
+        }
+
+        async function runNavigationTests() {
+            const container = document.getElementById('nav-tests');
+            container.innerHTML = '';
+
+            // Test navigation links existence
+            const pages = [
+                'index.html',
+                'pet_adoption_feed.html',
+                'shop_feed.html',
+                'vet_appointment.html',
+                'pet_community.html',
+                'pet_corner.html',
+                'login.html',
+                'register.html'
+            ];
+
+            let navTestsPassed = 0;
+            for (const page of pages) {
+                try {
+                    const response = await fetch(page, {method: 'HEAD'});
+                    const exists = response.ok;
+                    addTestResult(container, `Page Exists: ${page}`, exists, exists ? 'Page accessible' : `HTTP ${response.status}`);
+                    if (exists) navTestsPassed++;
+                    testResults.push({name: `Page ${page}`, passed: exists});
+                } catch (error) {
+                    addTestResult(container, `Page Exists: ${page}`, false, error.message);
+                    testResults.push({name: `Page ${page}`, passed: false});
+                }
+            }
+        }
+
+        async function runAPITests() {
+            const container = document.getElementById('api-tests');
+            container.innerHTML = '';
+
+            // Test 1: Session Manager API
+            try {
+                const response = await fetch('../src/session_manager.php?action=status');
+                const data = await response.json();
+                const apiWorks = response.ok && typeof data.logged_in === 'boolean';
+                addTestResult(container, 'Session Manager API', apiWorks, apiWorks ? 'API responding correctly' : 'API response invalid');
+                testResults.push({name: 'Session Manager API', passed: apiWorks});
+            } catch (error) {
+                addTestResult(container, 'Session Manager API', false, error.message);
+                testResults.push({name: 'Session Manager API', passed: false});
+            }
+
+            // Test 2: API Manager Existence
+            const apiManagerExists = document.querySelector('script[src*="api-manager.js"]') !== null || 
+                                   typeof window.apiManager !== 'undefined';
+            addTestResult(container, 'API Manager', apiManagerExists, apiManagerExists ? 'API manager available' : 'API manager not found');
+            testResults.push({name: 'API Manager', passed: apiManagerExists});
+        }
+
+        async function runPageTests() {
+            const container = document.getElementById('page-tests');
+            container.innerHTML = '';
+
+            // Test responsive design
+            const viewport = document.querySelector('meta[name="viewport"]');
+            const responsiveDesign = viewport && viewport.content.includes('width=device-width');
+            addTestResult(container, 'Responsive Design', responsiveDesign, responsiveDesign ? 'Viewport meta tag present' : 'Viewport meta tag missing');
+            testResults.push({name: 'Responsive Design', passed: responsiveDesign});
+
+            // Test Font Awesome
+            const fontAwesome = document.querySelector('link[href*="font-awesome"]') !== null;
+            addTestResult(container, 'Font Awesome', fontAwesome, fontAwesome ? 'Font Awesome loaded' : 'Font Awesome not found');
+            testResults.push({name: 'Font Awesome', passed: fontAwesome});
+
+            // Test for common elements
+            const hasHeader = document.querySelector('header') !== null;
+            addTestResult(container, 'Header Element', hasHeader, hasHeader ? 'Header element present' : 'Header element missing');
+            testResults.push({name: 'Header Element', passed: hasHeader});
+        }
+
+        function addTestResult(container, testName, passed, message) {
+            const div = document.createElement('div');
+            div.className = `test-result ${passed ? 'test-pass' : 'test-fail'}`;
+            div.innerHTML = `<strong>${testName}:</strong> ${passed ? '✅ PASS' : '❌ FAIL'} - ${message}`;
+            container.appendChild(div);
+        }
+
+        function updateSummary() {
+            const container = document.getElementById('test-summary');
+            const totalTests = testResults.length;
+            const passedTests = testResults.filter(t => t.passed).length;
+            const failedTests = totalTests - passedTests;
+
+            const passRate = totalTests > 0 ? ((passedTests / totalTests) * 100).toFixed(1) : 0;
+
+            container.innerHTML = `
+                <div class="test-result ${failedTests === 0 ? 'test-pass' : 'test-fail'}">
+                    <strong>Overall Results:</strong><br>
+                    Total Tests: ${totalTests}<br>
+                    Passed: ${passedTests}<br>
+                    Failed: ${failedTests}<br>
+                    Pass Rate: ${passRate}%
+                </div>
+            `;
+
+            if (failedTests === 0) {
+                container.innerHTML += '<div class="test-result test-pass"><strong>🎉 All tests passed! The PawConnect system is working correctly.</strong></div>';
+            } else {
+                container.innerHTML += '<div class="test-result test-fail"><strong>⚠️ Some tests failed. Please check the failed tests above.</strong></div>';
+            }
+        }
+
+        // Auto-run tests on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('PawConnect System Test Page Loaded');
+        });
+    </script>
+</body>
+</html>
