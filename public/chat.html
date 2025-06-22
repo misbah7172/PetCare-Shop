@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat - PawConnect</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .chat-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .chat-header .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .chat-header .back-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+        
+        .chat-info h2 {
+            margin: 0;
+            font-size: 1.3em;
+        }
+        
+        .chat-info p {
+            margin: 0;
+            opacity: 0.9;
+            font-size: 0.9em;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+        
+        .message.own {
+            flex-direction: row-reverse;
+        }
+        
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+        
+        .message-content {
+            background: white;
+            padding: 0.75rem 1rem;
+            border-radius: 18px;
+            max-width: 70%;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .message.own .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+        
+        .message-text {
+            margin: 0;
+            line-height: 1.4;
+        }
+        
+        .message-time {
+            font-size: 0.75em;
+            opacity: 0.7;
+            margin-top: 0.25rem;
+        }
+        
+        .chat-input {
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid #eee;
+            display: flex;
+            gap: 0.5rem;
+            align-items: center;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        .chat-input input:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .send-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .send-btn:hover {
+            transform: translateY(-1px);
+        }
+        
+        .send-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #666;
+        }
+        
+        .error {
+            text-align: center;
+            padding: 2rem;
+            color: #dc3545;
+            background: rgba(220, 53, 69, 0.1);
+            margin: 1rem;
+            border-radius: 8px;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            color: #666;
+            font-style: italic;
+        }
+        
+        .typing-dots {
+            display: flex;
+            gap: 2px;
+        }
+        
+        .typing-dots span {
+            width: 6px;
+            height: 6px;
+            background: #666;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+        
+        .typing-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .typing-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        @keyframes typing {
+            0%, 60%, 100% {
+                transform: translateY(0);
+            }
+            30% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .item-info {
+            background: rgba(102, 126, 234, 0.1);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .item-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+            background: #ddd;
+        }
+        
+        .item-details h3 {
+            margin: 0;
+            color: #333;
+            font-size: 1.1em;
+        }
+        
+        .item-details p {
+            margin: 0;
+            color: #666;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="logo-section">
+            <a href="index.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
+            <h1 class="header-title">PawConnect</h1>
+        </div>
+        <nav class="header-nav">
+            <!-- Navigation will be dynamically updated by session manager -->
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-header">
+                <button class="back-btn" onclick="goBack()">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <div class="chat-info">
+                    <h2 id="chat-title">Loading...</h2>
+                    <p id="chat-subtitle">Starting conversation...</p>
+                </div>
+            </div>
+            
+            <div id="item-info" class="item-info" style="display: none;">
+                <img id="item-image" class="item-image" src="" alt="Item">
+                <div class="item-details">
+                    <h3 id="item-name">Item Name</h3>
+                    <p id="item-description">Item description</p>
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages">
+                <div class="loading">Loading conversation...</div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" id="message-input" placeholder="Type your message..." disabled>
+                <button class="send-btn" id="send-btn" onclick="sendMessage()" disabled>
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/session-manager.js"></script>
+    <script>
+        let chatType = '';
+        let chatId = '';
+        let currentUser = null;
+        let otherUser = null;
+        let lastMessageTime = 0;
+        
+        // Initialize chat
+        document.addEventListener('DOMContentLoaded', async function() {
+            // Get URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            chatType = urlParams.get('type'); // 'adoption' or 'shop'
+            chatId = urlParams.get('id'); // pet_id or product_id
+            
+            if (!chatType || !chatId) {
+                showError('Invalid chat parameters');
+                return;
+            }
+            
+            // Initialize session manager first
+            const sessionManager = new SessionManager();
+            await sessionManager.init();
+            
+            if (!sessionManager.isLoggedIn) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            currentUser = sessionManager.user;
+            await loadChatData();
+            await loadMessages();
+            setupMessageInput();
+            
+            // Poll for new messages every 3 seconds
+            setInterval(loadMessages, 3000);
+        });
+          async function loadChatData() {
+            try {
+                let endpoint = '';
+                if (chatType === 'adoption') {
+                    endpoint = `../src/item_api.php?action=get_pet&id=${chatId}`;
+                } else if (chatType === 'shop') {
+                    endpoint = `../src/item_api.php?action=get_product&id=${chatId}`;
+                }
+                
+                const response = await fetch(endpoint);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const item = data.pet || data.product;
+                    document.getElementById('chat-title').textContent = 
+                        chatType === 'adoption' ? `About ${item.name}` : `About ${item.name}`;
+                    document.getElementById('chat-subtitle').textContent = 
+                        chatType === 'adoption' ? 'Adoption Conversation' : 'Shop Item Discussion';
+                    
+                    // Show item info
+                    const itemInfo = document.getElementById('item-info');
+                    const itemImage = document.getElementById('item-image');
+                    const itemName = document.getElementById('item-name');
+                    const itemDescription = document.getElementById('item-description');
+                    
+                    itemImage.src = item.image_url || 'assets/placeholder.png';
+                    itemName.textContent = item.name;
+                    itemDescription.textContent = item.description || item.breed || 'No description available';
+                    itemInfo.style.display = 'flex';
+                }
+            } catch (error) {
+                console.error('Error loading chat data:', error);
+                showError('Failed to load chat information');
+            }
+        }
+          async function loadMessages() {
+            try {
+                const response = await fetch(`../src/chat_api.php?action=get_messages&type=${chatType}&related_id=${chatId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    renderMessages(data.messages);
+                    
+                    // Update last message time for polling
+                    if (data.messages.length > 0) {
+                        const latestMessage = data.messages[data.messages.length - 1];
+                        const messageTime = new Date(latestMessage.created_at).getTime();
+                        if (messageTime > lastMessageTime) {
+                            lastMessageTime = messageTime;
+                            scrollToBottom();
+                        }
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading messages:', error);
+                showError('Failed to load messages');
+            }
+        }
+        
+        function renderMessages(messages) {
+            const container = document.getElementById('chat-messages');
+            
+            if (messages.length === 0) {
+                container.innerHTML = '<div class="loading">No messages yet. Start the conversation!</div>';
+                return;
+            }
+            
+            const messagesHTML = messages.map(message => {
+                const isOwn = message.sender_id == currentUser.id;
+                const senderName = isOwn ? 'You' : (message.sender_name || 'User');
+                const messageTime = new Date(message.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                
+                return `
+                    <div class="message ${isOwn ? 'own' : ''}">
+                        <div class="message-avatar">
+                            ${senderName.charAt(0).toUpperCase()}
+                        </div>
+                        <div class="message-content">
+                            <div class="message-text">${escapeHtml(message.message)}</div>
+                            <div class="message-time">${messageTime}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            container.innerHTML = messagesHTML;
+        }
+        
+        function setupMessageInput() {
+            const input = document.getElementById('message-input');
+            const sendBtn = document.getElementById('send-btn');
+            
+            input.disabled = false;
+            sendBtn.disabled = false;
+            
+            input.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    sendMessage();
+                }
+            });
+            
+            input.focus();
+        }
+        
+        async function sendMessage() {
+            const input = document.getElementById('message-input');
+            const sendBtn = document.getElementById('send-btn');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Disable input while sending
+            input.disabled = true;
+            sendBtn.disabled = true;
+              try {
+                const response = await fetch('../src/chat_api.php?action=send_message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `type=${chatType}&related_id=${chatId}&message=${encodeURIComponent(message)}`
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    input.value = '';
+                    await loadMessages();
+                } else {
+                    showError('Failed to send message: ' + data.message);
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+                showError('Failed to send message');
+            } finally {
+                input.disabled = false;
+                sendBtn.disabled = false;
+                input.focus();
+            }
+        }
+        
+        function scrollToBottom() {
+            const container = document.getElementById('chat-messages');
+            container.scrollTop = container.scrollHeight;
+        }
+        
+        function showError(message) {
+            const container = document.getElementById('chat-messages');
+            container.innerHTML = `<div class="error">${message}</div>`;
+        }
+        
+        function goBack() {
+            if (chatType === 'adoption') {
+                window.location.href = 'pet_adoption_feed.html';
+            } else if (chatType === 'shop') {
+                window.location.href = 'shop_feed.html';
+            } else {
+                window.history.back();
+            }
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

@@ -34,6 +34,10 @@ function setUserSession($user) {
     $_SESSION['username'] = $user['username'];
     $_SESSION['email'] = $user['email'];
     $_SESSION['role'] = $user['role'];
+    $_SESSION['first_name'] = $user['first_name'] ?? '';
+    $_SESSION['last_name'] = $user['last_name'] ?? '';
+    $_SESSION['status'] = $user['status'] ?? 'active';
+    $_SESSION['last_activity'] = time();
 }
 
 function destroyUserSession() {

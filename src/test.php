@@ -35,6 +35,6 @@ echo "<ul>";
 echo "<li><a href='setup_database.php'>Setup Database</a></li>";
 echo "<li><a href='../public/index.html'>Go to Website</a></li>";
 echo "<li><a href='../public/login.html'>Login Page</a></li>";
-echo "<li><a href='../public/register.html'>Register Page</a></li>";
+echo "<li><a href='../public/login.html'>Login/Register Page</a></li>";
 echo "</ul>";
 ?>

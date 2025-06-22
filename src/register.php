@@ -1,13 +1,18 @@
 <?php
 session_start();
 
+// Clear any old registration/login error messages
+unset($_SESSION['registration_errors']);
+unset($_SESSION['login_errors']);
+unset($_SESSION['registration_success']);
+
 // Include database configuration
 require_once '../config/database.php';
 require_once 'utils/auth.php';
 
 // Check if user is already logged in
 if (isset($_SESSION['user_id'])) {
-    if ($_SESSION['role'] == 'admin') {
+    if (isset($_SESSION['username']) && $_SESSION['username'] === 'admin') {
         header("Location: ../public/admin_dashboard.html");
     } else {
         header("Location: ../public/home.html");
@@ -17,17 +22,19 @@ if (isset($_SESSION['user_id'])) {
 
 // Handle registration form submission
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $name = sanitizeInput($_POST['name'] ?? $_POST['first_name'] ?? ''); // Support both 'name' and 'first_name'
     $username = sanitizeInput($_POST['username'] ?? '');
     $email = sanitizeInput($_POST['email'] ?? '');
     $password = $_POST['password'] ?? '';
     $confirm_password = $_POST['confirm_password'] ?? '';
-    $first_name = sanitizeInput($_POST['first_name'] ?? '');
-    $last_name = sanitizeInput($_POST['last_name'] ?? '');
-    $phone = sanitizeInput($_POST['phone'] ?? '');
     
     $errors = [];
     
     // Validation
+    if (empty($name)) {
+        $errors[] = "Name is required";
+    }
+    
     if (empty($username)) {
         $errors[] = "Username is required";
     } elseif (strlen($username) < 3) {
@@ -50,38 +57,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors[] = "Passwords do not match";
     }
     
-    if (empty($first_name)) {
-        $errors[] = "First name is required";
-    }
-    
-    if (empty($last_name)) {
-        $errors[] = "Last name is required";
-    }
-    
     // If no validation errors, attempt registration
     if (empty($errors)) {
         try {
             // Create database connection
             $database = new Database();
             $pdo = $database->getConnection();
-            
-            // Check if username or email already exists
-            $stmt = $pdo->prepare("SELECT id FROM users WHERE username = ? OR email = ?");
+              // Check if username or email already exists - DATABASE ONLY
+            $stmt = $pdo->prepare("SELECT id, username, email FROM users WHERE username = ? OR email = ?");
             $stmt->execute([$username, $email]);
+            $existingUser = $stmt->fetch();
             
-            if ($stmt->fetch()) {
+            if ($existingUser) {
+                // Debug info (remove in production)
+                if (isset($_GET['debug'])) {
+                    $errors[] = "Debug: Found existing user - ID: {$existingUser['id']}, Username: {$existingUser['username']}, Email: {$existingUser['email']}";
+                }
                 $errors[] = "Username or email already exists";
-            } else {
-                // Hash password
+            } else {                // Hash password
                 $hashed_password = password_hash($password, PASSWORD_DEFAULT);
                 
-                // Insert new user
+                // Insert new user with simplified schema
                 $insertStmt = $pdo->prepare("
-                    INSERT INTO users (username, email, password, first_name, last_name, phone, role, status, created_at) 
-                    VALUES (?, ?, ?, ?, ?, ?, 'user', 'active', NOW())
+                    INSERT INTO users (name, username, password, email, created_at) 
+                    VALUES (?, ?, ?, ?, NOW())
                 ");
                 
-                if ($insertStmt->execute([$username, $email, $hashed_password, $first_name, $last_name, $phone])) {
+                if ($insertStmt->execute([$name, $username, $hashed_password, $email])) {
                     $_SESSION['registration_success'] = "Registration successful! You can now login.";
                     header('Location: ../public/login.html?success=1');
                     exit();
@@ -97,16 +99,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
         }
     }
-    
-    // If there are errors, redirect back with error message
+      // If there are errors, redirect back with error message
     if (!empty($errors)) {
         $_SESSION['registration_errors'] = $errors;
-        header('Location: ../public/register.html?error=1');
+        header('Location: ../public/login.html?error=1');
         exit();
     }
 } else {
-    // If not POST request, redirect to registration page
-    header('Location: ../public/register.html');
+    // If not POST request, redirect to login page
+    header('Location: ../public/login.html');
     exit();
 }
 ?>

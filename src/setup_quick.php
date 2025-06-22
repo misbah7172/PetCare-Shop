@@ -197,7 +197,7 @@
         <hr>
         <h3>Next Steps:</h3>
         <a href="../public/index.html" class="btn">Go to Homepage</a>
-        <a href="../public/register.html" class="btn">Register New Account</a>
+        <a href="../public/login.html" class="btn">Register New Account</a>
         <a href="../public/login.html" class="btn">Login</a>
         <a href="test.php" class="btn">Test System</a>
         

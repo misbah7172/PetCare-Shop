@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notification Test - PawConnect</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .test-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+        
+        .test-section {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+        
+        .test-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .test-result {
+            margin-top: 1rem;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="logo-section">
+            <a href="index.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
+            <h1 class="header-title">PawConnect - Notification Test</h1>
+        </div>
+        <nav class="header-nav">
+            <!-- Navigation will be dynamically updated by session manager -->
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="test-container">
+            <h1>PawConnect Notification System Test</h1>
+            
+            <div class="test-section">
+                <h3>Notification API Tests</h3>
+                <button class="test-button" onclick="testUnreadCount()">Test Unread Count</button>
+                <button class="test-button" onclick="testNotificationList()">Test Notification List</button>
+                <button class="test-button" onclick="testMarkAllRead()">Test Mark All Read</button>
+                <div id="api-result" class="test-result"></div>
+            </div>
+            
+            <div class="test-section">
+                <h3>Chat API Tests</h3>
+                <button class="test-button" onclick="testChatConversations()">Test Get Conversations</button>
+                <button class="test-button" onclick="testGetPet()">Test Get Pet (ID: 1)</button>
+                <button class="test-button" onclick="testGetProduct()">Test Get Product (ID: 1)</button>
+                <div id="chat-result" class="test-result"></div>
+            </div>
+            
+            <div class="test-section">
+                <h3>Notification Manager Test</h3>
+                <button class="test-button" onclick="testNotificationManager()">Initialize Notification Manager</button>
+                <button class="test-button" onclick="toggleTestNotifications()">Toggle Notifications</button>
+                <div id="notification-result" class="test-result"></div>
+            </div>
+            
+            <div class="test-section">
+                <h3>Database Test</h3>
+                <button class="test-button" onclick="testDatabaseTables()">Check Required Tables</button>
+                <div id="db-result" class="test-result"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/session-manager.js"></script>
+    <script>
+        let testNotificationManager = null;
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', async function() {
+            const sessionManager = new SessionManager();
+            await sessionManager.init();
+            
+            if (!sessionManager.isLoggedIn) {
+                document.getElementById('notification-result').textContent = 
+                    'Please log in to test notification features. Go to login.html';
+                return;
+            }
+            
+            document.getElementById('notification-result').textContent = 
+                `Logged in as: ${sessionManager.user.first_name} ${sessionManager.user.last_name}`;
+        });
+        
+        async function testUnreadCount() {
+            try {
+                const response = await fetch('../src/notifications_api.php?action=count');
+                const data = await response.json();
+                document.getElementById('api-result').textContent = 
+                    `Unread Count Response:\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                document.getElementById('api-result').textContent = 
+                    `Error: ${error.message}`;
+            }
+        }
+        
+        async function testNotificationList() {
+            try {
+                const response = await fetch('../src/notifications_api.php?action=list&limit=10');
+                const data = await response.json();
+                document.getElementById('api-result').textContent = 
+                    `Notification List Response:\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                document.getElementById('api-result').textContent = 
+                    `Error: ${error.message}`;
+            }
+        }
+        
+        async function testMarkAllRead() {
+            try {
+                const response = await fetch('../src/notifications_api.php?action=mark_all_read', {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                document.getElementById('api-result').textContent = 
+                    `Mark All Read Response:\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                document.getElementById('api-result').textContent = 
+                    `Error: ${error.message}`;
+            }
+        }
+        
+        async function testChatConversations() {
+            try {
+                const response = await fetch('../src/chat_api.php?action=get_conversations');
+                const data = await response.json();
+                document.getElementById('chat-result').textContent = 
+                    `Chat Conversations Response:\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                document.getElementById('chat-result').textContent = 
+                    `Error: ${error.message}`;
+            }
+        }
+        
+        async function testGetPet() {
+            try {
+                const response = await fetch('../src/item_api.php?action=get_pet&id=1');
+                const data = await response.json();
+                document.getElementById('chat-result').textContent = 
+                    `Get Pet Response:\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                document.getElementById('chat-result').textContent = 
+                    `Error: ${error.message}`;
+            }
+        }
+        
+        async function testGetProduct() {
+            try {
+                const response = await fetch('../src/item_api.php?action=get_product&id=1');
+                const data = await response.json();
+                document.getElementById('chat-result').textContent = 
+                    `Get Product Response:\n${JSON.stringify(data, null, 2)}`;
+            } catch (error) {
+                document.getElementById('chat-result').textContent = 
+                    `Error: ${error.message}`;
+            }
+        }
+        
+        function testNotificationManager() {
+            try {
+                // Load notification manager
+                const script = document.createElement('script');
+                script.src = 'js/notification-manager.js';
+                script.onload = () => {
+                    document.getElementById('notification-result').textContent += 
+                        '\nNotification Manager loaded successfully!';
+                    testNotificationManager = window.notificationManager;
+                };
+                script.onerror = () => {
+                    document.getElementById('notification-result').textContent += 
+                        '\nError loading Notification Manager';
+                };
+                document.head.appendChild(script);
+            } catch (error) {
+                document.getElementById('notification-result').textContent += 
+                    `\nError: ${error.message}`;
+            }
+        }
+        
+        function toggleTestNotifications() {
+            if (testNotificationManager || window.notificationManager) {
+                const manager = testNotificationManager || window.notificationManager;
+                manager.toggleNotifications();
+                document.getElementById('notification-result').textContent += 
+                    '\nToggled notifications dropdown';
+            } else {
+                document.getElementById('notification-result').textContent += 
+                    '\nNotification Manager not loaded. Click "Initialize Notification Manager" first.';
+            }
+        }
+        
+        async function testDatabaseTables() {
+            try {
+                // Test notifications table by trying to get count
+                const notificationResponse = await fetch('../src/notifications_api.php?action=count');
+                const notificationData = await notificationResponse.json();
+                
+                // Test chat tables by trying to get conversations
+                const chatResponse = await fetch('../src/chat_api.php?action=get_conversations');
+                const chatData = await chatResponse.json();
+                
+                let result = 'Database Table Test Results:\n\n';
+                result += `Notifications table: ${notificationData.success ? '✅ Working' : '❌ Error - ' + notificationData.message}\n`;
+                result += `Chat tables: ${chatData.success ? '✅ Working' : '❌ Error - ' + chatData.message}\n`;
+                
+                if (notificationData.success && chatData.success) {
+                    result += '\n🎉 All required tables are working properly!';
+                }
+                
+                document.getElementById('db-result').textContent = result;
+            } catch (error) {
+                document.getElementById('db-result').textContent = 
+                    `Database Test Error: ${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>

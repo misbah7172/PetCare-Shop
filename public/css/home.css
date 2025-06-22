@@ -7,80 +7,92 @@ body {
     color: #222;
 }
 
-.logo {
-    position: absolute;
-    top: 10px;
-    left: 20px;
-    height: 50px;
-    width: auto;
-    z-index: 3;
+/* Header Info Bar - for clock, calendar, and admin button */
+.header-info-bar {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+    padding: 8px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
-.header-title {
-    margin-top: 70px;
-    font-size: medium;
-    margin-left: 20px;
+.header-clock-calendar {
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
 
+.clock-display, .calendar-display {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: rgba(255, 255, 255, 0.2);
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.9rem;
+}
+
+.admin-btn {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.3s ease;
+}
+
+.admin-btn:hover {
+    background: #45a049;
+}
+
+/* Fixed Navbar Styles */
 .navbar {
-    display: flex !important;
+    display: flex;
     justify-content: center;
     align-items: center;
     background: #fff;
-    margin: 2px auto 0 auto;
-    height: 44px;
-    width: 50%;
-    border-radius: 6px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    position: relative;
-    z-index: 10;
-    border: 1px solid #ddd;
+    margin: 0;
+    height: 50px;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    border-top: 1px solid #eee;
 }
 
 .navlist {
-    display: flex !important;
-    gap: 12px;
-    padding: 0 16px;
-    background: none;
-    box-shadow: none;
-    border-radius: 0;
+    display: flex;
+    gap: 15px;
+    padding: 0 20px;
     align-items: center;
     height: 100%;
-    flex-wrap: wrap;
     justify-content: center;
-    border: 1px solid #eee;
+    flex-wrap: wrap;
 }
 
 .navlist button {
-    height: 32px;
-    width: auto;
-    min-width: 80px;
-    max-width: 120px;
-    font-size: 13px;
+    height: 35px;
+    min-width: 100px;
+    font-size: 14px;
     font-weight: 500;
     border: none;
-    padding: 0 8px;
+    padding: 0 15px;
     background: none;
     color: #333;
     cursor: pointer;
-    border-bottom: 2px solid transparent;
-    border-radius: 3px 3px 0 0;
-    transition: color 0.2s, border-bottom 0.2s, background 0.2s;
+    border-radius: 5px;
+    transition: all 0.3s ease;
     outline: none;
-    letter-spacing: 0.3px;
-    line-height: 1.2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    text-transform: capitalize;
 }
 
 .navlist button:hover, .navlist button:focus {
-    color: #6f87f7;
-    background: #f3f6ff;
-    border-bottom: 2.5px solid #6f87f7;
+    color: #667eea;
+    background: #f8f9ff;
+    transform: translateY(-1px);
 }
 
 /* Subscription button specific styling */
@@ -1322,83 +1334,6 @@ body, html {
 .calendar-date.selected {
     background: #e0c9a6;
     color: #a0522d;
-    font-weight: bold;
-    border: 2px solid #a0522d;
-}
-.calendar-date:hover {
-    background: #ede8d0;
-}
-@media (max-width: 700px) {
-    .header-calendar-widget {
-        top: 48px;
-        right: 10px;
-    }
-    .calendar-widget {
-        width: 98vw;
-        min-width: 0;
-        padding: 0.5rem;
-    }
-}
-
-.header-pill-calendar {
-    position: absolute;
-    top: 18px;
-    right: 32px;
-    display: flex;
-    align-items: center;
-    background: #e6ab86;
-    color: #fff;
-    border-radius: 2rem;
-    padding: 6px 18px 6px 14px;
-    box-shadow: 0 2px 8px rgba(230,171,134,0.10);
-    font-family: 'Inter', Arial, sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    z-index: 20;
-    gap: 8px;
-}
-.pill-calendar-icon {
-    font-size: 1.2rem;
-    margin-right: 6px;
-    display: flex;
-    align-items: center;
-}
-.pill-calendar-date {
-    font-size: 1rem;
-    color: #fff;
-    font-weight: 500;
-    letter-spacing: 0.5px;
-}
-@media (max-width: 700px) {
-    .header-pill-calendar {
-        top: 10px;
-        right: 10px;
-        font-size: 0.9rem;
-        padding: 4px 10px 4px 8px;
-    }
-    .pill-calendar-date {
-        font-size: 0.85rem;
-    }
-}
-
-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    min-height: 80px;
-    background: none;
-    z-index: 10;
-    padding-right: 220px; /* Reserve space for clock and calendar */
-}
-.header-right-tools {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    position: absolute;
-    top: 18px;
-    right: 32px;
-    z-index: 20;
 }
 .header-clock-calendar-simple {
     position: static;
@@ -1461,269 +1396,153 @@ header {
     }
 }
 
-@media (max-width: 900px) {
-    .navbar {
-        width: 60%;
+/* Responsive Design for Better Navbar Alignment */
+@media (max-width: 1200px) {
+    .header-top {
+        padding: 8px 15px;
     }
-}
-@media (max-width: 600px) {
-    .navbar {
-        width: 80%;
-    }
-    .navlist {
-        gap: 6px;
-        padding: 6px;
-    }
-    .navlist button {
-        min-width: 60px;
-        max-width: 90px;
-        font-size: 10px;
-        height: 32px;
-        padding: 0 4px;
-    }
-}
-
-.text-container {
-    position: relative;
-    top: -80px;
-    z-index: 2;
-    padding: 20px;
-}
-
-/* Subscription Plans Section on Homepage */
-.subscription-home-section {
-    max-width: 1200px;
-    margin: 50px auto;
-    padding: 20px;
-}
-
-.subscription-intro {
-    text-align: center;
-    margin-bottom: 40px;
-}
-
-.subscription-intro h2 {
-    color: #a0522d;
-    font-size: 2.2rem;
-    margin-bottom: 15px;
-}
-
-.subscription-intro p {
-    color: #666;
-    font-size: 1.1rem;
-    max-width: 600px;
-    margin: 0 auto;
-}
-
-.subscription-plans-home {
-    display: flex;
-    justify-content: center;
-    gap: 25px;
-    flex-wrap: wrap;
-}
-
-.plan-card-home {
-    background: #fff;
-    border-radius: 15px;
-    padding: 25px;
-    width: 280px;
-    text-align: center;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-    transition: transform 0.3s, box-shadow 0.3s;
-    position: relative;
-}
-
-.plan-card-home:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 8px 30px rgba(0,0,0,0.15);
-}
-
-.plan-card-home.gold {
-    border: 3px solid #ffd700;
-    background: linear-gradient(135deg, #fff 0%, #fff8e1 100%);
-}
-
-.plan-card-home.silver {
-    border: 3px solid #c0c0c0;
-    background: linear-gradient(135deg, #fff 0%, #f5f5f5 100%);
-}
-
-.plan-card-home.bronze {
-    border: 3px solid #cd7f32;
-    background: linear-gradient(135deg, #fff 0%, #faf0e6 100%);
-}
-
-.plan-badge-home {
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #a0522d;
-    color: white;
-    padding: 6px 16px;
-    border-radius: 18px;
-    font-weight: bold;
-    font-size: 0.85rem;
-}
-
-.plan-name-home {
-    font-size: 1.8rem;
-    font-weight: bold;
-    margin: 18px 0 8px 0;
-}
-
-.plan-card-home.gold .plan-name-home { color: #ffd700; }
-.plan-card-home.silver .plan-name-home { color: #c0c0c0; }
-.plan-card-home.bronze .plan-name-home { color: #cd7f32; }
-
-.plan-price-home {
-    font-size: 2.5rem;
-    font-weight: bold;
-    color: #a0522d;
-    margin: 15px 0;
-}
-
-.plan-price-home small {
-    font-size: 0.9rem;
-    color: #666;
-}
-
-.plan-features-home {
-    list-style: none;
-    padding: 0;
-    margin: 25px 0;
-}
-
-.plan-features-home li {
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-    color: #555;
-    font-size: 0.9rem;
-}
-
-.plan-features-home li:last-child {
-    border-bottom: none;
-}
-
-.plan-features-home li i {
-    color: #4CAF50;
-    margin-right: 8px;
-}
-
-.subscribe-btn-home {
-    background: #a0522d;
-    color: white;
-    border: none;
-    padding: 12px 25px;
-    border-radius: 20px;
-    font-size: 1rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: background 0.3s;
-    width: 100%;
-}
-
-.subscribe-btn-home:hover {
-    background: #7a3a1d;
-}
-
-@media (max-width: 768px) {
-    .subscription-plans-home {
-        flex-direction: column;
-        align-items: center;
-    }
-    .plan-card-home {
-        width: 100%;
-        max-width: 320px;
-    }
-    .subscription-intro h2 {
-        font-size: 1.8rem;
-    }
-}
-
-/* Admin button styling */
-.admin-btn {
-    position: absolute;
-    top: 85px;
-    right: 20px;
-    background: #a0522d;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    z-index: 20;
-    box-shadow: 0 2px 8px rgba(160, 82, 45, 0.3);
-}
-
-.admin-btn:hover {
-    background: #7a3a1d;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(160, 82, 45, 0.4);
-}
-
-@media (max-width: 700px) {
-    .admin-btn {
-        top: 70px;
-        right: 15px;
-        padding: 6px 12px;
-        font-size: 11px;
-    }
-}
-
-/* Clock and Calendar styling */
-.header-clock-calendar {
-    position: absolute;
-    top: 15px;
-    right: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    z-index: 15;
-}
-
-.clock-display, .calendar-display {
-    background: rgba(255, 255, 255, 0.95);
-    color: #333;
-    padding: 6px 12px;
-    border-radius: 6px;
-    font-size: 12px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(5px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.clock-display i, .calendar-display i {
-    color: #6f87f7;
-    font-size: 11px;
-}
-
-.clock-display span, .calendar-display span {
-    font-family: 'Courier New', monospace;
-    letter-spacing: 0.5px;
-}
-
-@media (max-width: 700px) {
+    
     .header-clock-calendar {
-        top: 10px;
-        right: 15px;
-        gap: 6px;
+        gap: 15px;
     }
     
     .clock-display, .calendar-display {
+        font-size: 0.85rem;
         padding: 4px 8px;
-        font-size: 11px;
-        gap: 4px;
     }
     
-    .clock-display i, .calendar-display i {
+    .navlist {
+        gap: 10px;
+        padding: 0 15px;
+    }
+    
+    .navlist button {
+        min-width: 90px;
+        font-size: 13px;
+        padding: 0 12px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header-top {
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px;
+    }
+    
+    .header-left, .header-right {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .header-center {
+        order: -1;
+        width: 100%;
+    }
+    
+    .header-clock-calendar {
+        gap: 10px;
+        justify-content: center;
+    }
+    
+    .clock-display, .calendar-display {
+        font-size: 0.8rem;
+        padding: 3px 6px;
+    }
+    
+    .navbar {
+        height: 45px;
+    }
+    
+    .navlist {
+        gap: 5px;
+        padding: 0 10px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .navlist button {
+        min-width: 70px;
+        font-size: 11px;
+        padding: 0 8px;
+        height: 30px;
+    }
+    
+    .user-controls {
+        flex-direction: column;
+        gap: 5px;
+        align-items: center;
+    }
+    
+    #welcome-user {
+        font-size: 0.9rem;
+    }
+    
+    .logout-btn, .admin-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-title {
+        font-size: 1.2rem;
+    }
+    
+    .navbar {
+        height: 40px;
+    }
+    
+    .navlist button {
+        min-width: 60px;
         font-size: 10px;
+        padding: 0 6px;
+        height: 28px;
+    }
+    
+    .header-clock-calendar {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .clock-display, .calendar-display {
+        font-size: 0.75rem;
+        padding: 2px 5px;
+    }
+}
+
+/* Responsive Design for Header Info Bar */
+@media (max-width: 768px) {
+    .header-info-bar {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 15px;
+    }
+    
+    .header-clock-calendar {
+        gap: 15px;
+        justify-content: center;
+    }
+    
+    .clock-display, .calendar-display {
+        font-size: 0.8rem;
+        padding: 4px 8px;
+    }
+    
+    .admin-btn {
+        padding: 6px 10px;
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-clock-calendar {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .clock-display, .calendar-display {
+        font-size: 0.75rem;
+        padding: 3px 6px;
     }
 }

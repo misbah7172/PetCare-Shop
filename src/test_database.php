@@ -77,6 +77,6 @@ try {
 
 echo "<hr>";
 echo "<a href='setup_quick.php'>Re-run Database Setup</a> | ";
-echo "<a href='../public/register.html'>Try Registration</a> | ";
-echo "<a href='../public/register.html?debug=1'>Try Registration (Debug Mode)</a>";
+echo "<a href='../public/login.html'>Try Registration</a> | ";
+echo "<a href='../public/login.html?debug=1'>Try Registration (Debug Mode)</a>";
 ?>

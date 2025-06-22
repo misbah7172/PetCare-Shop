@@ -1,6 +1,6 @@
 // Global Session Manager and UI Controller
 class SessionManager {
-    constructor() {
+    const        const registerButtons = document.querySelectorAll('a[href="login.html"], button[onclick*="register"], .register-btn:not(.header-nav .register-btn)');uctor() {
         this.user = null;
         this.isLoggedIn = false;
         this.init();
@@ -35,12 +35,12 @@ class SessionManager {
             link.href = 'css/global.css';
             document.head.appendChild(link);
         }
-    }
-      updateUI() {
+    }      updateUI() {
         this.updateNavigation();
         this.updateUserDisplay();
         this.updateAuthButtons();
         this.ensureModernHeader();
+        this.loadNotificationManager();
     }
     
     ensureModernHeader() {
@@ -76,7 +76,7 @@ class SessionManager {
     updateStandaloneAuthButtons() {
         // Hide login/register buttons that are not in navigation
         const loginButtons = document.querySelectorAll('a[href="login.html"], button[onclick*="login"], .login-btn:not(.header-nav .login-btn)');
-        const registerButtons = document.querySelectorAll('a[href="register.html"], button[onclick*="register"], .register-btn:not(.header-nav .register-btn)');
+        const registerButtons = document.querySelectorAll('a[href="login.html"], button[onclick*="register"], .register-btn:not(.header-nav .register-btn)');
         
         loginButtons.forEach(btn => {
             if (this.isLoggedIn) {
@@ -93,8 +93,7 @@ class SessionManager {
                 btn.style.display = '';
             }
         });
-    }
-      showLoggedInNav(nav) {
+    }      showLoggedInNav(nav) {
         nav.className = 'header-nav';
         nav.innerHTML = `
             <a href="index.html" class="nav-link">Home</a>
@@ -104,7 +103,26 @@ class SessionManager {
             <a href="pet_community.html" class="nav-link">Community</a>
             <a href="pet_corner.html" class="nav-link">Pet Corner</a>
             <div class="user-menu">
-                <span class="user-greeting">Hi, ${this.user?.first_name || this.user?.username || 'User'}!</span>
+                <div class="notification-container">
+                    <div class="notification-bell" onclick="notificationManager.toggleNotifications()">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge" id="notification-badge" style="display: none;">0</span>
+                    </div>
+                    <div class="notification-dropdown" id="notification-dropdown" style="display: none;">
+                        <div class="notification-header">
+                            <h3>Notifications</h3>
+                            <div class="notification-actions">
+                                <button onclick="notificationManager.markAllAsRead()" class="mark-all-read-btn">
+                                    <i class="fas fa-check-double"></i> Mark all read
+                                </button>
+                            </div>
+                        </div>
+                        <div class="notification-list" id="notification-list">
+                            <div class="loading">Loading notifications...</div>
+                        </div>
+                    </div>
+                </div>
+                <span class="user-greeting">Hi, ${this.user?.name || this.user?.username || 'User'}!</span>
                 <a href="dashboard.html" class="nav-link">Dashboard</a>
                 <a href="#" onclick="sessionManager.logout()" class="nav-link logout-btn">Logout</a>
             </div>
@@ -120,7 +138,7 @@ class SessionManager {
             <a href="vet_appointment.html" class="nav-link">Vets</a>
             <a href="pet_community.html" class="nav-link">Community</a>
             <a href="login.html" class="nav-link login-btn">Login</a>
-            <a href="register.html" class="nav-link register-btn">Register</a>
+            <a href="login.html" class="nav-link register-btn">Register</a>
         `;
     }
     
@@ -176,6 +194,21 @@ class SessionManager {
             return false;
         }
         return true;
+    }
+    
+    loadNotificationManager() {
+        // Only load notification manager for logged-in users
+        if (this.isLoggedIn && !window.notificationManager) {
+            if (!document.getElementById('notification-manager-script')) {
+                const script = document.createElement('script');
+                script.id = 'notification-manager-script';
+                script.src = 'js/notification-manager.js';
+                script.onload = () => {
+                    console.log('Notification manager loaded');
+                };
+                document.head.appendChild(script);
+            }
+        }
     }
 }
 

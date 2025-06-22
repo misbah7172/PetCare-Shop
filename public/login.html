@@ -3,381 +3,86 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - PawConnect</title>
+    <title>Login & SignUp - PawConnect</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="css/global.css">
-    <style>
-        .login-container {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 20px;
-        }
-
-        .login-card {
-            background: var(--card-bg);
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 450px;
-            position: relative;
-        }
-
-        .login-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .login-header img {
-            height: 60px;
-            margin-bottom: 20px;
-        }
-
-        .login-header h1 {
-            color: var(--primary-color);
-            font-size: 2.5rem;
-            margin: 0;
-            font-weight: 600;
-        }
-
-        .login-header p {
-            color: var(--text-secondary);
-            margin-top: 10px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        .form-group input {
-            width: 100%;
-            padding: 15px 50px 15px 15px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 16px;
-            transition: all 0.3s ease;
-            background: var(--input-bg);
-        }
-
-        .form-group input:focus {
-            outline: none;
-            border-color: var(--primary-color);
-            box-shadow: 0 0 0 3px var(--primary-light);
-        }
-
-        .form-group i {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-secondary);
-            font-size: 18px;
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 15px;
-            background: var(--primary-color);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 20px;
-        }
-
-        .login-btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-1px);
-        }
-
-        .divider {
-            text-align: center;
-            margin: 20px 0;
-            position: relative;
-            color: var(--text-secondary);
-        }
-
-        .divider::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: var(--border-color);
-        }
-
-        .divider span {
-            background: var(--card-bg);
-            padding: 0 15px;
-        }
-
-        .social-login {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .social-btn {
-            flex: 1;
-            padding: 12px;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            background: transparent;
-            color: var(--text-primary);
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s ease;
-        }
-
-        .social-btn:hover {
-            background: var(--hover-bg);
-            border-color: var(--primary-color);
-        }
-
-        .social-btn i {
-            font-size: 18px;
-        }
-
-        .register-link {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .register-link a {
-            color: var(--primary-color);
-            text-decoration: none;
-            font-weight: 500;
-        }
-
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-
-        .forgot-link {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .forgot-link a {
-            color: var(--text-secondary);
-            text-decoration: none;
-            font-size: 14px;
-        }
-
-        .forgot-link a:hover {
-            color: var(--primary-color);
-            text-decoration: underline;
-        }
-
-        .back-home {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: white;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-weight: 500;
-            transition: all 0.3s ease;
-        }
-
-        .back-home:hover {
-            transform: translateX(-5px);
-        }
-
-        .message {
-            padding: 12px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-weight: 500;
-        }
-
-        .error-message {
-            background: #ffebee;
-            color: #c62828;
-            border: 1px solid #ffcdd2;
-        }
-
-        .success-message {
-            background: #e8f5e8;
-            color: #2e7d32;
-            border: 1px solid #c8e6c9;
-        }
-
-        .loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-
-        .loading .login-btn {
-            position: relative;
-        }
-
-        .loading .login-btn::after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            margin: auto;
-            border: 2px solid transparent;
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @media (max-width: 768px) {
-            .login-card {
-                padding: 30px 20px;
-                margin: 10px;
-            }
-
-            .login-header h1 {
-                font-size: 2rem;
-            }
-
-            .social-login {
-                flex-direction: column;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/login-styles.css">
 </head>
 <body>
-    <a href="index.html" class="back-home">
-        <i class='bx bx-arrow-back'></i>
-        Back to Home
-    </a>
-
-    <div class="login-container">
-        <div class="login-card">
-            <div class="login-header">
-                <img src="assets/logo_pwc.png" alt="PawConnect Logo">
-                <h1>Welcome Back</h1>
-                <p>Sign in to your PawConnect account</p>
-            </div>
-
-            <div id="message-container"></div>
-
-            <form id="login-form" action="../src/login.php" method="POST">
-                <div class="form-group">
-                    <input type="text" name="username" placeholder="Username or Email" required>
+    <!-- Logo -->
+    <img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo">
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+    
+    <div class="container" id="container">
+        <!-- Login Form -->
+        <div class="form-box login">
+            <form id="loginForm">
+                <h1>Login</h1>
+                <div class="input-box">
+                    <input type="text" id="loginUsername" placeholder="Username" required>
                     <i class='bx bxs-user'></i>
                 </div>
-
-                <div class="form-group">
-                    <input type="password" name="password" placeholder="Password" required>
+                <div class="input-box">
+                    <input type="password" id="loginPassword" placeholder="Password" required>
                     <i class='bx bxs-lock-alt'></i>
                 </div>
-
                 <div class="forgot-link">
-                    <a href="#">Forgot your password?</a>
+                    <a href="#" onclick="handleForgotPassword()">Forgot Password?</a>
                 </div>
-
-                <button type="submit" class="login-btn">Sign In</button>
+                <button type="submit" class="btn" id="loginButton">Login</button>
+                <p>or login with social platforms</p>
+                <div class="social-icon">
+                    <a href="#" onclick="handleSocialLogin('Facebook')"><i class='bx bxl-facebook'></i></a>
+                    <a href="#" onclick="handleSocialLogin('Twitter')"><i class='bx bxl-twitter'></i></a>
+                    <a href="#" onclick="handleSocialLogin('Google')"><i class='bx bxl-google'></i></a>
+                </div>
             </form>
+        </div>        <!-- Register Form -->
+        <div class="form-box register">
+            <form id="registerForm">
+                <h1>Registration</h1>
+                <div class="input-box">
+                    <input type="text" id="registerName" placeholder="Full Name" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="text" id="registerUsername" placeholder="Username" required>
+                    <i class='bx bxs-user'></i>
+                </div>
+                <div class="input-box">
+                    <input type="email" id="registerEmail" placeholder="Email" required>
+                    <i class='bx bxs-envelope'></i>
+                </div>
+                <div class="input-box">
+                    <input type="password" id="registerPassword" placeholder="Password" required>
+                    <i class='bx bxs-lock-alt'></i>
+                </div>
+                <button type="submit" class="btn" id="registerButton">Register</button>
+                <p>or sign up with social platforms</p>
+                <div class="social-icon">
+                    <a href="#" onclick="handleSocialLogin('Facebook')"><i class='bx bxl-facebook'></i></a>
+                    <a href="#" onclick="handleSocialLogin('Twitter')"><i class='bx bxl-twitter'></i></a>
+                    <a href="#" onclick="handleSocialLogin('Google')"><i class='bx bxl-google'></i></a>
+                </div>
+            </form>
+        </div>
 
-            <div class="divider">
-                <span>or sign in with</span>
+        <!-- Toggle Panel -->
+        <div class="toggle-box">
+            <div class="toggle-panel toggle-left">
+                <h1>PawConnect!</h1>
+                <p>Don't have an account?</p>
+                <button class="btn register-btn">Register</button>
             </div>
-
-            <div class="social-login">
-                <a href="#" class="social-btn">
-                    <i class='bx bxl-facebook'></i>
-                </a>
-                <a href="#" class="social-btn">
-                    <i class='bx bxl-google'></i>
-                </a>
-                <a href="#" class="social-btn">
-                    <i class='bx bxl-twitter'></i>
-                </a>
-            </div>
-
-            <div class="register-link">
-                <p>Don't have an account? <a href="register.html">Create one now</a></p>
+            <div class="toggle-panel toggle-right">
+                <h1>PawConnect!</h1>
+                <p>Already have an account?</p>
+                <button class="btn login-btn">Login</button>
             </div>
         </div>
     </div>
 
-    <script src="js/session-manager.js"></script>
-    <script>
-        // Initialize session manager
-        const sessionManager = new SessionManager();
-        
-        // Check if user is already logged in
-        sessionManager.checkSession().then(() => {
-            if (sessionManager.isLoggedIn) {
-                window.location.href = 'index.html';
-            }
-        });
-
-        // Handle form submission
-        document.getElementById('login-form').addEventListener('submit', function(e) {
-            const form = this;
-            const card = document.querySelector('.login-card');
-            
-            // Add loading state
-            card.classList.add('loading');
-            
-            // Note: Form will submit normally, but we add visual feedback
-            setTimeout(() => {
-                card.classList.remove('loading');
-            }, 2000);
-        });
-
-        // Display messages from URL parameters
-        window.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const messageContainer = document.getElementById('message-container');
-
-            if (urlParams.get('error') === '1') {
-                fetch('../src/get_messages.php?type=login_errors')
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.messages && data.messages.length > 0) {
-                            messageContainer.innerHTML = '<div class="message error-message">' + 
-                                data.messages.join('<br>') + 
-                                '</div>';
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching login errors:', error);
-                    });
-            }
-
-            if (urlParams.get('success') === '1') {
-                fetch('../src/get_messages.php?type=registration_success')
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.message) {
-                            messageContainer.innerHTML = '<div class="message success-message">' + 
-                                data.message + 
-                                '</div>';
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching success message:', error);
-                    });
-            }
-        });
-    </script>
+    <script src="js/script.js"></script>
 </body>
 </html>

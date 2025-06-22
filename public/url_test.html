@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawConnect - URL Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+        }
+        .url-link {
+            display: block;
+            margin: 10px 0;
+            padding: 15px;
+            background: #e8f4f8;
+            border-left: 4px solid #2196F3;
+            text-decoration: none;
+            color: #1976D2;
+            border-radius: 5px;
+        }
+        .url-link:hover {
+            background: #d1ecf1;
+        }
+        .correct {
+            border-left-color: #4CAF50;
+            background: #e8f5e8;
+            color: #2E7D32;
+        }
+        .correct:hover {
+            background: #c8e6c9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🐾 PawConnect - URL Test & Navigation</h1>
+        
+        <h2>✅ Correct URLs to use:</h2>
+        <a href="http://localhost/pawconnect/" class="url-link correct">
+            <strong>Main Site:</strong> http://localhost/pawconnect/
+        </a>
+        
+        <a href="http://localhost/pawconnect/public/login.html" class="url-link correct">
+            <strong>Login/Register Page:</strong> http://localhost/pawconnect/public/login.html
+        </a>
+        
+        <a href="http://localhost/pawconnect/public/test_login.php" class="url-link correct">
+            <strong>Database Test:</strong> http://localhost/pawconnect/public/test_login.php
+        </a>
+        
+        <h2>📁 File Structure Info:</h2>
+        <p><strong>Document Root:</strong> C:\xampp\htdocs\</p>
+        <p><strong>Project Folder:</strong> C:\xampp\htdocs\pawconnect\</p>
+        <p><strong>Public Files:</strong> C:\xampp\htdocs\pawconnect\public\</p>
+        
+        <h2>🔗 Legacy Redirects (these should redirect automatically):</h2>
+        <a href="http://localhost/pawconnect/public/register.html" class="url-link">
+            http://localhost/pawconnect/public/register.html → login.html
+        </a>
+        
+        <a href="http://localhost/pawconnect/public/register.php" class="url-link">
+            http://localhost/pawconnect/public/register.php → login.html
+        </a>
+        
+        <hr>
+        <p><strong>Current Page URL:</strong> <span id="currentUrl"></span></p>
+        <p><strong>Browser Info:</strong> <span id="browserInfo"></span></p>
+    </div>
+    
+    <script>
+        document.getElementById('currentUrl').textContent = window.location.href;
+        document.getElementById('browserInfo').textContent = navigator.userAgent;
+    </script>
+</body>
+</html>

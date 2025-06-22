@@ -39,33 +39,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         try {
             // Create database connection
             $database = new Database();
-            $pdo = $database->getConnection();
-            
-            // Check if user exists and password is correct
-            $stmt = $pdo->prepare("SELECT id, username, email, password, role, status FROM users WHERE username = ? OR email = ?");
+            $pdo = $database->getConnection();              // Check if user exists and password is correct
+            $stmt = $pdo->prepare("SELECT id, name, username, password, email FROM users WHERE username = ? OR email = ?");
             $stmt->execute([$username, $username]);
             $user = $stmt->fetch(PDO::FETCH_ASSOC);
-            
-            if ($user && password_verify($password, $user['password'])) {
-                // Check if account is active
-                if ($user['status'] !== 'active') {
-                    $errors[] = "Your account is not active. Please contact support.";
+              if ($user && password_verify($password, $user['password'])) {
+                // Set session variables
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['username'] = $user['username'];
+                $_SESSION['name'] = $user['name'];
+                $_SESSION['email'] = $user['email'];
+                
+                // Determine redirect based on username (admin check)
+                if ($user['username'] === 'admin') {
+                    header("Location: ../public/admin_dashboard.html");
                 } else {
-                    // Set user session
-                    setUserSession($user);
-                    
-                    // Update last login
-                    $updateStmt = $pdo->prepare("UPDATE users SET last_login = NOW() WHERE id = ?");
-                    $updateStmt->execute([$user['id']]);
-                    
-                    // Redirect based on role
-                    if ($user['role'] === 'admin') {
-                        header('Location: ../public/admin_dashboard.html');
-                    } else {
-                        header('Location: ../public/home.html');
-                    }
-                    exit();
+                    header("Location: ../public/home.html");
                 }
+                exit();
             } else {
                 $errors[] = "Invalid username or password";
             }

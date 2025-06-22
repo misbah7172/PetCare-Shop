@@ -4,67 +4,27 @@ const registerBtn = document.querySelector('.register-btn');
 const loginBtn = document.querySelector('.login-btn');
 const loginForm = document.getElementById('loginForm');
 const registerForm = document.getElementById('registerForm');
-const togglePasswordBtns = document.querySelectorAll('.toggle-password');
-const strengthMeter = document.querySelector('.strength-meter');
-const strengthValue = document.getElementById('strengthValue');
 const toast = document.getElementById('toast');
 
 // Toggle between login and register forms
-registerBtn.addEventListener('click', () => {
-    container.classList.add('active');
-});
-
-loginBtn.addEventListener('click', () => {
-    container.classList.remove('active');
-});
-
-// Toggle password visibility
-togglePasswordBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-        const input = this.previousElementSibling.previousElementSibling;
-        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-        input.setAttribute('type', type);
-        this.classList.toggle('bx-show-alt');
-        this.classList.toggle('bx-hide');
+if (registerBtn) {
+    registerBtn.addEventListener('click', () => {
+        container.classList.add('active');
     });
-});
-
-// Password strength checker
-function checkPasswordStrength(password) {
-    let strength = 0;
-    
-    // Length check
-    if (password.length >= 8) strength += 1;
-    
-    // Contains number
-    if (/\d/.test(password)) strength += 1;
-    
-    // Contains lowercase
-    if (/[a-z]/.test(password)) strength += 1;
-    
-    // Contains uppercase
-    if (/[A-Z]/.test(password)) strength += 1;
-    
-    // Contains special character
-    if (/[^A-Za-z0-9]/.test(password)) strength += 1;
-    
-    return strength;
 }
 
-// Update password strength meter
-document.getElementById('registerPassword').addEventListener('input', function() {
-    const strength = checkPasswordStrength(this.value);
-    const strengthText = ['None', 'Weak', 'Medium', 'Strong', 'Very Strong'];
-    const strengthClass = ['', 'weak', 'medium', 'strong', 'strong'];
-    
-    strengthMeter.className = 'strength-meter ' + strengthClass[strength];
-    strengthValue.textContent = strengthText[strength];
-});
+if (loginBtn) {
+    loginBtn.addEventListener('click', () => {
+        container.classList.remove('active');
+    });
+}
 
 // Show toast notification
-function showToast(message, duration = 3000) {
+function showToast(message, type = 'info', duration = 3000) {
+    if (!toast) return;
+    
     toast.textContent = message;
-    toast.classList.add('show');
+    toast.className = 'toast show ' + type;
     
     setTimeout(() => {
         toast.classList.remove('show');
@@ -75,72 +35,258 @@ function showToast(message, duration = 3000) {
 async function handleLogin(event) {
     event.preventDefault();
     const button = document.getElementById('loginButton');
-    const username = document.getElementById('loginUsername').value;
+    const username = document.getElementById('loginUsername').value.trim();
     const password = document.getElementById('loginPassword').value;
+    
+    if (!username || !password) {
+        showToast('Please fill in all fields', 'error');
+        return;
+    }
     
     try {
         button.classList.add('loading');
+        button.disabled = true;
         
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // Create form data for backend
+        const formData = new FormData();
+        formData.append('username', username);
+        formData.append('password', password);
         
-        // TODO: Replace with actual API call
-        if (username && password) {
-            showToast('Login successful!');
+        // Submit to backend with cache busting
+        const timestamp = new Date().getTime();
+        const response = await fetch(`../src/login.php?t=${timestamp}`, {
+            method: 'POST',
+            body: formData,
+            cache: 'no-cache',
+            headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0'
+            }
+        });
+        
+        if (response.redirected) {
+            // Login successful, redirect
+            showToast('Login successful!', 'success');
             setTimeout(() => {
-                window.location.href = 'home_first.html';
+                window.location.href = response.url;
             }, 1000);
         } else {
-            showToast('Please fill in all fields');
+            const text = await response.text();
+            if (text.includes('error=1')) {
+                showToast('Invalid username or password', 'error');
+            } else {
+                showToast('Login failed. Please try again.', 'error');
+            }
         }
     } catch (error) {
-        showToast('An error occurred. Please try again.');
+        console.error('Login error:', error);
+        showToast('An error occurred. Please try again.', 'error');
     } finally {
         button.classList.remove('loading');
+        button.disabled = false;
     }
 }
 
 async function handleRegister(event) {
     event.preventDefault();
     const button = document.getElementById('registerButton');
-    const username = document.getElementById('registerUsername').value;
-    const email = document.getElementById('registerEmail').value;
+    const name = document.getElementById('registerName').value.trim();
+    const username = document.getElementById('registerUsername').value.trim();
+    const email = document.getElementById('registerEmail').value.trim();
     const password = document.getElementById('registerPassword').value;
+    
+    console.log('Registration attempt:', { name, username, email, passwordLength: password.length });
+    
+    // Basic validation
+    if (!name || !username || !email || !password) {
+        showToast('Please fill in all fields', 'error');
+        return;
+    }
+    
+    if (name.length < 2) {
+        showToast('Name must be at least 2 characters long', 'error');
+        return;
+    }
+    
+    if (username.length < 3) {
+        showToast('Username must be at least 3 characters long', 'error');
+        return;
+    }
+    
+    if (!isValidEmail(email)) {
+        showToast('Please enter a valid email address', 'error');
+        return;
+    }
+    
+    if (password.length < 6) {
+        showToast('Password must be at least 6 characters long', 'error');
+        return;
+    }
     
     try {
         button.classList.add('loading');
+        button.disabled = true;
+        showToast('Processing registration...', 'info');
         
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1500));
+        // Create form data for backend - simplified schema
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('username', username);
+        formData.append('email', email);
+        formData.append('password', password);
+        formData.append('confirm_password', password);
         
-        // TODO: Replace with actual API call
-        if (username && email && password) {
-            showToast('Registration successful!');
-            setTimeout(() => {
-                window.location.href = 'home.html';
-            }, 1000);
+        console.log('Sending registration data...');
+        
+        // Submit to backend with cache busting
+        const timestamp = new Date().getTime();
+        const response = await fetch(`../src/register.php?t=${timestamp}&debug=1`, {
+            method: 'POST',
+            body: formData,
+            cache: 'no-cache',
+            headers: {
+                'Cache-Control': 'no-cache, no-store, must-revalidate',
+                'Pragma': 'no-cache',
+                'Expires': '0'
+            }
+        });
+        
+        console.log('Response received:', response);
+        
+        if (response.redirected) {
+            const redirectUrl = response.url;
+            console.log('Redirected to:', redirectUrl);
+            
+            if (redirectUrl.includes('success=1')) {
+                showToast('Registration successful! You can now login.', 'success');
+                // Switch to login form after success
+                setTimeout(() => {
+                    container.classList.remove('active');
+                    // Clear the form
+                    document.getElementById('registerForm').reset();
+                }, 1500);
+            } else if (redirectUrl.includes('error=1')) {
+                console.log('Registration failed - checking for error messages...');
+                // Try to get specific error message
+                try {
+                    const errorResponse = await fetch('../src/get_messages.php?type=registration_errors');
+                    const errorData = await errorResponse.json();
+                    if (errorData.messages && errorData.messages.length > 0) {
+                        showToast(errorData.messages[0], 'error');
+                    } else {
+                        showToast('Registration failed. Username or email may already exist.', 'error');
+                    }
+                } catch (msgError) {
+                    console.error('Error getting error messages:', msgError);
+                    showToast('Registration failed. Please try again.', 'error');
+                }
+            } else {
+                showToast('Registration completed', 'info');
+            }
         } else {
-            showToast('Please fill in all fields');
+            // Try to read response text for debugging
+            const responseText = await response.text();
+            console.log('Non-redirect response:', responseText);
+            
+            if (responseText.includes('successful') || responseText.includes('created')) {
+                showToast('Registration successful! You can now login.', 'success');
+                setTimeout(() => {
+                    container.classList.remove('active');
+                    document.getElementById('registerForm').reset();
+                }, 1500);
+            } else {
+                showToast('Registration failed. Please try again.', 'error');
+            }
         }
     } catch (error) {
-        showToast('An error occurred. Please try again.');
+        console.error('Registration error:', error);
+        showToast('Network error. Please check your connection and try again.', 'error');
     } finally {
         button.classList.remove('loading');
+        button.disabled = false;
     }
 }
 
-// Handle social login
+// Helper function to validate email
+function isValidEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
+
+// Handle social login (placeholder)
 function handleSocialLogin(platform) {
-    showToast(`Logging in with ${platform}...`);
-    // TODO: Implement social login
+    showToast(`${platform} login coming soon!`, 'info');
 }
 
-// Handle forgot password
+// Handle forgot password (placeholder)
 function handleForgotPassword() {
-    showToast('Password reset functionality coming soon!');
-    // TODO: Implement forgot password
+    showToast('Password reset functionality coming soon!', 'info');
 }
 
-// Add form validation
-loginForm.addEventListener('submit', handleLogin);
-registerForm.addEventListener('submit', handleRegister);
+// Add form event listeners
+if (loginForm) {
+    loginForm.addEventListener('submit', handleLogin);
+}
+
+if (registerForm) {
+    registerForm.addEventListener('submit', handleRegister);
+}
+
+// Display messages from URL parameters
+window.addEventListener('DOMContentLoaded', function() {
+    const urlParams = new URLSearchParams(window.location.search);
+
+    if (urlParams.get('error') === '1') {
+        // Check for login errors first
+        fetch('../src/get_messages.php?type=login_errors')
+            .then(response => response.json())
+            .then(data => {
+                if (data.messages && data.messages.length > 0) {
+                    showToast(data.messages[0], 'error', 5000);
+                    return;
+                }
+                
+                // If no login errors, check for registration errors
+                return fetch('../src/get_messages.php?type=registration_errors');
+            })
+            .then(response => {
+                if (response) return response.json();
+                return null;
+            })
+            .then(data => {
+                if (data && data.messages && data.messages.length > 0) {
+                    showToast(data.messages[0], 'error', 5000);
+                    // Switch to register form if registration error
+                    container.classList.add('active');
+                } else if (!document.querySelector('.toast.show')) {
+                    // Only show generic error if no specific error was found
+                    showToast('An error occurred. Please try again.', 'error');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching error messages:', error);
+                showToast('An error occurred. Please try again.', 'error');
+            });
+    }
+
+    if (urlParams.get('success') === '1') {
+        fetch('../src/get_messages.php?type=registration_success')
+            .then(response => response.json())
+            .then(data => {
+                if (data.message) {
+                    showToast(data.message, 'success', 5000);
+                    // Ensure we're on the login form
+                    container.classList.remove('active');
+                } else {
+                    showToast('Registration successful! You can now login.', 'success');
+                    container.classList.remove('active');
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching success message:', error);
+                showToast('Registration successful! You can now login.', 'success');
+                container.classList.remove('active');
+            });
+    }
+});
