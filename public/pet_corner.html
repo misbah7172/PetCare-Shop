@@ -92,15 +92,22 @@
                 display: none;
             }
         }
+
+        /* Logo section hover effects */
+        .logo-section a:hover {
+            transform: scale(1.02);
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
-        <div class="header-content">
-            <div class="logo-section">
-                <img src="assets/logo.png" alt="PawConnect" class="logo" onerror="this.style.display='none'">
-                <h1>PawConnect</h1>
+        <div class="header-content">            <div class="logo-section">
+                <a href="home.html" style="text-decoration: none; color: inherit; transition: all 0.3s ease;">
+                    <img src="assets/logo.png" alt="PawConnect" class="logo" onerror="this.style.display='none'">
+                    <h1 style="margin: 0;">PawConnect</h1>
+                </a>
             </div>
             
             <div class="header-info">
@@ -139,10 +146,14 @@
                     <a href="pet_community.html" class="navbar-link">
                         <i class="fas fa-comments navbar-icon"></i> <span>Community</span>
                     </a>
-                </li>
-                <li class="navbar-item">
+                </li>                <li class="navbar-item">
                     <a href="vet_appointment.html" class="navbar-link">
                         <i class="fas fa-stethoscope navbar-icon"></i> <span>Vet Appointments</span>
+                    </a>
+                </li>
+                <li class="navbar-item">
+                    <a href="shop_feed.html" class="navbar-link">
+                        <i class="fas fa-shopping-cart navbar-icon"></i> <span>Pet Shop</span>
                     </a>
                 </li>
             </ul>

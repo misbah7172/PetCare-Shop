@@ -334,14 +334,24 @@
             font-size: 0.9rem;
             line-height: 1.4;
         }
+        
+        /* Logo section hover effects */
+        .header-title a:hover {
+            opacity: 0.8;
+            transform: scale(1.02);
+        }
+        
+        .logo-section a:hover {
+            transform: scale(1.02);
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
-    <header class="site-header">
-        <div class="logo-section">
-            <a href="index.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
-            <h1 class="header-title">PawConnect</h1>
-        </div>        <nav class="header-nav">
+    <header class="site-header">        <div class="logo-section">
+            <a href="home.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
+            <a href="home.html" style="text-decoration: none; color: inherit;"><h1 class="header-title">PawConnect</h1></a>
+        </div><nav class="header-nav">
             <div class="navbar">
                 <div class="navbar-container">
                     <ul class="navbar-menu">
@@ -368,11 +378,16 @@
                                 <i class="fas fa-comments navbar-icon"></i>
                                 <span>Community</span>
                             </a>
-                        </li>
-                        <li class="navbar-item">
+                        </li>                        <li class="navbar-item">
                             <a href="vet_appointment.html" class="navbar-link">
                                 <i class="fas fa-stethoscope navbar-icon"></i>
                                 <span>Vet Appointments</span>
+                            </a>
+                        </li>
+                        <li class="navbar-item">
+                            <a href="shop_feed.html" class="navbar-link">
+                                <i class="fas fa-shopping-cart navbar-icon"></i>
+                                <span>Pet Shop</span>
                             </a>
                         </li>
                     </ul>
