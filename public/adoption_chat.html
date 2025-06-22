@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Adoption Chat - PawConnect</title>
+    <link rel="stylesheet" href="css/global.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .chat-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+        }
+        
+        .pet-info {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .pet-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        
+        .chat-messages {
+            height: 400px;
+            overflow-y: auto;
+            padding: 1rem;
+            background: #f8f9fa;
+        }
+        
+        .message {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+        }
+        
+        .message.own {
+            flex-direction: row-reverse;
+        }
+        
+        .message-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #667eea;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .message.own .message-avatar {
+            background: #48bb78;
+        }
+        
+        .message-content {
+            max-width: 70%;
+            padding: 0.75rem 1rem;
+            border-radius: 18px;
+            background: white;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .message.own .message-content {
+            background: #667eea;
+            color: white;
+        }
+        
+        .message-time {
+            font-size: 0.75rem;
+            color: #666;
+            margin-top: 0.25rem;
+        }
+        
+        .message.own .message-time {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .chat-input {
+            padding: 1rem;
+            background: white;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            outline: none;
+            font-size: 1rem;
+        }
+        
+        .chat-input input:focus {
+            border-color: #667eea;
+        }
+        
+        .send-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: #667eea;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .send-btn:hover {
+            background: #5a67d8;
+            transform: scale(1.05);
+        }
+        
+        .adoption-status {
+            padding: 1rem;
+            background: rgba(72, 187, 120, 0.1);
+            border-left: 4px solid #48bb78;
+            margin: 1rem;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .adoption-actions {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            gap: 0.75rem;
+            justify-content: center;
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-approve {
+            background: #48bb78;
+            color: white;
+        }
+        
+        .btn-approve:hover {
+            background: #38a169;
+        }
+        
+        .btn-decline {
+            background: #f56565;
+            color: white;
+        }
+        
+        .btn-decline:hover {
+            background: #e53e3e;
+        }
+        
+        .btn-secondary {
+            background: #e2e8f0;
+            color: #4a5568;
+        }
+        
+        .btn-secondary:hover {
+            background: #cbd5e0;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="logo-section">
+            <a href="index.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
+            <h1 class="header-title">PawConnect</h1>
+        </div>
+        <nav class="header-nav">
+            <a href="pet_adoption_feed.html" class="nav-link">
+                <i class="fas fa-arrow-left"></i> Back to Adoption Feed
+            </a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="chat-container">
+            <div class="chat-header">
+                <div class="pet-info">
+                    <div class="pet-avatar">
+                        <i class="fas fa-dog"></i>
+                    </div>
+                    <div>
+                        <h3 id="pet-name">Buddy</h3>
+                        <p>Golden Retriever • Adoption Chat</p>
+                    </div>
+                </div>
+                <small>Connected with pet owner</small>
+            </div>
+            
+            <div class="adoption-status">
+                <strong><i class="fas fa-info-circle"></i> Adoption Request</strong>
+                <p>You've expressed interest in adopting this pet. Use this chat to discuss details with the owner.</p>
+            </div>
+            
+            <div class="chat-messages" id="chat-messages">
+                <!-- Sample messages -->
+                <div class="message">
+                    <div class="message-avatar">O</div>
+                    <div class="message-content">
+                        <div>Hi! I saw your interest in adopting Buddy. He's a wonderful dog!</div>
+                        <div class="message-time">2 minutes ago</div>
+                    </div>
+                </div>
+                
+                <div class="message own">
+                    <div class="message-avatar">Y</div>
+                    <div class="message-content">
+                        <div>Hello! Yes, Buddy looks amazing. I'd love to learn more about him. Is he good with children?</div>
+                        <div class="message-time">1 minute ago</div>
+                    </div>
+                </div>
+                
+                <div class="message">
+                    <div class="message-avatar">O</div>
+                    <div class="message-content">
+                        <div>Absolutely! He's great with kids and very gentle. He loves playing fetch and going for walks.</div>
+                        <div class="message-time">30 seconds ago</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" id="message-input" placeholder="Type your message..." onkeypress="handleKeyPress(event)">
+                <button class="send-btn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+            
+            <div class="adoption-actions">
+                <button class="btn btn-approve" onclick="finalizeAdoption()">
+                    <i class="fas fa-heart"></i> Finalize Adoption
+                </button>
+                <button class="btn btn-secondary" onclick="scheduleVisit()">
+                    <i class="fas fa-calendar"></i> Schedule Visit
+                </button>
+                <button class="btn btn-decline" onclick="withdrawRequest()">
+                    <i class="fas fa-times"></i> Withdraw Request
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/session-manager.js"></script>
+    <script>
+        // Get conversation ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const conversationId = urlParams.get('conversation');
+        const petName = urlParams.get('pet') || 'Pet';
+        
+        // Update pet name if provided
+        document.getElementById('pet-name').textContent = petName;
+        
+        function handleKeyPress(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('message-input');
+            const message = input.value.trim();
+            
+            if (!message) return;
+            
+            // Add message to chat
+            addMessage(message, true);
+            
+            // Clear input
+            input.value = '';
+            
+            // In a real implementation, send to server
+            sendToServer(message);
+        }
+        
+        function addMessage(text, isOwn = false) {
+            const messagesContainer = document.getElementById('chat-messages');
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${isOwn ? 'own' : ''}`;
+            
+            messageDiv.innerHTML = `
+                <div class="message-avatar">${isOwn ? 'Y' : 'O'}</div>
+                <div class="message-content">
+                    <div>${escapeHtml(text)}</div>
+                    <div class="message-time">Just now</div>
+                </div>
+            `;
+            
+            messagesContainer.appendChild(messageDiv);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+        
+        async function sendToServer(message) {
+            try {
+                // In a real implementation, send message via API
+                const response = await fetch('../src/adoption_api.php?action=send_message', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        conversation_id: conversationId,
+                        message: message
+                    })
+                });
+                
+                if (!response.ok) {
+                    console.error('Failed to send message');
+                }
+            } catch (error) {
+                console.error('Error sending message:', error);
+            }
+        }
+        
+        function finalizeAdoption() {
+            if (confirm(`Are you sure you want to finalize the adoption of ${petName}? This will complete the adoption process.`)) {
+                alert('Adoption finalized! Congratulations on your new family member! 🎉');
+                // In real implementation, update adoption status
+                window.location.href = 'pet_adoption_feed.html';
+            }
+        }
+        
+        function scheduleVisit() {
+            const date = prompt('When would you like to schedule a visit? (e.g., "Tomorrow at 2 PM")');
+            if (date) {
+                addMessage(`I'd like to schedule a visit: ${date}`, true);
+                setTimeout(() => {
+                    addMessage('That sounds perfect! I'll confirm the details shortly.', false);
+                }, 1000);
+            }
+        }
+        
+        function withdrawRequest() {
+            if (confirm('Are you sure you want to withdraw your adoption request?')) {
+                alert('Adoption request withdrawn.');
+                window.location.href = 'pet_adoption_feed.html';
+            }
+        }
+        
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // Auto-scroll to bottom on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const messagesContainer = document.getElementById('chat-messages');
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        });
+    </script>
+</body>
+</html>

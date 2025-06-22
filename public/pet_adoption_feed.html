@@ -7,6 +7,88 @@
     <link rel="stylesheet" href="css/global.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        /* Navigation Bar Styles */
+        .navbar {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0;
+            margin-bottom: 20px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .navbar-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0;
+        }
+
+        .navbar-menu {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            gap: 0;
+        }
+
+        .navbar-item {
+            position: relative;
+        }
+
+        .navbar-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 18px 25px;
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            border-bottom: 3px solid transparent;
+        }
+
+        .navbar-link:hover {
+            background: rgba(231, 76, 60, 0.1);
+            color: #e74c3c;
+            border-bottom-color: #e74c3c;
+        }
+
+        .navbar-link.active {
+            background: rgba(231, 76, 60, 0.15);
+            color: #e74c3c;
+            border-bottom-color: #e74c3c;
+            font-weight: 600;
+        }
+
+        .navbar-icon {
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar-menu {
+                flex-direction: column;
+                width: 100%;
+            }
+            
+            .navbar-link {
+                justify-content: center;
+                padding: 15px 20px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar-link {
+                font-size: 0.9rem;
+                padding: 12px 15px;
+            }
+            
+            .navbar-link span {
+                display: none;
+            }
+        }
+        
         /* Pet Adoption Specific Styles */
         .adoption-grid {
             display: grid;
@@ -188,12 +270,69 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-        
-        .stat-label {
+          .stat-label {
             color: #4a5568;
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.5px;
+        }
+        
+        /* Additional styles for adoption feed */
+        .placeholder-image {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            font-size: 3rem;
+        }
+        
+        .adoption-notes {
+            margin-top: 0.5rem;
+            padding: 0.5rem;
+            background: rgba(102, 126, 234, 0.05);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            color: #4a5568;
+        }
+        
+        .post-meta {
+            margin-top: 1rem;
+            padding-top: 0.5rem;
+            border-top: 1px solid #e2e8f0;
+            color: #718096;
+            font-size: 0.8rem;
+        }
+        
+        .error-message {
+            text-align: center;
+            padding: 3rem;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            margin: 2rem auto;
+            max-width: 500px;
+        }
+        
+        .error-message i {
+            font-size: 3rem;
+            color: #f56565;
+            margin-bottom: 1rem;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.2rem;
+            color: #667eea;
+        }
+        
+        .pet-description {
+            margin-top: 0.5rem;
+            color: #4a5568;
+            font-size: 0.9rem;
+            line-height: 1.4;
         }
     </style>
 </head>
@@ -202,9 +341,43 @@
         <div class="logo-section">
             <a href="index.html"><img src="assets/logo_pwc.png" alt="PawConnect Logo" class="logo"></a>
             <h1 class="header-title">PawConnect</h1>
-        </div>
-        <nav class="header-nav">
-            <!-- Navigation will be dynamically updated by session manager -->
+        </div>        <nav class="header-nav">
+            <div class="navbar">
+                <div class="navbar-container">
+                    <ul class="navbar-menu">
+                        <li class="navbar-item">
+                            <a href="dashboard.html" class="navbar-link">
+                                <i class="fas fa-tachometer-alt navbar-icon"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="navbar-item">
+                            <a href="pet_corner.html" class="navbar-link">
+                                <i class="fas fa-paw navbar-icon"></i>
+                                <span>Pet Corner</span>
+                            </a>
+                        </li>
+                        <li class="navbar-item">
+                            <a href="pet_adoption_feed.html" class="navbar-link active">
+                                <i class="fas fa-heart navbar-icon"></i>
+                                <span>Adoption Feed</span>
+                            </a>
+                        </li>
+                        <li class="navbar-item">
+                            <a href="pet_community.html" class="navbar-link">
+                                <i class="fas fa-comments navbar-icon"></i>
+                                <span>Community</span>
+                            </a>
+                        </li>
+                        <li class="navbar-item">
+                            <a href="vet_appointment.html" class="navbar-link">
+                                <i class="fas fa-stethoscope navbar-icon"></i>
+                                <span>Vet Appointments</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </nav>
     </header>
 
@@ -340,75 +513,13 @@
         <div class="footer-bottom">
             <p>&copy; 2024 PawConnect. All rights reserved. Help us save more lives! 🐾</p>
         </div>
-    </footer>
-
-    <!-- Scripts -->
+    </footer>    <!-- Scripts -->
     <script src="js/session-manager.js"></script>
     <script src="js/api-manager.js"></script>
-    <script>
-        // Initialize session manager
-        const sessionManager = new SessionManager();
-        
-        // Initialize API manager for pets
-        const apiManager = new APIManager();
-        
-        // Filter and search functions
-        function searchPets() {
-            const searchTerm = document.getElementById('search-input').value;
-            filterPets();
-        }
-        
-        function filterPets() {
-            const type = document.getElementById('type-filter').value;
-            const age = document.getElementById('age-filter').value;
-            const gender = document.getElementById('gender-filter').value;
-            const status = document.getElementById('status-filter').value;
-            const searchTerm = document.getElementById('search-input').value;
-            
-            // Filter logic will be handled by API manager
-            apiManager.loadPets(type, age, gender, status, searchTerm);
-        }
-        
-        function toggleFilterTag(element, filterType, value) {
-            element.classList.toggle('active');
-            
-            // Update corresponding select element
-            const selectElement = document.getElementById(filterType + '-filter');
-            if (element.classList.contains('active')) {
-                selectElement.value = value;
-            } else {
-                selectElement.value = '';
-            }
-            
-            filterPets();
-        }
-        
-        function clearFilters() {
-            document.getElementById('search-input').value = '';
-            document.getElementById('type-filter').value = '';
-            document.getElementById('age-filter').value = '';
-            document.getElementById('gender-filter').value = '';
-            document.getElementById('status-filter').value = '';
-            
-            // Remove active class from filter tags
-            document.querySelectorAll('.filter-tag').forEach(tag => {
-                tag.classList.remove('active');
-            });
-            
-            filterPets();
-        }
-        
-        // Initialize page
+    <script src="js/adoption-feed.js"></script>    <script>
+        // Initialize adoption feed
         document.addEventListener('DOMContentLoaded', function() {
-            // Load initial data
-            apiManager.loadPets();
-            
-            // Add enter key support for search
-            document.getElementById('search-input').addEventListener('keypress', function(e) {
-                if (e.key === 'Enter') {
-                    searchPets();
-                }
-            });
+            window.adoptionFeed = new AdoptionFeed();
         });
     </script>
 </body>

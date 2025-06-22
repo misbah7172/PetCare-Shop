@@ -626,27 +626,81 @@ body {
     color: #333;
 }
 
+/* Upload Section Styles */
+.upload-section {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 2px dashed #ddd;
+    transition: all 0.3s ease;
+}
+
+.upload-area {
+    text-align: center;
+    padding: 2rem;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.upload-area:hover {
+    background: rgba(111, 135, 247, 0.05);
+    border-color: #6f87f7;
+}
+
+.upload-icon {
+    font-size: 3rem;
+    color: #6f87f7;
+    margin-bottom: 1rem;
+}
+
+.upload-area h3 {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.upload-area p {
+    color: #666;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
 /* Form Styles */
+.pet-form {
+    background: white;
+    border-radius: 12px;
+    padding: 0;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
 .form-group {
-    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
 }
 
 .form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 500;
+    font-weight: 600;
     color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
 }
 
 .form-group input,
 .form-group select,
 .form-group textarea {
-    width: 100%;
-    padding: 0.8rem;
+    padding: 0.75rem;
     border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 6px;
     font-size: 1rem;
-    transition: border-color 0.2s;
+    transition: border-color 0.3s ease;
 }
 
 .form-group input:focus,
@@ -657,74 +711,150 @@ body {
     box-shadow: 0 0 0 3px rgba(111, 135, 247, 0.1);
 }
 
-.form-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.form-actions {
+    display: flex;
     gap: 1rem;
+    justify-content: center;
+    padding: 2rem 0;
 }
 
-.char-count {
-    text-align: right;
-    font-size: 0.9rem;
-    color: #666;
-    margin-top: 0.5rem;
+/* Adoption Section Styles */
+.adoption-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    border: 2px solid rgba(111, 135, 247, 0.2);
 }
 
 .checkbox-label {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.75rem;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 600;
+    color: #333;
 }
 
 .checkbox-label input[type="checkbox"] {
-    width: auto;
-    margin: 0;
+    width: 18px;
+    height: 18px;
+    accent-color: #6f87f7;
+    cursor: pointer;
 }
 
-.form-actions {
+.checkbox-text {
     display: flex;
-    gap: 1rem;
-    justify-content: flex-end;
-    padding: 1.5rem;
-    border-top: 1px solid #f0f0f0;
-}
-
-/* Button Styles */
-.btn {
-    display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.8rem 1.5rem;
-    border: none;
+}
+
+.checkbox-text i {
+    color: #e53e3e;
+    font-size: 1.1em;
+}
+
+.help-text {
+    display: block;
+    margin-top: 0.25rem;
+    font-size: 0.85rem;
+    color: #666;
+    font-style: italic;
+}
+
+.adoption-details {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(111, 135, 247, 0.2);
+    animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.adoption-details .form-group {
+    margin-bottom: 1rem;
+}
+
+.adoption-details label {
+    color: #444;
+    font-weight: 600;
+}
+
+.adoption-details select,
+.adoption-details textarea,
+.adoption-details input[type="number"] {
+    width: 100%;
+    padding: 0.75rem;
+    border: 2px solid #ddd;
     border-radius: 8px;
     font-size: 1rem;
-    font-weight: 500;
+    transition: border-color 0.3s ease;
+}
+
+.adoption-details select:focus,
+.adoption-details textarea:focus,
+.adoption-details input[type="number"]:focus {
+    outline: none;
+    border-color: #6f87f7;
+    box-shadow: 0 0 0 3px rgba(111, 135, 247, 0.1);
+}
+
+/* Pet Card Actions Enhancement */
+.pet-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.btn-adopt {
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-weight: 600;
     cursor: pointer;
-    text-decoration: none;
-    transition: all 0.2s;
-    white-space: nowrap;
+    transition: all 0.3s ease;
 }
 
-.btn-primary {
-    background: #6f87f7;
-    color: white;
+.btn-adopt:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(72, 187, 120, 0.3);
 }
 
-.btn-primary:hover {
-    background: #5a6fd8;
-    transform: translateY(-1px);
+.adoption-status {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-top: 0.5rem;
 }
 
-.btn-secondary {
-    background: #6c757d;
-    color: white;
+.status-available {
+    background: #c6f6d5;
+    color: #2f855a;
 }
 
-.btn-secondary:hover {
-    background: #5a6268;
-    transform: translateY(-1px);
+.status-pending {
+    background: #fed7aa;
+    color: #c05621;
+}
+
+.status-urgent {
+    background: #feb2b2;
+    color: #c53030;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.7; }
 }
 
 /* Animations */
@@ -822,4 +952,4 @@ body {
     .story-actions {
         flex-direction: column;
     }
-} 
+}

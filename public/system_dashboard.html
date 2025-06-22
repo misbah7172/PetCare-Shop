@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PawConnect - Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #2c3e50;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: #3498db;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 1rem;
+        }
+
+        .main-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #3498db, #2980b9);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #27ae60, #229954);
+            color: white;
+        }
+
+        .btn-info {
+            background: linear-gradient(135deg, #17a2b8, #138496);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .recent-list {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .recent-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            border-bottom: 1px solid #ecf0f1;
+            transition: background 0.3s ease;
+        }
+
+        .recent-item:hover {
+            background: #f8f9fa;
+        }
+
+        .recent-item:last-child {
+            border-bottom: none;
+        }
+
+        .recent-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        .recent-icon.pet {
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+        }
+
+        .recent-icon.adoption {
+            background: linear-gradient(135deg, #f39c12, #e67e22);
+        }
+
+        .recent-content {
+            flex: 1;
+        }
+
+        .recent-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .recent-meta {
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .loading {
+            text-align: center;
+            color: #7f8c8d;
+            padding: 20px;
+        }
+
+        .spinner {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-paw"></i> PawConnect Dashboard</h1>
+            <p>Manage your pet adoption platform</p>
+        </div>
+
+        <!-- Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-dog"></i>
+                </div>
+                <div class="stat-number" id="total-pets">-</div>
+                <div class="stat-label">Total Pets</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-heart"></i>
+                </div>
+                <div class="stat-number" id="available-adoptions">-</div>
+                <div class="stat-label">Available for Adoption</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-number" id="total-users">-</div>
+                <div class="stat-label">Registered Users</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <div class="stat-number" id="successful-adoptions">-</div>
+                <div class="stat-label">Successful Adoptions</div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-grid">
+            <!-- Quick Actions -->
+            <div class="section">
+                <h2><i class="fas fa-bolt"></i> Quick Actions</h2>
+                <div class="action-buttons">
+                    <a href="pet_corner.html" class="btn btn-primary">
+                        <i class="fas fa-plus-circle"></i>
+                        Add New Pet
+                    </a>
+                    <a href="pet_adoption_feed.html" class="btn btn-success">
+                        <i class="fas fa-heart"></i>
+                        Browse Adoptions
+                    </a>
+                    <a href="manage_users.html" class="btn btn-info">
+                        <i class="fas fa-users-cog"></i>
+                        Manage Users
+                    </a>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="section">
+                <h2><i class="fas fa-clock"></i> Recent Activity</h2>
+                <div id="recent-activity" class="recent-list">
+                    <div class="loading">
+                        <i class="fas fa-spinner spinner"></i> Loading activity...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Pets and Adoptions -->
+        <div class="main-grid">
+            <!-- Recent Pets -->
+            <div class="section">
+                <h2><i class="fas fa-paw"></i> Recent Pets</h2>
+                <div id="recent-pets" class="recent-list">
+                    <div class="loading">
+                        <i class="fas fa-spinner spinner"></i> Loading pets...
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Adoption Posts -->
+            <div class="section">
+                <h2><i class="fas fa-heart"></i> Recent Adoption Posts</h2>
+                <div id="recent-adoptions" class="recent-list">
+                    <div class="loading">
+                        <i class="fas fa-spinner spinner"></i> Loading adoptions...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        class Dashboard {
+            constructor() {
+                this.init();
+            }
+
+            async init() {
+                await this.loadStatistics();
+                await this.loadRecentPets();
+                await this.loadRecentAdoptions();
+                await this.loadRecentActivity();
+            }
+
+            async loadStatistics() {
+                try {
+                    // Load total pets
+                    const petsResponse = await fetch('get_pets.php');
+                    const petsData = await petsResponse.json();
+                    if (petsData.success) {
+                        document.getElementById('total-pets').textContent = petsData.pets.length;
+                        const adoptionPets = petsData.pets.filter(pet => pet.is_for_adoption == 1);
+                        document.getElementById('available-adoptions').textContent = adoptionPets.length;
+                    }
+
+                    // Load adoption posts
+                    const adoptionsResponse = await fetch('get_adoption_posts.php');
+                    const adoptionsData = await adoptionsResponse.json();
+                    
+                    // Load users count (we'll create this endpoint)
+                    try {
+                        const usersResponse = await fetch('get_stats.php');
+                        const usersData = await usersResponse.json();
+                        if (usersData.success) {
+                            document.getElementById('total-users').textContent = usersData.total_users || 0;
+                            document.getElementById('successful-adoptions').textContent = usersData.successful_adoptions || 0;
+                        }
+                    } catch (error) {
+                        document.getElementById('total-users').textContent = '0';
+                        document.getElementById('successful-adoptions').textContent = '0';
+                    }
+
+                } catch (error) {
+                    console.error('Error loading statistics:', error);
+                }
+            }
+
+            async loadRecentPets() {
+                try {
+                    const response = await fetch('get_pets.php');
+                    const data = await response.json();
+                    
+                    const container = document.getElementById('recent-pets');
+                    
+                    if (data.success && data.pets.length > 0) {
+                        const recentPets = data.pets.slice(0, 5); // Get last 5 pets
+                        container.innerHTML = recentPets.map(pet => `
+                            <div class="recent-item">
+                                <div class="recent-icon pet">
+                                    <i class="fas fa-${this.getPetIcon(pet.type)}"></i>
+                                </div>
+                                <div class="recent-content">
+                                    <div class="recent-title">${this.escapeHtml(pet.name)}</div>
+                                    <div class="recent-meta">
+                                        ${pet.type.charAt(0).toUpperCase() + pet.type.slice(1)}
+                                        ${pet.breed ? ` • ${pet.breed}` : ''}
+                                        ${pet.is_for_adoption == 1 ? ' • Available for adoption' : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('');
+                    } else {
+                        container.innerHTML = '<div class="loading">No pets found. <a href="pet_corner.html">Add your first pet!</a></div>';
+                    }
+                } catch (error) {
+                    document.getElementById('recent-pets').innerHTML = '<div class="loading">Error loading pets</div>';
+                }
+            }
+
+            async loadRecentAdoptions() {
+                try {
+                    const response = await fetch('get_adoption_posts.php');
+                    const data = await response.json();
+                    
+                    const container = document.getElementById('recent-adoptions');
+                    
+                    if (data.success && data.posts.length > 0) {
+                        const recentAdoptions = data.posts.slice(0, 5); // Get last 5 adoption posts
+                        container.innerHTML = recentAdoptions.map(post => `
+                            <div class="recent-item">
+                                <div class="recent-icon adoption">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                                <div class="recent-content">
+                                    <div class="recent-title">${this.escapeHtml(post.pet_name)}</div>
+                                    <div class="recent-meta">
+                                        ${post.pet_type.charAt(0).toUpperCase() + post.pet_type.slice(1)}
+                                        • Owner: ${this.escapeHtml(post.owner_name)}
+                                        ${post.adoption_fee > 0 ? ` • $${post.adoption_fee}` : ' • Free'}
+                                    </div>
+                                </div>
+                            </div>
+                        `).join('');
+                    } else {
+                        container.innerHTML = '<div class="loading">No adoption posts found. <a href="pet_corner.html">Create your first adoption post!</a></div>';
+                    }
+                } catch (error) {
+                    document.getElementById('recent-adoptions').innerHTML = '<div class="loading">Error loading adoption posts</div>';
+                }
+            }
+
+            async loadRecentActivity() {
+                try {
+                    const container = document.getElementById('recent-activity');
+                    
+                    // Combine recent pets and adoptions for activity feed
+                    const [petsResponse, adoptionsResponse] = await Promise.all([
+                        fetch('get_pets.php'),
+                        fetch('get_adoption_posts.php')
+                    ]);
+                    
+                    const petsData = await petsResponse.json();
+                    const adoptionsData = await adoptionsResponse.json();
+                    
+                    const activities = [];
+                    
+                    // Add pet activities
+                    if (petsData.success) {
+                        petsData.pets.slice(0, 3).forEach(pet => {
+                            activities.push({
+                                type: 'pet',
+                                title: `New pet added: ${pet.name}`,
+                                meta: `${pet.type} • Added recently`,
+                                icon: 'paw'
+                            });
+                        });
+                    }
+                    
+                    // Add adoption activities
+                    if (adoptionsData.success) {
+                        adoptionsData.posts.slice(0, 3).forEach(post => {
+                            activities.push({
+                                type: 'adoption',
+                                title: `${post.pet_name} available for adoption`,
+                                meta: `${post.pet_type} • ${post.owner_name}`,
+                                icon: 'heart'
+                            });
+                        });
+                    }
+                    
+                    if (activities.length > 0) {
+                        container.innerHTML = activities.slice(0, 5).map(activity => `
+                            <div class="recent-item">
+                                <div class="recent-icon ${activity.type}">
+                                    <i class="fas fa-${activity.icon}"></i>
+                                </div>
+                                <div class="recent-content">
+                                    <div class="recent-title">${this.escapeHtml(activity.title)}</div>
+                                    <div class="recent-meta">${this.escapeHtml(activity.meta)}</div>
+                                </div>
+                            </div>
+                        `).join('');
+                    } else {
+                        container.innerHTML = '<div class="loading">No recent activity. Start by adding pets!</div>';
+                    }
+                    
+                } catch (error) {
+                    document.getElementById('recent-activity').innerHTML = '<div class="loading">Error loading activity</div>';
+                }
+            }
+
+            getPetIcon(type) {
+                const icons = {
+                    dog: 'dog',
+                    cat: 'cat',
+                    bird: 'dove',
+                    fish: 'fish',
+                    rabbit: 'rabbit',
+                    other: 'paw'
+                };
+                return icons[type] || 'paw';
+            }
+
+            escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+        }
+
+        // Initialize dashboard when page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            new Dashboard();
+        });
+    </script>
+</body>
+</html>
